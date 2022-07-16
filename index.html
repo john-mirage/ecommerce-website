@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Primary Meta Tags -->
   <title>Orinoco — Appareil photos et accessoires</title>
@@ -30,18 +30,100 @@
 
 <body>
   <!-- top app bar -->
-  <header>
-
+  <header class="fixed z-50 top-0 left-0 w-full h-16 bg-neutral-900 shadow-lg">
+    <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
+      <a href="#">
+        <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
+      </a>
+      <button class="-mr-3 flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700 hover:text-neutral-200">
+        <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+      </button>
+    </div>
   </header>
 
   <!-- view -->
-  <main>
+  <main class="my-16">
+    <!-- hero -->
+    <div class="mb-12 py-20 bg-neutral-800">
+      <div class="mx-auto container px-6 lg:px-10">
+        <div class="max-w-lg lg:max-w-2xl">
+          <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
+          <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+          <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400" href="#trending">
+            <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
+          </a>
+        </div>
+      </div>
+    </div>
 
+    <!-- trending -->
+    <div class="mx-auto container px-6 lg:px-10" id="trending">
+      <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+        <li class="space-y-1">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
+          <div class="flex flex-row justify-between items-center">
+            <h3 class="font-sans font-semibold text-lg text-neutral-700">Canon 6d</h3>
+            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
+          </div>
+        </li>
+        <li class="space-y-1">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
+          <div class="flex flex-row justify-between items-center">
+            <h3 class="font-sans font-semibold text-lg text-neutral-700">Leica 18x</h3>
+            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
+          </div>
+        </li>
+        <li class="space-y-1">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
+          <div class="flex flex-row justify-between items-center">
+            <h3 class="font-sans font-semibold text-lg text-neutral-700">Sony 8+</h3>
+            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
+          </div>
+        </li>
+        <li class="space-y-1">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
+          <div class="flex flex-row justify-between items-center">
+            <h3 class="font-sans font-semibold text-lg text-neutral-700">Canon 7d</h3>
+            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
+          </div>
+        </li>
+        <li class="space-y-1">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
+          <div class="flex flex-row justify-between items-center">
+            <h3 class="font-sans font-semibold text-lg text-neutral-700">Sony rx1000</h3>
+            <p class="font-sans font-semibold text-lg text-neutral-500">499€</p>
+          </div>
+        </li>
+      </ul>
+    </div>
   </main>
 
   <!-- footer -->
-  <footer>
-
+  <footer class="pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
+    <div class="mx-auto container px-6 lg:px-10">
+      <div class="divide-y divide-neutral-200">
+        <div class="grid grid-cols-1 gap-8 pb-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+          <div class="max-w-xs">
+            <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Pas de frais de transport</h3>
+            <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+          </div>
+          <div class="max-w-xs">
+            <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Service client disponible 24/7</h3>
+            <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+          </div>
+          <div class="max-w-xs">
+            <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">10 ans de garanties</h3>
+            <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+          </div>
+        </div>
+        <div class="pt-6">
+          <p class="font-sans font-normal text-sm text-neutral-600">copyright Orinoco</p>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <script type="module" src="/src/main.js"></script>
