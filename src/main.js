@@ -10,3 +10,5 @@ customElements.define("web-camera-card-skeleton", WebCameraCardSkeleton, {extend
 const trending = document.getElementById("trending");
 const webCameraList = document.createElement("ul", {is: "web-camera-list"});
 trending.append(webCameraList);
+
+console.log(window.location);

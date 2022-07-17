@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Primary Meta Tags -->
-  <title>Orinoco — Appareil photos et accessoires</title>
+  <title>Orinoco — Chargement du produit</title>
   <meta name="title" content="Orinoco — Appareil photos et accessoires">
   <meta name="description" content="Avec Orinoco, spécialiste des appareil photos anciens, trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent.">
 
@@ -45,23 +45,9 @@
   </header>
 
   <!-- view -->
-  <main class="my-16" id="app">
-    <!-- hero -->
-    <div class="mb-12 py-20 bg-neutral-800">
-      <div class="mx-auto container px-6 lg:px-10">
-        <div class="max-w-lg lg:max-w-2xl">
-          <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
-          <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-          <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400" href="#trending">
-            <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <!-- trending -->
-    <div class="mx-auto container px-6 lg:px-10" id="trending">
-      <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
-    </div>
+  <main class="my-16">
+    <!-- product -->
+    <div class="mx-auto container px-6 py-16 lg:px-10 lg:gap-10" id="product"></div>
   </main>
 
   <!-- footer -->
@@ -89,26 +75,20 @@
     </div>
   </footer>
 
-  <!-- template | camera card skeleton -->
-  <template id="template-camera-card-skeleton">
-    <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-100 overflow-hidden"></div>
-    <div class="h-7 rounded-lg bg-neutral-100"></div>
+  <!-- template | camera view -->
+  <template id="template-camera-view">
+    <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-300 overflow-hidden">
+      <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
+    </div>
+    <div>
+      <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name">Product name</h1>
+      <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price">499 €</p>
+      <p class="mb-6 font-normal text-base text-neutral-500" data-name="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio ipsum doloribus dicta expedita sapiente aliquid praesentium voluptas rerum illo perferendis iste eveniet sit doloremque reprehenderit nam, fugit corporis temporibus alias?</p>
+      <button class="mt-auto h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Ajouter au panier</button>
+    </div>
   </template>
 
-  <!-- template | camera card -->
-  <template id="template-camera-card">
-    <a class="group" href="#" data-name="link">
-      <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-        <img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-name="image" src="" alt="" draggable="false">
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <h3 class="font-sans font-semibold text-lg text-neutral-700" data-name="name"></h3>
-        <p class="font-sans font-bold text-lg text-neutral-500" data-name="price"></p>
-      </div>
-    </a>
-  </template>
-
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/product.js"></script>
 </body>
 
 </html>
