@@ -45,7 +45,7 @@
   </header>
 
   <!-- view -->
-  <main class="my-16">
+  <main class="my-16" id="app">
     <!-- hero -->
     <div class="mb-12 py-20 bg-neutral-800">
       <div class="mx-auto container px-6 lg:px-10">
@@ -58,47 +58,9 @@
         </div>
       </div>
     </div>
-
     <!-- trending -->
     <div class="mx-auto container px-6 lg:px-10" id="trending">
       <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
-      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-        <li class="space-y-1">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
-          <div class="flex flex-row justify-between items-center">
-            <h3 class="font-sans font-semibold text-lg text-neutral-700">Canon 6d</h3>
-            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
-          </div>
-        </li>
-        <li class="space-y-1">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
-          <div class="flex flex-row justify-between items-center">
-            <h3 class="font-sans font-semibold text-lg text-neutral-700">Leica 18x</h3>
-            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
-          </div>
-        </li>
-        <li class="space-y-1">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
-          <div class="flex flex-row justify-between items-center">
-            <h3 class="font-sans font-semibold text-lg text-neutral-700">Sony 8+</h3>
-            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
-          </div>
-        </li>
-        <li class="space-y-1">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
-          <div class="flex flex-row justify-between items-center">
-            <h3 class="font-sans font-semibold text-lg text-neutral-700">Canon 7d</h3>
-            <p class="font-sans font-bold text-lg text-neutral-500">499€</p>
-          </div>
-        </li>
-        <li class="space-y-1">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-500"></div>
-          <div class="flex flex-row justify-between items-center">
-            <h3 class="font-sans font-semibold text-lg text-neutral-700">Sony rx1000</h3>
-            <p class="font-sans font-semibold text-lg text-neutral-500">499€</p>
-          </div>
-        </li>
-      </ul>
     </div>
   </main>
 
@@ -126,6 +88,23 @@
       </div>
     </div>
   </footer>
+
+  <!-- template | camera card skeleton -->
+  <template id="template-camera-card-skeleton">
+    <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-100 overflow-hidden"></div>
+    <div class="h-7 rounded-lg bg-neutral-100"></div>
+  </template>
+
+  <!-- template | camera card -->
+  <template id="template-camera-card">
+    <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+      <img class="w-full h-full object-cover" data-name="image" src="" alt="" draggable="false">
+    </div>
+    <div class="flex flex-row justify-between items-center">
+      <h3 class="font-sans font-semibold text-lg text-neutral-700" data-name="name">Canon 6d</h3>
+      <p class="font-sans font-bold text-lg text-neutral-500" data-name="price">499€</p>
+    </div>
+  </template>
 
   <script type="module" src="/src/main.js"></script>
 </body>
