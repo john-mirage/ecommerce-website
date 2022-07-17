@@ -36,10 +36,11 @@
       <a href="#">
         <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
       </a>
-      <button class="-mr-3 flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700 hover:text-neutral-200">
+      <button class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" is="web-cart-button">
         <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
         </svg>
+        <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-neutral-500 font-semibold text-xs text-neutral-100" data-name="badge">2</span>
       </button>
     </div>
   </header>
@@ -47,8 +48,8 @@
   <!-- view -->
   <main class="my-16">
     <div class="mx-auto container grid grid-cols-1 gap-6 px-6 py-16 lg:px-10 lg:gap-10 lg:grid-cols-2" id="camera-view" is="web-camera-view">
-      <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-300"></div>
-      <div>
+      <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-300 animate-pulse"></div>
+      <div class="animate-pulse">
         <div class="mb-3 w-1/2 h-8 rounded-full bg-neutral-200"></div>
         <div class="mb-6 w-1/2 h-5 rounded-full bg-neutral-200"></div>
         <div class="mb-2 max-w-lg h-4 rounded-full bg-neutral-200"></div>

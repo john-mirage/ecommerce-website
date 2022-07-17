@@ -1,4 +1,4 @@
-const numberFormatter = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+import currencyFormatter from "@utils/currency-formatter";
 
 const template = document.getElementById("template-camera-card");
 
@@ -28,10 +28,10 @@ class WebCameraList extends HTMLUListElement {
     const imageElement = fragment.querySelector('[data-name="image"]');
     const nameElement = fragment.querySelector('[data-name="name"]');
     const priceElement = fragment.querySelector('[data-name="price"]');
-    linkElement.setAttribute("href", `/product.html?${camera._id}`);
+    linkElement.setAttribute("href", `/orinoco/product.html?id=${camera._id}`);
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
-    priceElement.textContent = numberFormatter.format(camera.price / 100);
+    priceElement.textContent = currencyFormatter.format(camera.price / 100);
     this.append(fragment);
   }
 }

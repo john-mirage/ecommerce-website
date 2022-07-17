@@ -1,4 +1,4 @@
-const numberFormatter = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+import currencyFormatter from "@utils/currency-formatter";
 
 const template = document.getElementById("template-camera-view");
 
@@ -8,8 +8,8 @@ class WebCameraView extends HTMLDivElement {
   }
 
   renderCameraView() {
-    const cameraUUID = window.location.search.substring(1);
-    return fetch(`http://localhost:3000/api/cameras/${cameraUUID}`)
+    const url = new URL(window.location.href);
+    return fetch(`http://localhost:3000/api/cameras/${url.searchParams.get("id")}`)
       .then(response => response.json())
       .then(data => {
         this.innerHTML = "";
@@ -29,7 +29,7 @@ class WebCameraView extends HTMLDivElement {
     const descriptionElement = fragment.querySelector('[data-name="description"]');
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
-    priceElement.textContent = numberFormatter.format(camera.price / 100);
+    priceElement.textContent = currencyFormatter.format(camera.price / 100);
     descriptionElement.textContent = camera.description;
     this.append(fragment);
   }
