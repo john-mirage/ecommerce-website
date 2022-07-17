@@ -1,14 +1,9 @@
 import "./main.css";
+import WebCartButton from "./components/web-cart-button";
 import WebCameraList from "./components/web-camera-list";
-import WebCameraCard from "./components/web-camera-card";
-import WebCameraCardSkeleton from "./components/web-camera-card-skeleton";
 
+customElements.define("web-cart-button", WebCartButton, {extends: "button"});
 customElements.define("web-camera-list", WebCameraList, {extends: "ul"});
-customElements.define("web-camera-card", WebCameraCard, {extends: "li"});
-customElements.define("web-camera-card-skeleton", WebCameraCardSkeleton, {extends: "li"});
 
-const trending = document.getElementById("trending");
-const webCameraList = document.createElement("ul", {is: "web-camera-list"});
-trending.append(webCameraList);
-
-console.log(window.location);
+const cameraList = document.getElementById("camera-list");
+cameraList.renderCameraCards();

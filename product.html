@@ -46,8 +46,16 @@
 
   <!-- view -->
   <main class="my-16">
-    <!-- product -->
-    <div class="mx-auto container px-6 py-16 lg:px-10 lg:gap-10" id="product"></div>
+    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 py-16 lg:px-10 lg:gap-10 lg:grid-cols-2" id="camera-view" is="web-camera-view">
+      <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-300"></div>
+      <div>
+        <div class="mb-3 w-1/2 h-8 rounded-full bg-neutral-200"></div>
+        <div class="mb-6 w-1/2 h-5 rounded-full bg-neutral-200"></div>
+        <div class="mb-2 max-w-lg h-4 rounded-full bg-neutral-200"></div>
+        <div class="mb-8 max-w-lg h-4 rounded-full bg-neutral-200"></div>
+        <div class="w-48 h-12 px-6 rounded-lg bg-neutral-200"></div>
+      </div>
+    </div>
   </main>
 
   <!-- footer -->
@@ -74,17 +82,17 @@
       </div>
     </div>
   </footer>
-
+  
   <!-- template | camera view -->
   <template id="template-camera-view">
-    <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-300 overflow-hidden">
+    <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
       <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
     </div>
     <div>
-      <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name">Product name</h1>
-      <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price">499 €</p>
-      <p class="mb-6 font-normal text-base text-neutral-500" data-name="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio ipsum doloribus dicta expedita sapiente aliquid praesentium voluptas rerum illo perferendis iste eveniet sit doloremque reprehenderit nam, fugit corporis temporibus alias?</p>
-      <button class="mt-auto h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Ajouter au panier</button>
+      <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
+      <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
+      <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
+      <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Ajouter au panier</button>
     </div>
   </template>
 

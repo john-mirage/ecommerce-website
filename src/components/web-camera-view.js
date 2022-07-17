@@ -5,16 +5,6 @@ const template = document.getElementById("template-camera-view");
 class WebCameraView extends HTMLDivElement {
   constructor() {
     super();
-    this.fragment = template.content.cloneNode(true);
-    this.imageElement = this.fragment.querySelector('[data-name="image"]');
-    this.nameElement = this.fragment.querySelector('[data-name="name"]');
-    this.priceElement = this.fragment.querySelector('[data-name="price"]');
-    this.descriptionElement = this.fragment.querySelector('[data-name="description"]');
-  }
-
-  connectedCallback() {
-    this.classList.add("grid", "grid-cols-1", "gap-6", "lg:grid-cols-2");
-    this.renderCameraView();
   }
 
   renderCameraView() {
@@ -32,12 +22,16 @@ class WebCameraView extends HTMLDivElement {
   }
 
   createCameraView(camera) {
-    document.title = `Orinoco — ${camera.name}`;
-    this.imageElement.setAttribute("src", camera.imageUrl);
-    this.nameElement.textContent = camera.name;
-    this.priceElement.textContent = numberFormatter.format(camera.price / 100);
-    this.descriptionElement.textContent = camera.description;
-    this.append(this.fragment);
+    const fragment = template.content.cloneNode(true);
+    const imageElement = fragment.querySelector('[data-name="image"]');
+    const nameElement = fragment.querySelector('[data-name="name"]');
+    const priceElement = fragment.querySelector('[data-name="price"]');
+    const descriptionElement = fragment.querySelector('[data-name="description"]');
+    imageElement.setAttribute("src", camera.imageUrl);
+    nameElement.textContent = camera.name;
+    priceElement.textContent = numberFormatter.format(camera.price / 100);
+    descriptionElement.textContent = camera.description;
+    this.append(fragment);
   }
 }
 
