@@ -9,4 +9,4 @@ const cameraList = document.getElementById("camera-list");
 cameraList.renderCameraCards();
 
 const url = new URL(window.location.href);
-console.log(url.searchParams.get("camera"));
+

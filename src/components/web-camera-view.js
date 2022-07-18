@@ -1,3 +1,4 @@
+import { getLocalCart, addItemToLocalCart } from "@utils/cart";
 import currencyFormatter from "@utils/currency-formatter";
 
 const template = document.getElementById("template-camera-view");
@@ -11,9 +12,9 @@ class WebCameraView extends HTMLDivElement {
     const url = new URL(window.location.href);
     return fetch(`http://localhost:3000/api/cameras/${url.searchParams.get("id")}`)
       .then(response => response.json())
-      .then(data => {
+      .then(camera => {
         this.innerHTML = "";
-        this.createCameraView(data);
+        this.createCameraView(camera);
       })
       .catch(error => {
         this.innerHTML = "";
@@ -27,11 +28,19 @@ class WebCameraView extends HTMLDivElement {
     const nameElement = fragment.querySelector('[data-name="name"]');
     const priceElement = fragment.querySelector('[data-name="price"]');
     const descriptionElement = fragment.querySelector('[data-name="description"]');
+    this.cartButton = fragment.querySelector('[data-name="button"]');
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
     priceElement.textContent = currencyFormatter.format(camera.price / 100);
     descriptionElement.textContent = camera.description;
     this.append(fragment);
+    this.cartButton.addEventListener("click", () => {
+      const cart = getLocalCart();
+      addItemToLocalCart(cart, camera._id);
+      console.log(localStorage.getItem("orinoco-cart"));
+      const customEvent = new CustomEvent("update-cart-button");
+      this.dispatchEvent(customEvent);
+    });
   }
 }
 
