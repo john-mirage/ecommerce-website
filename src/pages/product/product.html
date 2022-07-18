@@ -10,21 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Primary Meta Tags -->
-  <title>Orinoco — Chargement du produit</title>
-  <meta name="title" content="Orinoco — Appareil photos et accessoires">
+  <title>Orinoco — Page produit</title>
+  <meta name="title" content="Orinoco — Page produit">
   <meta name="description" content="Avec Orinoco, spécialiste des appareil photos anciens, trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent.">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://john-mirage.github.io/orinoco/">
-  <meta property="og:title" content="Orinoco — Appareil photos et accessoires">
+  <meta property="og:title" content="Orinoco — Page produit">
   <meta property="og:description" content="Avec Orinoco, spécialiste des appareil photos anciens, trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent.">
   <meta property="og:image" content="https://john-mirage.github.io/orinoco/banner.jpg">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://john-mirage.github.io/orinoco/">
-  <meta property="twitter:title" content="Orinoco — Appareil photos et accessoires">
+  <meta property="twitter:title" content="Orinoco — Page produit">
   <meta property="twitter:description" content="Avec Orinoco, spécialiste des appareil photos anciens, trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent.">
   <meta property="twitter:image" content="https://john-mirage.github.io/orinoco/banner.jpg">
 </head>
@@ -33,21 +33,21 @@
   <!-- top app bar -->
   <header class="fixed z-50 top-0 left-0 w-full h-16 bg-neutral-900 shadow-lg">
     <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
-      <a href="#">
+      <a href="/orinoco/">
         <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
       </a>
-      <button class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" is="web-cart-button">
+      <a class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" href="/orinoco/src/pages/cart/cart.html" is="web-cart-button">
         <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
         </svg>
         <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-neutral-500 font-semibold text-xs text-neutral-100" data-name="badge">2</span>
-      </button>
+      </a>
     </div>
   </header>
 
   <!-- view -->
   <main class="my-16">
-    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 py-16 lg:px-10 lg:gap-10 lg:grid-cols-2" id="camera-view" is="web-camera-view">
+    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2" id="camera-view" is="web-camera-view">
       <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-300 animate-pulse"></div>
       <div class="animate-pulse">
         <div class="mb-3 w-1/2 h-8 rounded-full bg-neutral-200"></div>
@@ -97,7 +97,7 @@
     </div>
   </template>
 
-  <script type="module" src="/src/product.js"></script>
+  <script type="module" src="/src/pages/product/product.js"></script>
 </body>
 
 </html>

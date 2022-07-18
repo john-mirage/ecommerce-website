@@ -28,7 +28,7 @@ class WebCameraList extends HTMLUListElement {
     const imageElement = fragment.querySelector('[data-name="image"]');
     const nameElement = fragment.querySelector('[data-name="name"]');
     const priceElement = fragment.querySelector('[data-name="price"]');
-    linkElement.setAttribute("href", `/orinoco/product.html?id=${camera._id}`);
+    linkElement.setAttribute("href", `/orinoco/src/pages/product/product.html?id=${camera._id}`);
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
     priceElement.textContent = currencyFormatter.format(camera.price / 100);
