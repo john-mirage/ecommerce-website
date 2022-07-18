@@ -8,5 +8,3 @@ customElements.define("web-camera-list", WebCameraList, {extends: "ul"});
 const cameraList = document.getElementById("camera-list");
 cameraList.renderCameraCards();
 
-const url = new URL(window.location.href);
-

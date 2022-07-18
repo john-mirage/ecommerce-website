@@ -37,7 +37,6 @@ class WebCameraView extends HTMLDivElement {
     this.cartButton.addEventListener("click", () => {
       const cart = getLocalCart();
       addItemToLocalCart(cart, camera._id);
-      console.log(localStorage.getItem("orinoco-cart"));
       const customEvent = new CustomEvent("update-cart-button");
       this.dispatchEvent(customEvent);
     });

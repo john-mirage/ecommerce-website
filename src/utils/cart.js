@@ -7,7 +7,6 @@ export function getLocalCartNumber(cart) {
 }
 
 export function addItemToLocalCart(cart, id) {
-  console.log(cart);
   if (cart) {
     let idIsInLocalCart = false;
     const newCart = cart.map((item) => {
