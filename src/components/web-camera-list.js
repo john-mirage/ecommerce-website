@@ -7,6 +7,11 @@ class WebCameraList extends HTMLUListElement {
     super();
   }
 
+  connectedCallback() {
+    console.log("list connected");
+    this.renderCameraCards();
+  }
+
   renderCameraCards() {
     return fetch('http://localhost:3000/api/cameras')
       .then(response => response.json())

@@ -30,8 +30,11 @@ const heartBeatAnimationTiming = {
 class WebCartButton extends HTMLAnchorElement {
   constructor() {
     super();
-    this.initialCall = true;
     this.badgeElement = this.querySelector('[data-name="badge"]');
+  }
+
+  connectedCallback() {
+    console.log("button connected");
     this.renderBadge(false);
   }
 

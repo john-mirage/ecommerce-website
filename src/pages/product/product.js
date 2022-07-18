@@ -8,8 +8,6 @@ customElements.define("web-camera-view", WebCameraView, {extends: "div"});
 const cartButton = document.getElementById("cart-button");
 const cameraView = document.getElementById("camera-view");
 
-cameraView.renderCameraView();
-
 cameraView.addEventListener("update-cart-button", () => {
   cartButton.renderBadge();
 });

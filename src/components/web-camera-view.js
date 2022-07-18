@@ -8,6 +8,11 @@ class WebCameraView extends HTMLDivElement {
     super();
   }
 
+  connectedCallback() {
+    console.log("view connected");
+    this.renderCameraView();
+  }
+
   renderCameraView() {
     const url = new URL(window.location.href);
     return fetch(`http://localhost:3000/api/cameras/${url.searchParams.get("id")}`)

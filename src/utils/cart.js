@@ -29,3 +29,18 @@ export function addItemToLocalCart(cart, id) {
     localStorage.setItem("orinoco-cart", JSON.stringify([{ id, number: 1 }]));
   }
 }
+
+export function editItemInLocalCart(cart, id, number) {
+  let isFound = false;
+  localStorage.setItem(JSON.stringify(cart.map((item) => {
+    if (item.id === id) {
+      isFound = true;
+      return {id, number}
+    }
+  })));
+  if (!isFound) throw new Error("The item you want to edit is not in the cart");
+}
+
+export function removeItemFromLocalCart(cart, id) {
+  localStorage.setItem(JSON.stringify(cart.filter((item) => item.id !== id)));
+}
