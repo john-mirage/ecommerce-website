@@ -1,0 +1,10 @@
+export function URLHasValidUuid(url) {
+  const urlParams = new URL(url).searchParams;
+  const uuidRegex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+  return urlParams.has("id") && uuidRegex.test(urlParams.get("id"));
+}
+
+export function getUrlPathname(urlString) {
+  const url = new URL(urlString);
+  return url.pathname.replace(/(?<=^.+)\/$/, "");
+}
