@@ -1,47 +1,18 @@
 import "./main.css";
-import { URLHasValidUuid, getUrlPathname } from "@utils/url";
+import WebApp from "@components/web-app";
+import WebHeader from "@components/web-header";
+import WebCartButton from "@components/web-cart-button";
+import WebIndexView from "@components/web-index-view";
+import WebIndexHero from "@components/web-index-hero";
+import WebIndexList from "@components/web-index-list";
+import WebProductView from "@components/web-product-view";
 
-const routes = {
-  "404": {
-    component: "web-404",
-    title: "Orinoco - La page n'existe pas",
-    checkers: [],
-  },
-  "/orinoco": {
-    component: "web-index",
-    title: "Orinoco - Appareil photos anciens",
-    checkers: [],
-  },
-  "/orinoco/produit": {
-    component: "web-product",
-    title: "Orinoco - Page produit",
-    checkers: [URLHasValidUuid],
-  },
-  "/orinoco/panier": {
-    component: "web-cart",
-    title: "Orinoco - Mon panier",
-    checkers: [],
-  }
-};
+customElements.define("web-app", WebApp, { extends: "div" });
+customElements.define("web-header", WebHeader, { extends: "header" });
+customElements.define("web-cart-button", WebCartButton, { extends: "button" });
 
-document.getElementById("accueil").addEventListener("click", linkHandler);
-document.getElementById("produit").addEventListener("click", linkHandler);
-document.getElementById("produit-2").addEventListener("click", linkHandler);
-document.getElementById("panier").addEventListener("click", linkHandler);
+customElements.define("web-index-view", WebIndexView);
+customElements.define("web-index-hero", WebIndexHero);
+customElements.define("web-index-list", WebIndexList);
 
-function linkHandler(event) {
-  event.preventDefault();
-  window.history.pushState({}, "", event.target.href);
-  locationHandler();
-}
-
-function locationHandler() {
-  const pathname = getUrlPathname(window.location.href);
-  const base = routes[pathname] || routes["404"];
-  const route = base.checkers.every(checker => checker(window.location.href)) ? base : routes["404"];
-  document.title = route.title;
-}
-
-window.addEventListener("popstate", locationHandler);
-
-locationHandler();
+customElements.define("web-product-view", WebProductView);

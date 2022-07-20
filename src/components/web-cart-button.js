@@ -27,7 +27,7 @@ const heartBeatAnimationTiming = {
   duration: 1000,
 }
 
-class WebCartButton extends HTMLAnchorElement {
+class WebCartButton extends HTMLButtonElement {
   constructor() {
     super();
     this.badgeElement = this.querySelector('[data-name="badge"]');

@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Primary Meta Tags -->
-  <title>Orinoco — Appareil photos et accessoires</title>
-  <meta name="title" content="Orinoco — Appareil photos et accessoires">
+  <title>Orinoco — Appareil photos anciens</title>
+  <meta name="title" content="Orinoco — Appareil photos anciens">
   <meta name="description" content="Avec Orinoco, spécialiste des appareil photos anciens, trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent.">
 
   <!-- Open Graph / Facebook -->
@@ -29,54 +29,100 @@
   <meta property="twitter:image" content="https://john-mirage.github.io/orinoco/banner.jpg">
 </head>
 
-<body class="flex flex-col justify-start min-h-screen">
-  <!-- top app bar -->
-  <header class="fixed z-50 top-0 left-0 w-full h-16 bg-neutral-900 shadow-lg">
-    <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
-      <a href="#">
-        <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
-      </a>
-      <a class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" href="/orinoco/panier" is="web-cart-button">
-        <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-        </svg>
-        <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-500 font-semibold text-xs text-neutral-100" data-name="badge">2</span>
-      </a>
-    </div>
-  </header>
+<body>
 
-  <!-- view -->
-  <main class="my-16" id="view">
-    <a href="/orinoco/" id="accueil">accueil</a>
-    <a href="/orinoco/produit" id="produit">produit invalide</a>
-    <a href="/orinoco/produit?id=9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" id="produit-2">produit valide</a>
-    <a href="/orinoco/panier" id="panier">panier</a>
-  </main>
+  <div class="flex flex-col justify-start min-h-screen" is="web-app">
 
-  <!-- footer -->
-  <footer class="mt-auto pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
-    <div class="mx-auto container px-6 lg:px-10">
-      <div class="divide-y divide-neutral-200">
-        <div class="grid grid-cols-1 gap-8 pb-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-          <div class="max-w-xs">
-            <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Pas de frais de transport</h3>
-            <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+    <!-- top app bar -->
+    <header class="fixed z-50 top-0 left-0 w-full h-16 bg-neutral-900 shadow-lg" data-name="web-header" is="web-header">
+      <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
+        <button data-name="logo-button">
+          <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
+        </button>
+        <button class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" data-name="cart-button" is="web-cart-button">
+          <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-500 font-semibold text-xs text-neutral-100" data-name="badge">2</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- view -->
+    <main class="my-16" data-name="view"></main>
+
+    <!-- footer -->
+    <footer class="mt-auto pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
+      <div class="mx-auto container px-6 lg:px-10">
+        <div class="divide-y divide-neutral-200">
+          <div class="grid grid-cols-1 gap-8 pb-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+            <div class="max-w-xs">
+              <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Pas de frais de transport</h3>
+              <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+            </div>
+            <div class="max-w-xs">
+              <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Service client disponible 24/7</h3>
+              <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+            </div>
+            <div class="max-w-xs">
+              <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">10 ans de garanties</h3>
+              <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+            </div>
           </div>
-          <div class="max-w-xs">
-            <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Service client disponible 24/7</h3>
-            <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
-          </div>
-          <div class="max-w-xs">
-            <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">10 ans de garanties</h3>
-            <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+          <div class="pt-6">
+            <p class="font-sans font-normal text-sm text-neutral-600">copyright Orinoco</p>
           </div>
         </div>
-        <div class="pt-6">
-          <p class="font-sans font-normal text-sm text-neutral-600">copyright Orinoco</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- template | web index hero -->
+  <template id="template-web-index-hero">
+    <div class="mb-12 py-20 bg-neutral-800">
+      <div class="mx-auto container px-6 lg:px-10">
+        <div class="max-w-lg lg:max-w-2xl">
+          <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
+          <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+          <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400/50" href="#trending">
+            <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
+          </a>
         </div>
       </div>
     </div>
-  </footer>
+  </template>
+
+  <!-- template | web index list -->
+  <template id="template-web-index-list">
+    <div class="mx-auto container px-6 lg:px-10">
+      <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list"></ul>
+    </div>
+  </template>
+
+  <!-- template | web index list item skeleton -->
+  <template id="template-web-index-list-item-skeleton">
+    <li class="space-y-1 animate-pulse">
+      <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-300 overflow-hidden"></div>
+      <div class="h-7 rounded-full bg-neutral-300"></div>
+    </li>
+  </template>
+
+  <!-- template | web index list item -->
+  <template id="template-web-index-list-item">
+    <li class="space-y-1">
+      <a class="group" href="#" data-name="link">
+        <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+          <img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-name="image" src="" alt="" draggable="false">
+        </div>
+        <div class="flex flex-row justify-between items-center">
+          <h3 class="font-sans font-semibold text-lg text-neutral-700" data-name="name"></h3>
+          <p class="font-sans font-semibold text-lg text-neutral-500" data-name="price"></p>
+        </div>
+      </a>
+    </li>
+  </template>
 
   <script type="module" src="/src/main.js"></script>
 </body>
