@@ -118,14 +118,16 @@
 
   <!-- template | app product view -->
   <template id="template-app-product-view">
-    <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
-      <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
-    </div>
-    <div>
-      <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
-      <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
-      <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
-      <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700" data-name="button">Ajouter au panier</button>
+    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
+      <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+        <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
+      </div>
+      <div>
+        <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
+        <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
+        <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
+        <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700" data-name="button">Ajouter au panier</button>
+      </div>
     </div>
   </template>
 

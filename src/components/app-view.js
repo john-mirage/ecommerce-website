@@ -5,6 +5,7 @@ class AppView extends HTMLElement {
     this.mainElement = document.createElement("main");
     this.mainElement.classList.add("my-16");
     this.appIndexView = false;
+    this.appProductView = false;
   }
 
   connectedCallback() {
@@ -19,42 +20,39 @@ class AppView extends HTMLElement {
     console.log("LOADING VIEW")
   }
 
-  switchToErrorView(link) {
+  switchToErrorView() {
     this.mainElement.innerHTML = "";
-    window.history.pushState({}, "", link);
     console.log("ERROR VIEW")
   }
 
-  switchToNotFoundView(link) {
+  switchToNotFoundView() {
     this.mainElement.innerHTML = "";
-    window.history.pushState({}, "", link);
     console.log("NOT FOUND VIEW")
   }
 
-  switchToIndexView(link, cameras) {
+  switchToIndexView(cameras) {
     this.mainElement.innerHTML = "";
     this.appIndexView = this.indexView ? this.indexView : document.createElement("app-index-view");
     this.appIndexView.cameras = cameras;
     this.mainElement.append(this.appIndexView);
-    window.history.pushState({}, "", link);
     console.log("INDEX VIEW")
   }
 
-  switchToProductView(link, camera) {
+  switchToProductView(camera) {
     this.mainElement.innerHTML = "";
-    window.history.pushState({}, "", link);
+    this.appProductView = this.appProductView ? this.appProductView : document.createElement("app-product-view");
+    this.appProductView.camera = camera;
+    this.mainElement.append(this.appProductView);
     console.log("PRODUCT VIEW")
   }
 
-  switchToFilledCartView(link, cart) {
+  switchToFilledCartView(cart) {
     this.mainElement.innerHTML = "";
-    window.history.pushState({}, "", link);
     console.log("FILLED CART VIEW")
   }
 
-  switchToEmptyCartView(link) {
+  switchToEmptyCartView() {
     this.mainElement.innerHTML = "";
-    window.history.pushState({}, "", link);
     console.log("EMPTY CART VIEW")
   }
 }

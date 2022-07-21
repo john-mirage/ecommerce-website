@@ -66,7 +66,7 @@ class WebIndexView extends HTMLElement {
     const customEvent = new CustomEvent("router-link-click", {
       bubbles: true,
       detail: {
-        link: event.currentTarget.href
+        href: event.currentTarget.href,
       }
     });
     this.dispatchEvent(customEvent);

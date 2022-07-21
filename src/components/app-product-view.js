@@ -6,25 +6,35 @@ class AppProductView extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.fragment = template.content.cloneNode(true);
+    this.imageElement = this.fragment.querySelector('[data-name="image"]');
+    this.nameElement = this.fragment.querySelector('[data-name="name"]');
+    this.priceElement = this.fragment.querySelector('[data-name="price"]');
+    this.descriptionElement = this.fragment.querySelector('[data-name="description"]');
+    this.buttonElement = this.fragment.querySelector('[data-name="button"]');
+  }
+
+  get camera() {
+    if ("_camera" in this && this._camera !== undefined) {
+      return this._camera;
+    } else {
+      throw new Error("The camera is not defined");
+    }
+  }
+
+  set camera(camera) {
+    this._camera = camera;
   }
 
   connectedCallback() {
     if (this.initialCall) {
+      this.append(this.fragment);
       this.initialCall = false;
     }
-  }
-
-  getProductRow(camera) {
-    const fragment = template.content.cloneNode(true);
-    const imageElement = fragment.querySelector('[data-name="image"]');
-    const nameElement = fragment.querySelector('[data-name="name"]');
-    const priceElement = fragment.querySelector('[data-name="price"]');
-    const descriptionElement = fragment.querySelector('[data-name="description"]');
-    const cartButton = fragment.querySelector('[data-name="button"]');
-    imageElement.setAttribute("src", camera.imageUrl);
-    nameElement.textContent = camera.name;
-    priceElement.textContent = currencyFormatter.format(camera.price / 100);
-    descriptionElement.textContent = camera.description;
+    this.imageElement.setAttribute("src", this.camera.imageUrl);
+    this.nameElement.textContent = this.camera.name;
+    this.priceElement.textContent = currencyFormatter.format(this.camera.price / 100);
+    this.descriptionElement.textContent = this.camera.description;
   }
 }
 

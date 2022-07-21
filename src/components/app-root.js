@@ -6,73 +6,78 @@ class AppRoot extends HTMLElement {
     this.appHeader = this.querySelector("app-header");
     this.appView = this.querySelector("app-view");
     this.appFooter = this.querySelector("app-footer");
-    this.handleNavigation = this.handleNavigation.bind(this);
+    this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
     this.handleNavigationLink = this.handleNavigationLink.bind(this);
   }
 
   connectedCallback() {
-    this.handleNavigation();
-    window.addEventListener("popstate", this.handleNavigation);
+    console.log("init");
+    this.handleNavigation(window.location.href);
+    window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);
   }
 
   disconnectedCallback() {
-    window.removeEventListener("popstate", this.handleNavigation);
+    window.removeEventListener("popstate", this.handleNavigationPopState);
     this.removeEventListener("router-link-click", this.handleNavigationLink);
   }
 
-  handleNavigationLink(event) {
-    const link = event.detail.link;
-    this.handleNavigation(link);
+  handleNavigationPopState(event) {
+    this.handleNavigation(window.location.href);
   }
 
-  handleNavigation(baseUrl = false) {
+  handleNavigationLink(event) {
+    const href = event.detail.href;
+    window.history.pushState({}, "", href);
+    this.handleNavigation(href);
+  }
+
+  handleNavigation(href) {
+    const url = new URL(href);
     this.appView.switchToLoadingView();
-    const url = baseUrl ? baseUrl : window.location.href;
-    const pathname = getUrlPathname(url).toLowerCase();
-    switch(pathname) {
-      case "/orinoco":
-        this.navigateToIndexPage(url);
+    switch(url.pathname) {
+      case "/orinoco/":
+        this.navigateToIndexPage();
         break;
       case "/orinoco/produit":
-        this.navigateToProductPage(url);
+        this.navigateToProductPage(url.searchParams.get("id"));
         break;
       case "/orinoco/panier":
-        this.navigateToCartPage(url);
+        this.navigateToCartPage(href);
         break;
       default:
-        this.appView.switchToNotFoundView(url);
+        this.appView.switchToNotFoundView();
         break;
     }
   }
 
-  navigateToIndexPage(url) {
+  navigateToIndexPage() {
     fetch('http://localhost:3000/api/cameras')
       .then(response => response.json())
       .then(cameras => {
-        this.appView.switchToIndexView(url, cameras);
+        this.appView.switchToIndexView(cameras);
       })
       .catch(error => {
-        this.appView.switchToErrorView(url);
+        this.appView.switchToErrorView();
       });
   }
 
-  navigateToProductPage(url) {
-    fetch(`http://localhost:3000/api/cameras/${new URL(url).searchParams.get("id")}`)
+  navigateToProductPage(id) {
+    fetch(`http://localhost:3000/api/cameras/${id}`)
       .then(response => response.json())
       .then(camera => {
         if (Object.keys(camera).length > 0) {
-          this.appView.switchToProductView(url, camera);
+          this.appView.switchToProductView(camera);
         } else {
-          this.appView.switchToNotFoundView(url);
+          this.appView.switchToNotFoundView();
         }
       })
       .catch(error => {
-        this.appView.switchToErrorView(url);
+        this.appView.switchToErrorView();
       });
   }
 
-  navigateToCartPage(link) {
+  navigateToCartPage(href) {
     
   }
 }
