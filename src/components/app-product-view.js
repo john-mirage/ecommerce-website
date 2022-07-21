@@ -12,6 +12,7 @@ class AppProductView extends HTMLElement {
     this.priceElement = this.fragment.querySelector('[data-name="price"]');
     this.descriptionElement = this.fragment.querySelector('[data-name="description"]');
     this.buttonElement = this.fragment.querySelector('[data-name="button"]');
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   get camera() {
@@ -35,6 +36,12 @@ class AppProductView extends HTMLElement {
     this.nameElement.textContent = this.camera.name;
     this.priceElement.textContent = currencyFormatter.format(this.camera.price / 100);
     this.descriptionElement.textContent = this.camera.description;
+    this.buttonElement.addEventListener("click", this.handleButtonClick);
+  }
+
+  handleButtonClick(event) {
+    const customEvent = new CustomEvent("cart-add", {bubbles: true, detail: {id: this.camera._id}});
+    this.dispatchEvent(customEvent);
   }
 }
 

@@ -1,5 +1,3 @@
-import { URLHasValidUuid, getUrlPathname } from "@utils/url";
-
 class AppRoot extends HTMLElement {
   constructor() {
     super();
@@ -11,10 +9,12 @@ class AppRoot extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("init");
     this.handleNavigation(window.location.href);
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);
+    this.addEventListener("cart-add", (event) => {
+      console.log("cart change");
+    });
   }
 
   disconnectedCallback() {
@@ -33,6 +33,7 @@ class AppRoot extends HTMLElement {
   }
 
   handleNavigation(href) {
+    console.log(href);
     const url = new URL(href);
     this.appView.switchToLoadingView();
     switch(url.pathname) {
@@ -63,7 +64,8 @@ class AppRoot extends HTMLElement {
   }
 
   navigateToProductPage(id) {
-    fetch(`http://localhost:3000/api/cameras/${id}`)
+    if (typeof id === "string") {
+      fetch(`http://localhost:3000/api/cameras/${id}`)
       .then(response => response.json())
       .then(camera => {
         if (Object.keys(camera).length > 0) {
@@ -75,6 +77,9 @@ class AppRoot extends HTMLElement {
       .catch(error => {
         this.appView.switchToErrorView();
       });
+    } else {
+      this.appView.switchToNotFoundView();
+    }
   }
 
   navigateToCartPage(href) {
