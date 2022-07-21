@@ -31,9 +31,15 @@
 
 <body>
 
-  <div class="flex flex-col justify-start min-h-screen" is="web-app">
+  <!-- app -->
+  <app-root class="flex flex-col min-h-screen">
+    <app-header class="flex-none"></app-header>
+    <app-view class="flex-1"></app-view>
+    <app-footer class="flex-none"></app-footer>
+  </app-root>
 
-    <!-- top app bar -->
+  <!-- template | web app header -->
+  <template id="template-app-header">
     <header class="fixed z-50 top-0 left-0 w-full h-16 bg-neutral-900 shadow-lg" data-name="web-header" is="web-header">
       <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
         <button data-name="logo-button">
@@ -47,11 +53,10 @@
         </button>
       </div>
     </header>
+  </template>
 
-    <!-- view -->
-    <main class="my-16" data-name="view"></main>
-
-    <!-- footer -->
+  <!-- template | web app footer -->
+  <template id="template-app-footer">
     <footer class="mt-auto pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
       <div class="mx-auto container px-6 lg:px-10">
         <div class="divide-y divide-neutral-200">
@@ -75,11 +80,10 @@
         </div>
       </div>
     </footer>
+  </template>
 
-  </div>
-
-  <!-- template | web index hero -->
-  <template id="template-web-index-hero">
+  <!-- template | web index view -->
+  <template id="template-app-index-view">
     <div class="mb-12 py-20 bg-neutral-800">
       <div class="mx-auto container px-6 lg:px-10">
         <div class="max-w-lg lg:max-w-2xl">
@@ -91,26 +95,14 @@
         </div>
       </div>
     </div>
-  </template>
-
-  <!-- template | web index list -->
-  <template id="template-web-index-list">
-    <div class="mx-auto container px-6 lg:px-10">
+    <div class="mx-auto container px-6 lg:px-10" id="trending">
       <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
       <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list"></ul>
     </div>
   </template>
 
-  <!-- template | web index list item skeleton -->
-  <template id="template-web-index-list-item-skeleton">
-    <li class="space-y-1 animate-pulse">
-      <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-300 overflow-hidden"></div>
-      <div class="h-7 rounded-full bg-neutral-300"></div>
-    </li>
-  </template>
-
-  <!-- template | web index list item -->
-  <template id="template-web-index-list-item">
+  <!-- template | app index product -->
+  <template id="template-app-index-product">
     <li class="space-y-1">
       <a class="group" href="#" data-name="link">
         <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
@@ -122,6 +114,19 @@
         </div>
       </a>
     </li>
+  </template>
+
+  <!-- template | app product view -->
+  <template id="template-app-product-view">
+    <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+      <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
+    </div>
+    <div>
+      <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
+      <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
+      <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
+      <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700" data-name="button">Ajouter au panier</button>
+    </div>
   </template>
 
   <script type="module" src="/src/main.js"></script>

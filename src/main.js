@@ -1,18 +1,18 @@
 import "./main.css";
-import WebApp from "@components/web-app";
-import WebHeader from "@components/web-header";
-import WebCartButton from "@components/web-cart-button";
-import WebIndexView from "@components/web-index-view";
-import WebIndexHero from "@components/web-index-hero";
-import WebIndexList from "@components/web-index-list";
-import WebProductView from "@components/web-product-view";
 
-customElements.define("web-app", WebApp, { extends: "div" });
-customElements.define("web-header", WebHeader, { extends: "header" });
-customElements.define("web-cart-button", WebCartButton, { extends: "button" });
+import AppRoot from "@components/app-root";
+import AppHeader from "@components/app-header";
+import AppView from "@components/app-view";
+import AppFooter from "@components/app-footer";
 
-customElements.define("web-index-view", WebIndexView);
-customElements.define("web-index-hero", WebIndexHero);
-customElements.define("web-index-list", WebIndexList);
+import AppIndexView from "@components/app-index-view";
+import AppProductView from "@components/app-product-view";
 
-customElements.define("web-product-view", WebProductView);
+customElements.define("app-header", AppHeader);
+customElements.define("app-view", AppView);
+customElements.define("app-footer", AppFooter);
+
+customElements.define("app-index-view", AppIndexView);
+customElements.define("app-product-view", AppProductView);
+
+customElements.define("app-root", AppRoot);

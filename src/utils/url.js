@@ -1,5 +1,5 @@
 export function URLHasValidUuid(url) {
-  const urlParams = new URL(url).searchParams;
+  const urlParams = url.searchParams;
   const uuidRegex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$|^[a-f0-9]{24}$/;
   return urlParams.has("id") && uuidRegex.test(urlParams.get("id"));
 }
