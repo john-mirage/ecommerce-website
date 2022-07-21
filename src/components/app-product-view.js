@@ -16,7 +16,7 @@ class AppProductView extends HTMLElement {
   }
 
   get camera() {
-    if ("_camera" in this && this._camera !== undefined) {
+    if (this.hasOwnProperty("_camera") && this._camera !== undefined) {
       return this._camera;
     } else {
       throw new Error("The camera is not defined");

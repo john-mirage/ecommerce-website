@@ -44,3 +44,22 @@ export function editItemInLocalCart(cart, id, number) {
 export function removeItemFromLocalCart(cart, id) {
   localStorage.setItem(JSON.stringify(cart.filter((item) => item.id !== id)));
 }
+
+export class Cart {
+  constructor() {
+    this.cart = this.getCartFromLocalStorage();
+  }
+
+  getCartFromLocalStorage() {
+    const baseCart = JSON.parse(localStorage.getItem("orinoco-cart"));
+    const cleanCart = [];
+    if (Array.isArray(baseCart) && baseCart.length > 0) {
+      baseCart.forEach((item) => {
+        if (item.hasOwnProperty("id") && item.hasOwnProperty("number")) {
+          cleanCart.push(item);
+        }
+      });
+    }
+    return cleanCart;
+  }
+}

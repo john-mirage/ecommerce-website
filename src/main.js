@@ -16,3 +16,10 @@ customElements.define("app-index-view", AppIndexView);
 customElements.define("app-product-view", AppProductView);
 
 customElements.define("app-root", AppRoot);
+
+
+const number = 0;
+const string = "z"
+const obj = {}
+const obj2 = {cart: 1}
+console.log(obj2.hasOwnProperty("cart"));

@@ -13,7 +13,7 @@ class WebIndexView extends HTMLElement {
   }
 
   get cameras() {
-    if ("_cameras" in this && this._cameras !== undefined) {
+    if (this.hasOwnProperty("_cameras") && this._cameras !== undefined) {
       return this._cameras;
     } else {
       throw new Error("The cameras are not defined");

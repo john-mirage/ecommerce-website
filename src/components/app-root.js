@@ -9,6 +9,7 @@ class AppRoot extends HTMLElement {
   }
 
   connectedCallback() {
+    this.appHeader.updateCartBadge(0);
     this.handleNavigation(window.location.href);
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);
@@ -33,9 +34,7 @@ class AppRoot extends HTMLElement {
   }
 
   handleNavigation(href) {
-    console.log(href);
     const url = new URL(href);
-    this.appView.switchToLoadingView();
     switch(url.pathname) {
       case "/orinoco/":
         this.navigateToIndexPage();
