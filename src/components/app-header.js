@@ -48,6 +48,7 @@ class AppHeader extends HTMLElement {
   }
 
   handleLinkClick(event) {
+    event.preventDefault();
     const href = event.currentTarget.href;
     const customEvent = new CustomEvent("router-link-click", {bubbles: true, detail: {href}});
     this.dispatchEvent(customEvent);
