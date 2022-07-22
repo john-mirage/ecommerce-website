@@ -1,65 +1,130 @@
-export function getLocalCart() {
-  return JSON.parse(localStorage.getItem("orinoco-cart"));
+/**
+ * Get the local storage item.
+ * 
+ * @param {string} key - The key of the local storage item to get.
+ * @returns {any} The local storage item.
+ */
+export function getLocalStorageItem(key) {
+  return JSON.parse(localStorage.getItem(key));
 }
 
-export function getLocalCartNumber(cart) {
-  return cart ? cart.reduce((previous, current) => previous + current.number, 0) : 0;
+/**
+ * Update the local storage item.
+ * 
+ * @param {string} key - The key of the local storage item to update.
+ * @param {any} value - the value of the local storage item to update. 
+ */
+export function updateLocalStorageItem(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
 }
 
-export function addItemToLocalCart(cart, id) {
-  if (cart) {
-    let idIsInLocalCart = false;
-    const newCart = cart.map((item) => {
-      if (item.id === id) {
-        idIsInLocalCart = true;
-        return {
-          id: item.id,
-          number: item.number + 1
-        }
-      } else {
-        return item;
+/**
+ * Validate the local storage cart.
+ * 
+ * @param {any} cart - The cart retrieved from the local storage.
+ * @returns {Array} The valid cart.
+ */
+export function validateLocalStorageCart(cart) {
+  const cleanCart = [];
+  if (Array.isArray(cart) && cart.length > 0) {
+    cart.forEach((item) => {
+      if (
+        item.hasOwnProperty("id") &&
+        item.hasOwnProperty("number") &&
+        item.hasOwnProperty("variant")
+        ) {
+        cleanCart.push(item);
       }
     });
-    if (!idIsInLocalCart) {
-      localStorage.setItem("orinoco-cart", JSON.stringify([...cart, {id: id, number: 1 }]));
+  }
+  return cleanCart;
+}
+
+/**
+ * Get the cart item count.
+ * 
+ * @param {CartItem[]} cart - The cart.
+ * @returns {number} The count of the cart items.
+ */
+export function getCartItemCount(cart) {
+  return cart ? cart.reduce((count, item) => count + item.number, 0) : 0;
+}
+
+/**
+ * Add an item in the cart.
+ * 
+ * @param {CartItem[]} cart - The cart.
+ * @param {CartITem} itemToAdd - The item to add to the cart.
+ * @returns {CartItem[]} the cart with the new cart item.
+ */
+export function addCartItem(cart, itemToAdd) {
+  let itemToAddIsInCart = false;
+  const newCart = cart.map((item) => {
+    if (
+      item.id === itemToAdd.id &&
+      item.variant === itemToAdd.variant
+    ) {
+      itemToAddIsInCart = true;
+      return {
+        id: item.id,
+        number: item.number + 1,
+        variant: item.variant,
+      }
     } else {
-      localStorage.setItem("orinoco-cart", JSON.stringify(newCart));
+      return item;
     }
+  });
+  if (!itemToAddIsInCart) {
+    return [
+      ...cart,
+      {
+        id: itemToAdd.id,
+        number: 1,
+        variant: itemToAdd.variant,
+      }
+    ];
   } else {
-    localStorage.setItem("orinoco-cart", JSON.stringify([{ id, number: 1 }]));
+    return newCart;
   }
 }
 
-export function editItemInLocalCart(cart, id, number) {
-  let isFound = false;
-  localStorage.setItem(JSON.stringify(cart.map((item) => {
-    if (item.id === id) {
-      isFound = true;
-      return {id, number}
+/**
+ * Update an item in the cart.
+ * 
+ * @param {CartItem[]} cart - The cart.
+ * @param {CartITem} itemToUpdate - The cart item to update.
+ * @returns {CartITem[]} The cart with the updated cart item.
+ * @throws {Error} Throws error if the cart item to update doesnt exist in the cart.
+ */
+export function updateCartItem(cart, itemToUpdate) {
+  let itemIsInTheCart = false;
+  const newCart = cart.map((item) => {
+    if (
+      item.id === itemToUpdate.id &&
+      item.variant === itemToUpdate.variant
+    ) {
+      itemIsInTheCart = true;
+      return itemToUpdate;
+    } else {
+      return item;
     }
-  })));
-  if (!isFound) throw new Error("The item you want to edit is not in the cart");
+  });
+  if (itemIsInTheCart) {
+    return newCart;
+  } else {
+    throw new Error("The item you want to update is not in the cart");
+  }
 }
 
-export function removeItemFromLocalCart(cart, id) {
-  localStorage.setItem(JSON.stringify(cart.filter((item) => item.id !== id)));
-}
-
-export class Cart {
-  constructor() {
-    this.cart = this.getCartFromLocalStorage();
-  }
-
-  getCartFromLocalStorage() {
-    const baseCart = JSON.parse(localStorage.getItem("orinoco-cart"));
-    const cleanCart = [];
-    if (Array.isArray(baseCart) && baseCart.length > 0) {
-      baseCart.forEach((item) => {
-        if (item.hasOwnProperty("id") && item.hasOwnProperty("number")) {
-          cleanCart.push(item);
-        }
-      });
-    }
-    return cleanCart;
-  }
+/**
+ * Delete an item from the cart.
+ * 
+ * @param {CartItem[]} cart - The cart.
+ * @param {CartITem} itemToDelete - The cart item to delete. 
+ * @returns {CartItem[]} The cart without the item to delete.
+ */
+export function deleteCartItem(cart, itemToDelete) {
+  return cart.filter((item) => {
+    return (item.id !== itemToDelete.id) && (item.variant !== itemToDelete.variant);
+  });
 }
