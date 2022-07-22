@@ -83,11 +83,7 @@ export function addCartItem(cart, validateCart, itemToAdd, itemIsValid) {
         item.variant === itemToAdd.variant
       ) {
         itemToAddIsInCart = true;
-        return {
-          id: item.id,
-          number: item.number + 1,
-          variant: item.variant,
-        }
+        return {...item, number: item.number + 1}
       } else {
         return item;
       }
@@ -116,29 +112,33 @@ export function addCartItem(cart, validateCart, itemToAdd, itemIsValid) {
  * @returns {CartITem[]} The cart with the updated cart item.
  * @throws {Error} Throws error if the cart item to update doesnt exist in the cart.
  */
-export function updateCartItem(cart, validateCart, itemToUpdate, itemIsValid) {
+export function updateCartItemNumber(cart, validateCart, itemToUpdate, itemIsValid, itemNumber) {
   const cleanCart = validateCart(cart);
   const itemToUpdateIsValid = itemIsValid(itemToUpdate);
-  if (itemToUpdateIsValid) {
-    let itemIsInTheCart = false;
-    const newCart = cleanCart.map((item) => {
-      if (
-        item.id === itemToUpdate.id &&
-        item.variant === itemToUpdate.variant
-      ) {
-        itemIsInTheCart = true;
-        return itemToUpdate;
+  if (cleanCart.length > 0) {
+    if (itemToUpdateIsValid) {
+      let itemIsInTheCart = false;
+      const newCart = cleanCart.map((item) => {
+        if (
+          item.id === itemToUpdate.id &&
+          item.variant === itemToUpdate.variant
+        ) {
+          itemIsInTheCart = true;
+          return {...item, number: itemNumber};
+        } else {
+          return item;
+        }
+      });
+      if (itemIsInTheCart) {
+        return newCart;
       } else {
-        return item;
+        throw new Error("The item you want to update is not in the cart");
       }
-    });
-    if (itemIsInTheCart) {
-      return newCart;
     } else {
-      throw new Error("The item you want to update is not in the cart");
+      throw new Error("the item you want to update is not valid");
     }
   } else {
-    throw new Error("the item you want to update is not valid");
+    throw new Error("the cart is empty");
   }
 }
 
@@ -152,10 +152,15 @@ export function updateCartItem(cart, validateCart, itemToUpdate, itemIsValid) {
 export function deleteCartItem(cart, validateCart, itemToDelete, itemIsValid) {
   const cleanCart = validateCart(cart);
   const itemToDeleteIsValid = itemIsValid(itemToDelete);
-  if (itemToDeleteIsValid) {
-    return cleanCart.filter((item) => {
-      return (item.id !== itemToDelete.id) && (item.variant !== itemToDelete.variant);
-    });
+  if (cleanCart.length > 0) {
+    if (itemToDeleteIsValid) {
+      return cleanCart.filter((item) => {
+        return (item.id !== itemToDelete.id) && (item.variant !== itemToDelete.variant);
+      });
+    } else {
+      throw new Error("the item you want to delete is not valid");
+    }
+  } else {
+    throw new Error("the cart is empty");
   }
-  throw new Error("the item you want to delete is not valid");
 }

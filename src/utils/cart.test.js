@@ -1,10 +1,13 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, afterEach } from "vitest";
 import {
   getLocalStorageItem,
   updateLocalStorageItem,
   validateCart,
+  cartItemIsValid,
   getCartItemCount,
-  addCartItem
+  addCartItem,
+  updateCartItemNumber,
+  deleteCartItem
 } from "@utils/cart";
 
 const LOCAL_STORAGE_KEY = "orinoco-cart";
@@ -154,6 +157,26 @@ describe("validateCart", () => {
   });
 });
 
+describe("cartItemIsValid", () => {
+  it("should return true if the cart item is valid", () => {
+    const item = {
+      id: 1,
+      number: 1,
+      variant: "blue",
+    }
+    expect(cartItemIsValid(item)).toBeTruthy();
+  });
+
+  it("should return false if the cart item is NOT valid", () => {
+    const item = {
+      id: 1,
+      number: "2",
+      variant: "blue",
+    }
+    expect(cartItemIsValid(item)).toBeFalsy();
+  });
+});
+
 describe("getCartItemCount", () => {
   it("should return the cart item count", () => {
     const cart = [
@@ -192,7 +215,12 @@ describe("getCartItemCount", () => {
   });
 });
 
-describe.only("addCartItem", () => {
+describe("addCartItem", () => {
+  afterEach(() => {
+    validateCartMock.mockClear();
+    itemIsValidMock.mockClear();
+  });
+
   it("should return the cart with the new item if the item doesnt exist", () => {
     const cart = [
       {
@@ -213,29 +241,11 @@ describe.only("addCartItem", () => {
     validateCartMock.mockImplementationOnce(() => cart);
     itemIsValidMock.mockImplementationOnce(() => true);
     const newCart = addCartItem(cart, validateCartMock, itemToAdd, itemIsValidMock);
-    expect(newCart).toEqual([
-      {
-        id: 1,
-        number: 2,
-        variant: "red",
-      },
-      {
-        id: 2,
-        number: 2,
-        variant: "blue",
-      },
-      {
-        id: 3,
-        number: 1,
-        variant: "green",
-      }
-    ]);
+    expect(newCart).toEqual([...cart, {...itemToAdd, number: 1}]);
     expect(validateCartMock).toHaveBeenCalledOnce();
     expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
     expect(itemIsValidMock).toHaveBeenCalledOnce();
     expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToAdd);
-    validateCartMock.mockClear();
-    itemIsValidMock.mockClear();
   });
 
   it("should return the cart with the new item if the item exist", () => {
@@ -274,8 +284,6 @@ describe.only("addCartItem", () => {
     expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
     expect(itemIsValidMock).toHaveBeenCalledOnce();
     expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToAdd);
-    validateCartMock.mockClear();
-    itemIsValidMock.mockClear();
   });
 
   it("should return the cart with the new item if the cart array is empty", () => {
@@ -298,8 +306,6 @@ describe.only("addCartItem", () => {
     expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
     expect(itemIsValidMock).toHaveBeenCalledOnce();
     expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToAdd);
-    validateCartMock.mockClear();
-    itemIsValidMock.mockClear();
   });
 
   it("should throw an error if the item to add is not valid", () => {
@@ -312,7 +318,196 @@ describe.only("addCartItem", () => {
     expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
     expect(itemIsValidMock).toHaveBeenCalledOnce();
     expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToAdd);
+  });
+});
+
+describe("updateCartItemNumber", () => {
+  afterEach(() => {
     validateCartMock.mockClear();
     itemIsValidMock.mockClear();
+  });
+
+  it("should return the cart with the updated item number", () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const itemToUpdate = {
+      id: 1,
+      variant: "red",
+    }
+    const itemNumber = 5;
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => true);
+    const newCart = updateCartItemNumber(cart, validateCartMock, itemToUpdate, itemIsValidMock, itemNumber);
+    expect(newCart).toEqual([
+      {
+        id: 1,
+        number: 5,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ]);
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToUpdate);
+  });
+
+  it("should throw an error if the item to update is not in the cart", () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const itemToUpdate = {
+      id: 1,
+      variant: "blue",
+    }
+    const itemNumber = 5;
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => true);
+    expect(() => updateCartItemNumber(cart, validateCartMock, itemToUpdate, itemIsValidMock, itemNumber)).toThrow("The item you want to update is not in the cart");
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToUpdate);
+  });
+
+  it("should throw an error if the cart is empty", () => {
+    const cart = [];
+    const itemToUpdate = {
+      id: 1,
+      variant: "blue",
+    }
+    const itemNumber = 5;
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => true);
+    expect(() => updateCartItemNumber(cart, validateCartMock, itemToUpdate, itemIsValidMock, itemNumber)).toThrow("the cart is empty");
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToUpdate);
+  });
+
+  it("should throw an error if the item to update is not valid", () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const itemToUpdate = {
+      id: "1",
+      variant: "blue",
+    }
+    const itemNumber = 5;
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => false);
+    expect(() => updateCartItemNumber(cart, validateCartMock, itemToUpdate, itemIsValidMock, itemNumber)).toThrow("the item you want to update is not valid");
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToUpdate);
+  });
+});
+
+describe("deleteCartItem", () => {
+  afterEach(() => {
+    validateCartMock.mockClear();
+    itemIsValidMock.mockClear();
+  });
+
+  it("should return the cart without the item to delete", () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const itemToDelete = {
+      id: 1,
+      variant: "red",
+    }
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => true);
+    const newCart = deleteCartItem(cart, validateCartMock, itemToDelete, itemIsValidMock);
+    expect(newCart).toEqual([cart[1]]);
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToDelete);
+  });
+
+  it("should throw an error if the cart is empty", () => {
+    const cart = [];
+    const itemToDelete = {
+      id: 1,
+      variant: "red",
+    }
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => true);
+    expect(() => deleteCartItem(cart, validateCartMock, itemToDelete, itemIsValidMock)).toThrow("the cart is empty");
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToDelete);
+  });
+
+  it("should throw an error if the item to delete is not valid", () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const itemToDelete = {
+      id: 1,
+      variant: 1256,
+    }
+    validateCartMock.mockImplementationOnce(() => cart);
+    itemIsValidMock.mockImplementationOnce(() => false);
+    expect(() => deleteCartItem(cart, validateCartMock, itemToDelete, itemIsValidMock)).toThrow("the item you want to delete is not valid");
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
+    expect(itemIsValidMock).toHaveBeenCalledOnce();
+    expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToDelete);
   });
 });
