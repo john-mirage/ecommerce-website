@@ -1,33 +1,52 @@
 import { describe, expect, it, vi, afterEach } from "vitest";
 import {
-  getLocalStorageItem,
-  updateLocalStorageItem,
+  getLocalStorageCart,
+  updateLocalStorageCart,
   validateCart,
   cartItemIsValid,
   getCartItemCount,
   addCartItem,
   updateCartItemNumber,
-  deleteCartItem
+  deleteCartItem,
+  getCartWithCameras
 } from "@utils/cart";
 
 const LOCAL_STORAGE_KEY = "orinoco-cart";
 
-const validateCartMock = vi.fn();
-const itemIsValidMock = vi.fn();
-
 describe("getLocalStorageItem", () => {
+  const validateCartMock = vi.fn();
+
+  afterEach(() => {
+    validateCartMock.mockClear();
+  });
+
   it("should return the json parsed local storage item", () => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify("test"));
-    const localStorageCart = getLocalStorageItem(LOCAL_STORAGE_KEY);
-    expect(localStorageCart).toBe("test");
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 1,
+        variant: "blue",
+      },
+    ];
+    validateCartMock.mockImplementationOnce(() => cart);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
+    const localStorageCart = getLocalStorageCart(LOCAL_STORAGE_KEY, validateCartMock);
+    expect(localStorageCart).toEqual(cart);
+    expect(validateCartMock).toHaveBeenCalledOnce();
+    expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   });
 });
 
-describe("updateLocalStorageItem", () => {
+describe("updateLocalStorageCart", () => {
   it("should update the local storage item with a new value", () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify("test"));
-    updateLocalStorageItem(LOCAL_STORAGE_KEY, "newValue");
+    updateLocalStorageCart(LOCAL_STORAGE_KEY, "newValue");
     const localStorageCart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
     expect(localStorageCart).toBe("newValue");
     localStorage.removeItem(LOCAL_STORAGE_KEY);
@@ -35,6 +54,8 @@ describe("updateLocalStorageItem", () => {
 });
 
 describe("validateCart", () => {
+  const itemIsValidMock = vi.fn();
+
   it("should return a valid cart when the cart is valid", () => {
     itemIsValidMock.mockImplementation(() => true);
     const cartToTest = [
@@ -178,6 +199,8 @@ describe("cartItemIsValid", () => {
 });
 
 describe("getCartItemCount", () => {
+  const validateCartMock = vi.fn();
+
   it("should return the cart item count", () => {
     const cart = [
       {
@@ -216,6 +239,9 @@ describe("getCartItemCount", () => {
 });
 
 describe("addCartItem", () => {
+  const validateCartMock = vi.fn();
+  const itemIsValidMock = vi.fn();
+
   afterEach(() => {
     validateCartMock.mockClear();
     itemIsValidMock.mockClear();
@@ -322,6 +348,9 @@ describe("addCartItem", () => {
 });
 
 describe("updateCartItemNumber", () => {
+  const validateCartMock = vi.fn();
+  const itemIsValidMock = vi.fn();
+
   afterEach(() => {
     validateCartMock.mockClear();
     itemIsValidMock.mockClear();
@@ -438,6 +467,9 @@ describe("updateCartItemNumber", () => {
 });
 
 describe("deleteCartItem", () => {
+  const validateCartMock = vi.fn();
+  const itemIsValidMock = vi.fn();
+
   afterEach(() => {
     validateCartMock.mockClear();
     itemIsValidMock.mockClear();
@@ -509,5 +541,74 @@ describe("deleteCartItem", () => {
     expect(validateCartMock).toHaveBeenNthCalledWith(1, cart);
     expect(itemIsValidMock).toHaveBeenCalledOnce();
     expect(itemIsValidMock).toHaveBeenNthCalledWith(1, itemToDelete);
+  });
+});
+
+describe("getCartWithCameras", () => {
+  const validateCartMock = vi.fn();
+  const getCameraFromApiMock = vi.fn();
+
+  afterEach(() => {
+    validateCartMock.mockClear();
+    getCameraFromApiMock.mockClear();
+  });
+
+  it("should return the cart with the cameras from an API", async () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const response1 = {
+      status: "OK",
+      camera: {
+        lenses: "lenses",
+        _id: 1,
+        name: "name",
+        description: "description",
+        price: 599900,
+        imageUrl: "path/to/image",
+      }
+    }
+    const response2 = {
+      status: "OK",
+      camera: {
+        lenses: "lenses",
+        _id: 2,
+        name: "name",
+        description: "description",
+        price: 199998400,
+        imageUrl: "path/to/image",
+      }
+    }
+    validateCartMock.mockImplementationOnce(() => cart);
+    getCameraFromApiMock.mockImplementationOnce(async () => response1);
+    getCameraFromApiMock.mockImplementationOnce(async () => response2);
+    const cartWithCameras = await getCartWithCameras(cart, validateCartMock, getCameraFromApiMock);
+    expect(cartWithCameras).toEqual({
+      status: "OK",
+      cameras: [
+        {
+          ...response1.camera,
+          number: cart[0].number,
+          variant: cart[0].variant,
+        },
+        {
+          ...response2.camera,
+          number: cart[1].number,
+          variant: cart[1].variant,
+        },
+      ]
+    });
+    expect(getCameraFromApiMock).toHaveBeenCalledTimes(2);
+    expect(getCameraFromApiMock).toHaveBeenNthCalledWith(1, cart[0].id);
+    expect(getCameraFromApiMock).toHaveBeenNthCalledWith(2, cart[1].id);
   });
 });

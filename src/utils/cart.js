@@ -1,29 +1,12 @@
-/**
- * Get the local storage item.
- * 
- * @param {string} key - The key of the local storage item to get.
- * @returns {any} The local storage item.
- */
-export function getLocalStorageItem(key) {
-  return JSON.parse(localStorage.getItem(key));
+export function getLocalStorageCart(key, validateCart, itemIsValid) {
+  const cart = JSON.parse(localStorage.getItem(key));
+  return validateCart(cart, itemIsValid);
 }
 
-/**
- * Update the local storage item.
- * 
- * @param {string} key - The key of the local storage item to update.
- * @param {any} value - the value of the local storage item to update. 
- */
-export function updateLocalStorageItem(key, value) {
+export function updateLocalStorageCart(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
-/**
- * Validate the local storage cart.
- * 
- * @param {any} cart - The cart retrieved from the local storage.
- * @returns {Array} The valid cart.
- */
 export function validateCart(cart, itemIsValid) {
   const cleanCart = [];
   if (Array.isArray(cart) && cart.length > 0) {
@@ -54,34 +37,17 @@ export function cartItemIsValid(item) {
   return false;
 }
 
-export function getCart(localStorageCart, validateCart) {
-  return validateCart(localStorageCart);
+export function getCartItemCount(getCart) {
+  const cart = getCart();
+  return cart.length > 0 ? cleanCart.reduce((count, item) => count + item.number, 0) : 0;
 }
 
-/**
- * Get the cart item count.
- * 
- * @param {CartItem[]} cart - The cart.
- * @returns {number} The count of the cart items.
- */
-export function getCartItemCount(cart, validateCart) {
-  const cleanCart = validateCart(cart);
-  return cleanCart.length > 0 ? cleanCart.reduce((count, item) => count + item.number, 0) : 0;
-}
-
-/**
- * Add an item in the cart.
- * 
- * @param {CartItem[]} cart - The cart.
- * @param {CartITem} itemToAdd - The item to add to the cart.
- * @returns {CartItem[]} the cart with the new cart item.
- */
-export function addCartItem(cart, validateCart, itemToAdd, itemIsValid) {
-  const cleanCart = validateCart(cart);
+export function addCartItem(getCart, itemToAdd, itemIsValid) {
+  const cart = getCart();
   const itemToAddIsValid = itemIsValid(itemToAdd);
   if (itemToAddIsValid) {
     let itemToAddIsInCart = false;
-    const newCart = cleanCart.map((item) => {
+    const newCart = cart.map((item) => {
       if (
         item.id === itemToAdd.id &&
         item.variant === itemToAdd.variant
@@ -108,21 +74,13 @@ export function addCartItem(cart, validateCart, itemToAdd, itemIsValid) {
   throw new Error("the item you want to add is not valid");
 }
 
-/**
- * Update an item in the cart.
- * 
- * @param {CartItem[]} cart - The cart.
- * @param {CartITem} itemToUpdate - The cart item to update.
- * @returns {CartITem[]} The cart with the updated cart item.
- * @throws {Error} Throws error if the cart item to update doesnt exist in the cart.
- */
-export function updateCartItemNumber(cart, validateCart, itemToUpdate, itemIsValid, itemNumber) {
-  const cleanCart = validateCart(cart);
+export function updateCartItemNumber(getCart, itemToUpdate, itemIsValid, itemNumber) {
+  const cart = getCart();
   const itemToUpdateIsValid = itemIsValid(itemToUpdate);
-  if (cleanCart.length > 0) {
+  if (cart.length > 0) {
     if (itemToUpdateIsValid) {
       let itemIsInTheCart = false;
-      const newCart = cleanCart.map((item) => {
+      const newCart = cart.map((item) => {
         if (
           item.id === itemToUpdate.id &&
           item.variant === itemToUpdate.variant
@@ -146,19 +104,12 @@ export function updateCartItemNumber(cart, validateCart, itemToUpdate, itemIsVal
   }
 }
 
-/**
- * Delete an item from the cart.
- * 
- * @param {CartItem[]} cart - The cart.
- * @param {CartITem} itemToDelete - The cart item to delete. 
- * @returns {CartItem[]} The cart without the item to delete.
- */
-export function deleteCartItem(cart, validateCart, itemToDelete, itemIsValid) {
-  const cleanCart = validateCart(cart);
+export function deleteCartItem(getCart, itemToDelete, itemIsValid) {
+  const cart = getCart();
   const itemToDeleteIsValid = itemIsValid(itemToDelete);
-  if (cleanCart.length > 0) {
+  if (cart.length > 0) {
     if (itemToDeleteIsValid) {
-      return cleanCart.filter((item) => {
+      return cart.filter((item) => {
         return (item.id !== itemToDelete.id) && (item.variant !== itemToDelete.variant);
       });
     } else {
@@ -167,4 +118,26 @@ export function deleteCartItem(cart, validateCart, itemToDelete, itemIsValid) {
   } else {
     throw new Error("the cart is empty");
   }
+}
+
+ export async function getCartWithCameras(getCart, getCameraFromApi) {
+  const cart = getCart();
+  let fullResponse = {
+    status: "OK",
+    cameras: [],
+  };
+  for (const item of cart) {
+    const response = await getCameraFromApi(item.id);
+    if (response.status === "ERROR") {
+      fullResponse = { status: "ERROR" };
+      break;
+    } else {
+      fullResponse.cameras.push({
+        ...response.camera,
+        number: item.number,
+        variant: item.variant,
+      });
+    }
+  };
+  return fullResponse;
 }

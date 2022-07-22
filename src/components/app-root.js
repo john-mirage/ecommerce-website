@@ -87,6 +87,7 @@ class AppRoot extends HTMLElement {
   async navigateToCartPage(href) {
     const cartFromLocalStorage = getLocalStorageItem("orinoco-cart");
     const baseCart = getCart(cartFromLocalStorage, validateCart);
+    // TODO GET CART IN EVERY FUNCTIONS of CART UTILS
   }
 }
 

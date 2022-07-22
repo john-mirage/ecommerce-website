@@ -38,30 +38,3 @@ export async function getOneCamera(uuid) {
   }
   return { status: "ERROR" };
 }
-
-/**
- * Get cart with cameras.
- * 
- * @param {Object[]} cartItems - The cart items.
- * @returns {Object} The cart with the cameras.
- */
-export async function getCartWithCameras(cartItems) {
-  let cameras = [];
-  for (const item in cartItems) {
-    const response = await fetch(API_URL + item.id)
-      .then(response => response)
-      .catch(error => false);
-    if (response) {
-      if (response.ok) {
-        const camera = await response.json();
-        cameras.push(camera);
-      }
-    } else {
-      cameras = false;
-      break;
-    }
-  };
-  if (cameras) {
-    return { status: "OK", "" }
-  }
-}
