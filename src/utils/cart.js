@@ -1,10 +1,12 @@
-export function getLocalStorageCart(key, validateCart, itemIsValid) {
-  const cart = JSON.parse(localStorage.getItem(key));
-  return validateCart(cart, itemIsValid);
+const LOCAL_STORAGE_KEY = "orinoco-cart";
+
+export function getLocalStorageCart(validateCart, cartItemIsValid) {
+  const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+  return validateCart(cart, cartItemIsValid);
 }
 
-export function updateLocalStorageCart(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+export function updateLocalStorageCart(newValue) {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
 }
 
 export function validateCart(cart, itemIsValid) {

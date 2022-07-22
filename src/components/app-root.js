@@ -1,4 +1,4 @@
-import { getLocalStorageItem, validateCart, getCart } from "@utils/cart";
+import { getLocalStorageCart, validateCart, cartItemIsValid } from "@utils/cart";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -85,8 +85,7 @@ class AppRoot extends HTMLElement {
   }
 
   async navigateToCartPage(href) {
-    const cartFromLocalStorage = getLocalStorageItem("orinoco-cart");
-    const baseCart = getCart(cartFromLocalStorage, validateCart);
+    const cart = getLocalStorageCart("orinoco-cart", validateCart, cartItemIsValid);
     // TODO GET CART IN EVERY FUNCTIONS of CART UTILS
   }
 }
