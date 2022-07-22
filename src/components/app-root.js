@@ -1,3 +1,5 @@
+import { getLocalStorageItem, validateCart, getCart } from "@utils/cart";
+
 class AppRoot extends HTMLElement {
   constructor() {
     super();
@@ -52,7 +54,7 @@ class AppRoot extends HTMLElement {
   }
 
   navigateToIndexPage() {
-    fetch('http://localhost:3000/api/cameras')
+    fetch('http://localhost:3000/api/cameras/')
       .then(response => response.json())
       .then(cameras => {
         this.appView.switchToIndexView(cameras);
@@ -62,27 +64,29 @@ class AppRoot extends HTMLElement {
       });
   }
 
-  navigateToProductPage(id) {
+  async navigateToProductPage(id) {
     if (typeof id === "string") {
-      fetch(`http://localhost:3000/api/cameras/${id}`)
-      .then(response => response.json())
-      .then(camera => {
-        if (Object.keys(camera).length > 0) {
+      const response = await fetch(`http://localhost:3000/api/cameras/${id}`)
+        .then(response => response)
+        .catch(error => false);
+      if (response) {
+        if (response.ok) {
+          const camera = await response.json();
           this.appView.switchToProductView(camera);
         } else {
           this.appView.switchToNotFoundView();
         }
-      })
-      .catch(error => {
+      } else {
         this.appView.switchToErrorView();
-      });
+      }
     } else {
       this.appView.switchToNotFoundView();
     }
   }
 
-  navigateToCartPage(href) {
-    
+  async navigateToCartPage(href) {
+    const cartFromLocalStorage = getLocalStorageItem("orinoco-cart");
+    const baseCart = getCart(cartFromLocalStorage, validateCart);
   }
 }
 

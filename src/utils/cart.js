@@ -54,6 +54,10 @@ export function cartItemIsValid(item) {
   return false;
 }
 
+export function getCart(localStorageCart, validateCart) {
+  return validateCart(localStorageCart);
+}
+
 /**
  * Get the cart item count.
  * 
