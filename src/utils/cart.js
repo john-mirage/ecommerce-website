@@ -24,26 +24,34 @@ export function updateLocalStorageItem(key, value) {
  * @param {any} cart - The cart retrieved from the local storage.
  * @returns {Array} The valid cart.
  */
-export function validateLocalStorageCart(cart) {
+export function validateCart(cart, itemIsValid) {
   const cleanCart = [];
   if (Array.isArray(cart) && cart.length > 0) {
     cart.forEach((item) => {
-      if (
-        item.hasOwnProperty("id") &&
-        item.hasOwnProperty("number") &&
-        item.hasOwnProperty("variant")
-      ) {
-        if (
-          typeof item.id === "number" &&
-          typeof item.number === "number" &&
-          typeof item.variant === "string"
-        ) {
-          cleanCart.push(item);
-        }
-      }
+      const itemToTestIsValid = itemIsValid(item);
+      if (itemToTestIsValid) cleanCart.push(item);
     });
   }
   return cleanCart;
+}
+
+export function cartItemIsValid(item) {
+  if (
+    item.hasOwnProperty("id") &&
+    item.hasOwnProperty("number") &&
+    item.hasOwnProperty("variant")
+  ) {
+    if (
+      typeof item.id === "number" &&
+      typeof item.number === "number" &&
+      typeof item.variant === "string"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
 }
 
 /**
@@ -52,17 +60,9 @@ export function validateLocalStorageCart(cart) {
  * @param {CartItem[]} cart - The cart.
  * @returns {number} The count of the cart items.
  */
-export function getCartItemCount(cart) {
-  if (Array.isArray(cart)) {
-    if (cart.length <= 0) return 0;
-    if (cart.every((item) => item.hasOwnProperty("number"))) {
-      return cart.reduce((count, item) => count + item.number, 0);
-    } else {
-      throw new Error("the cart is not a valid array");
-    }
-  } else {
-    throw new Error("the cart is not an array");
-  }
+export function getCartItemCount(cart, validateCart) {
+  const cleanCart = validateCart(cart);
+  return cleanCart.length > 0 ? cleanCart.reduce((count, item) => count + item.number, 0) : 0;
 }
 
 /**
@@ -72,10 +72,12 @@ export function getCartItemCount(cart) {
  * @param {CartITem} itemToAdd - The item to add to the cart.
  * @returns {CartItem[]} the cart with the new cart item.
  */
-export function addCartItem(cart, itemToAdd) {
-  if (Array.isArray(cart)) {
+export function addCartItem(cart, validateCart, itemToAdd, itemIsValid) {
+  const cleanCart = validateCart(cart);
+  const itemToAddIsValid = itemIsValid(itemToAdd);
+  if (itemToAddIsValid) {
     let itemToAddIsInCart = false;
-    const newCart = cart.map((item) => {
+    const newCart = cleanCart.map((item) => {
       if (
         item.id === itemToAdd.id &&
         item.variant === itemToAdd.variant
@@ -102,9 +104,8 @@ export function addCartItem(cart, itemToAdd) {
     } else {
       return newCart;
     }
-  } else {
-    throw new Error("the cart is not an array");
   }
+  throw new Error("the item you want to add is not valid");
 }
 
 /**
@@ -115,23 +116,29 @@ export function addCartItem(cart, itemToAdd) {
  * @returns {CartITem[]} The cart with the updated cart item.
  * @throws {Error} Throws error if the cart item to update doesnt exist in the cart.
  */
-export function updateCartItem(cart, itemToUpdate) {
-  let itemIsInTheCart = false;
-  const newCart = cart.map((item) => {
-    if (
-      item.id === itemToUpdate.id &&
-      item.variant === itemToUpdate.variant
-    ) {
-      itemIsInTheCart = true;
-      return itemToUpdate;
+export function updateCartItem(cart, validateCart, itemToUpdate, itemIsValid) {
+  const cleanCart = validateCart(cart);
+  const itemToUpdateIsValid = itemIsValid(itemToUpdate);
+  if (itemToUpdateIsValid) {
+    let itemIsInTheCart = false;
+    const newCart = cleanCart.map((item) => {
+      if (
+        item.id === itemToUpdate.id &&
+        item.variant === itemToUpdate.variant
+      ) {
+        itemIsInTheCart = true;
+        return itemToUpdate;
+      } else {
+        return item;
+      }
+    });
+    if (itemIsInTheCart) {
+      return newCart;
     } else {
-      return item;
+      throw new Error("The item you want to update is not in the cart");
     }
-  });
-  if (itemIsInTheCart) {
-    return newCart;
   } else {
-    throw new Error("The item you want to update is not in the cart");
+    throw new Error("the item you want to update is not valid");
   }
 }
 
@@ -142,8 +149,13 @@ export function updateCartItem(cart, itemToUpdate) {
  * @param {CartITem} itemToDelete - The cart item to delete. 
  * @returns {CartItem[]} The cart without the item to delete.
  */
-export function deleteCartItem(cart, itemToDelete) {
-  return cart.filter((item) => {
-    return (item.id !== itemToDelete.id) && (item.variant !== itemToDelete.variant);
-  });
+export function deleteCartItem(cart, validateCart, itemToDelete, itemIsValid) {
+  const cleanCart = validateCart(cart);
+  const itemToDeleteIsValid = itemIsValid(itemToDelete);
+  if (itemToDeleteIsValid) {
+    return cleanCart.filter((item) => {
+      return (item.id !== itemToDelete.id) && (item.variant !== itemToDelete.variant);
+    });
+  }
+  throw new Error("the item you want to delete is not valid");
 }
