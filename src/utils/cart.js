@@ -32,8 +32,14 @@ export function validateLocalStorageCart(cart) {
         item.hasOwnProperty("id") &&
         item.hasOwnProperty("number") &&
         item.hasOwnProperty("variant")
+      ) {
+        if (
+          typeof item.id === "number" &&
+          typeof item.number === "number" &&
+          typeof item.variant === "string"
         ) {
-        cleanCart.push(item);
+          cleanCart.push(item);
+        }
       }
     });
   }
@@ -47,7 +53,16 @@ export function validateLocalStorageCart(cart) {
  * @returns {number} The count of the cart items.
  */
 export function getCartItemCount(cart) {
-  return cart ? cart.reduce((count, item) => count + item.number, 0) : 0;
+  if (Array.isArray(cart)) {
+    if (cart.length <= 0) return 0;
+    if (cart.every((item) => item.hasOwnProperty("number"))) {
+      return cart.reduce((count, item) => count + item.number, 0);
+    } else {
+      throw new Error("the cart is not a valid array");
+    }
+  } else {
+    throw new Error("the cart is not an array");
+  }
 }
 
 /**
@@ -58,33 +73,37 @@ export function getCartItemCount(cart) {
  * @returns {CartItem[]} the cart with the new cart item.
  */
 export function addCartItem(cart, itemToAdd) {
-  let itemToAddIsInCart = false;
-  const newCart = cart.map((item) => {
-    if (
-      item.id === itemToAdd.id &&
-      item.variant === itemToAdd.variant
-    ) {
-      itemToAddIsInCart = true;
-      return {
-        id: item.id,
-        number: item.number + 1,
-        variant: item.variant,
+  if (Array.isArray(cart)) {
+    let itemToAddIsInCart = false;
+    const newCart = cart.map((item) => {
+      if (
+        item.id === itemToAdd.id &&
+        item.variant === itemToAdd.variant
+      ) {
+        itemToAddIsInCart = true;
+        return {
+          id: item.id,
+          number: item.number + 1,
+          variant: item.variant,
+        }
+      } else {
+        return item;
       }
+    });
+    if (!itemToAddIsInCart) {
+      return [
+        ...cart,
+        {
+          id: itemToAdd.id,
+          number: 1,
+          variant: itemToAdd.variant,
+        }
+      ];
     } else {
-      return item;
+      return newCart;
     }
-  });
-  if (!itemToAddIsInCart) {
-    return [
-      ...cart,
-      {
-        id: itemToAdd.id,
-        number: 1,
-        variant: itemToAdd.variant,
-      }
-    ];
   } else {
-    return newCart;
+    throw new Error("the cart is not an array");
   }
 }
 
