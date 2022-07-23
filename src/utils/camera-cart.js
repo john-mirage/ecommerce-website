@@ -160,7 +160,7 @@ export async function getCartWithCameras(
     if (response.status === "ERROR") {
       fullResponse = { status: "ERROR" };
       break;
-    } else {
+    } else if (response.status === "OK") {
       fullResponse.cameras.push({
         ...response.camera,
         number: item.number,

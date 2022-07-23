@@ -8,7 +8,7 @@ const API_URL = "http://localhost:3000/api/cameras/";
 export async function getAllCameras() {
   const response = await fetch(API_URL)
     .then(response => response)
-    .catch(error => false);
+    .catch(() => false);
   if (response) {
     if (response.ok) {
       const cameras = await response.json();
@@ -28,7 +28,7 @@ export async function getAllCameras() {
 export async function getOneCamera(uuid) {
   const response = await fetch(API_URL + uuid)
     .then(response => response)
-    .catch(error => false);
+    .catch(() => false);
   if (response) {
     if (response.ok) {
       const camera = await response.json();

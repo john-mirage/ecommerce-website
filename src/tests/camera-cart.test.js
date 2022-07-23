@@ -516,7 +516,7 @@ describe("deleteCartItem", () => {
   });
 });
 
-describe.only("getCartWithCameras", () => {
+describe("getCartWithCameras", () => {
   const getCartMock = vi.fn();
   const getCameraFromApiMock = vi.fn();
 
@@ -583,5 +583,77 @@ describe.only("getCartWithCameras", () => {
     expect(getCameraFromApiMock).toHaveBeenCalledTimes(2);
     expect(getCameraFromApiMock).toHaveBeenNthCalledWith(1, cart[0].id);
     expect(getCameraFromApiMock).toHaveBeenNthCalledWith(2, cart[1].id);
+  });
+
+  it("should return the cart with the some cameras from an API if some of them are not found", async () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const response1 = {
+      status: "OK",
+      camera: {
+        lenses: "lenses",
+        _id: 1,
+        name: "name",
+        description: "description",
+        price: 599900,
+        imageUrl: "path/to/image",
+      }
+    }
+    const response2 = {
+      status: "NOT_FOUND",
+    }
+    getCartMock.mockImplementationOnce(() => cart);
+    getCameraFromApiMock.mockImplementationOnce(async () => response1);
+    getCameraFromApiMock.mockImplementationOnce(async () => response2);
+    const cartWithCameras = await getCartWithCameras(getCameraFromApiMock, getCartMock);
+    expect(cartWithCameras).toEqual({
+      status: "OK",
+      cameras: [
+        {
+          ...response1.camera,
+          number: cart[0].number,
+          variant: cart[0].variant,
+        },
+      ]
+    });
+    expect(getCartMock).toHaveBeenCalledTimes(1);
+    expect(getCameraFromApiMock).toHaveBeenCalledTimes(2);
+    expect(getCameraFromApiMock).toHaveBeenNthCalledWith(1, cart[0].id);
+    expect(getCameraFromApiMock).toHaveBeenNthCalledWith(2, cart[1].id);
+  });
+
+  it("should return an object with status = ERROR if the one request failed", async () => {
+    const cart = [
+      {
+        id: 1,
+        number: 2,
+        variant: "red",
+      },
+      {
+        id: 2,
+        number: 2,
+        variant: "blue",
+      },
+    ];
+    const response1 = {
+      status: "ERROR",
+    }
+    getCartMock.mockImplementationOnce(() => cart);
+    getCameraFromApiMock.mockImplementationOnce(async () => response1);
+    const cartWithCameras = await getCartWithCameras(getCameraFromApiMock, getCartMock);
+    expect(cartWithCameras).toEqual({ status: "ERROR" });
+    expect(getCartMock).toHaveBeenCalledTimes(1);
+    expect(getCameraFromApiMock).toHaveBeenCalledTimes(1);
+    expect(getCameraFromApiMock).toHaveBeenNthCalledWith(1, cart[0].id);
   });
 });
