@@ -146,6 +146,10 @@ export function deleteCartItem(
   }
 }
 
+export function mergeCartItemsWithCameras(cart, cameras) {
+  return {cartWithCameras, cart}; 
+}
+
 export async function getCartWithCameras(
   getCameraFromApi,
   getCart = getLocalStorageCart
@@ -153,19 +157,25 @@ export async function getCartWithCameras(
   const cart = getCart();
   let fullResponse = {
     status: "OK",
-    cameras: [],
+    cart: [],
   };
+  cartItemsLoop:
   for (const item of cart) {
-    const response = await getCameraFromApi(item.id);
-    if (response.status === "ERROR") {
-      fullResponse = { status: "ERROR" };
-      break;
-    } else if (response.status === "OK") {
-      fullResponse.cameras.push({
-        ...response.camera,
-        number: item.number,
-        variant: item.variant,
-      });
+    const { data, error } = await getCameraFromApi(item.id);
+    switch(response.status) {
+      case "OK":
+        fullResponse.cart.push({
+          ...response.camera,
+          number: item.number,
+          variant: item.variant,
+        });
+        break;
+      case "ERROR":
+        fullResponse = { status: "ERROR" };
+        break cartItemsLoop;
+      default:
+        if (response.status !== "DEGRADED") fullResponse.status = "DEGRADED";
+        break;
     }
   };
   return fullResponse;

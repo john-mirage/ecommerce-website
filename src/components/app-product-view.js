@@ -1,4 +1,4 @@
-import currencyFormatter from "@utils/currency-formatter";
+import { formatCameraPrice } from "@utils/camera-price-formatter";
 
 const template = document.getElementById("template-app-product-view");
 
@@ -34,7 +34,7 @@ class AppProductView extends HTMLElement {
     }
     this.imageElement.setAttribute("src", this.camera.imageUrl);
     this.nameElement.textContent = this.camera.name;
-    this.priceElement.textContent = currencyFormatter.format(this.camera.price / 100);
+    this.priceElement.textContent = formatCameraPrice(this.camera.price);
     this.descriptionElement.textContent = this.camera.description;
     this.buttonElement.addEventListener("click", this.handleButtonClick);
   }

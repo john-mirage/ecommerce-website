@@ -6,17 +6,50 @@ const API_URL = "http://localhost:3000/api/cameras/";
  * @returns {Object} The fetch response.
  */
 export async function getAllCameras() {
+  let data = false;
+  let error = false;
   const response = await fetch(API_URL)
     .then(response => response)
     .catch(() => false);
   if (response) {
     if (response.ok) {
-      const cameras = await response.json();
-      return { status: "OK", cameras };
+      data = await response.json();
+    } else {
+      error = "ERROR";
     }
-    return { status: "NOT_FOUND" }
+  } else {
+    error = "ERROR";
   }
-  return { status: "ERROR" };
+  return { data, error };
+}
+
+/**
+ * Get some cameras from the API.
+ * 
+ * @param {string[]} uuids - The uuids of the cameras.
+ * @param {(uuid) => Object} getOneCamera - The function used to retrieve one camera.
+ * @returns {Object} The fetch response.
+ */
+export async function getSomeCameras(uuids, getOneCamera = getOneCamera) {
+  let fullData = false;
+  let fullError = false;
+  for(const uuid of uuids) {
+    const { data, error } = getOneCamera(uuid);
+    if (typeof error === "string") {
+      if (error === "ERROR") {
+        fullData = false;
+        fullError = "ERROR";
+        break;
+      }
+    } else {
+      if (Array.isArray(fullData)) {
+        fullData.push(data);
+      } else {
+        fullData = [data];
+      }
+    }
+  }
+  return {data: fullData, error: fullError};
 }
 
 /**
@@ -26,15 +59,19 @@ export async function getAllCameras() {
  * @returns {Object} The fetch response.
  */
 export async function getOneCamera(uuid) {
+  let data = false;
+  let error = false;
   const response = await fetch(API_URL + uuid)
     .then(response => response)
     .catch(() => false);
   if (response) {
     if (response.ok) {
-      const camera = await response.json();
-      return { status: "OK", camera };
+      data = await response.json();
+    } else {
+      error = "NOT_FOUND";
     }
-    return { status: "NOT_FOUND" };
+  } else {
+    error = "ERROR";
   }
-  return { status: "ERROR" };
+  return { data, error };
 }

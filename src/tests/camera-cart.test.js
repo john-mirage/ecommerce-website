@@ -540,7 +540,7 @@ describe("getCartWithCameras", () => {
     ];
     const response1 = {
       status: "OK",
-      camera: {
+      cart: {
         lenses: "lenses",
         _id: 1,
         name: "name",
@@ -551,7 +551,7 @@ describe("getCartWithCameras", () => {
     }
     const response2 = {
       status: "OK",
-      camera: {
+      cart: {
         lenses: "lenses",
         _id: 2,
         name: "name",
@@ -566,7 +566,7 @@ describe("getCartWithCameras", () => {
     const cartWithCameras = await getCartWithCameras(getCameraFromApiMock, getCartMock);
     expect(cartWithCameras).toEqual({
       status: "OK",
-      cameras: [
+      cart: [
         {
           ...response1.camera,
           number: cart[0].number,
@@ -617,8 +617,8 @@ describe("getCartWithCameras", () => {
     getCameraFromApiMock.mockImplementationOnce(async () => response2);
     const cartWithCameras = await getCartWithCameras(getCameraFromApiMock, getCartMock);
     expect(cartWithCameras).toEqual({
-      status: "OK",
-      cameras: [
+      status: "DEGRADED",
+      cart: [
         {
           ...response1.camera,
           number: cart[0].number,

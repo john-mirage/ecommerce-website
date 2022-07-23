@@ -1,4 +1,4 @@
-import currencyFormatter from "@utils/currency-formatter";
+import { formatCameraPrice } from "@utils/camera-price-formatter";
 
 const viewTemplate = document.getElementById("template-app-index-view");
 const productTemplate = document.getElementById("template-app-index-product");
@@ -55,7 +55,7 @@ class WebIndexView extends HTMLElement {
     linkElement.setAttribute("href", `/orinoco/produit?id=${camera._id}`);
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
-    priceElement.textContent = currencyFormatter.format(camera.price / 100);
+    priceElement.textContent = formatCameraPrice(camera.price);
     console.log("add listener");
     linkElement.addEventListener("click", this.handleProductCardClick);
     return fragment;

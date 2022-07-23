@@ -1,5 +1,5 @@
-import { getOneCamera } from "@utils/api";
-import { getCartWithCameras } from "@utils/cart";
+import { getOneCamera } from "@utils/camera-api";
+import { updateLocalStorageCart, getCartWithCameras } from "@utils/camera-cart";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -85,9 +85,23 @@ class AppRoot extends HTMLElement {
     }
   }
 
-  async navigateToCartPage(href) {
-    const cartWithCameras = await getCartWithCameras(getOneCamera);
-    // TODO GET CART IN EVERY FUNCTIONS of CART UTILS
+  async navigateToCartPage() {
+    const response = await getCartWithCameras(getOneCamera);
+    if (response.status === "OK") {
+      const newLocalStorageCart = response.cart.map((item) => ({
+        id: item.id,
+        number: item.number,
+        variant: item.variant
+      }));
+      updateLocalStorageCart(newLocalStorageCart);
+      if (response.cart.length > 0) {
+        this.appView.switchToFilledCartView(response.cart);
+      } else {
+        this.appView.switchToEmptyCartView();
+      }
+    } else if (response.status === "ERROR") {
+      this.appView.switchToErrorView();
+    }
   }
 }
 
