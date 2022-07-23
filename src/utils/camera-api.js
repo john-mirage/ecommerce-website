@@ -31,25 +31,36 @@ export async function getAllCameras() {
  * @returns {Object} The fetch response.
  */
 export async function getSomeCameras(uuids, getOneCamera = getOneCamera) {
-  let fullData = false;
-  let fullError = false;
-  for(const uuid of uuids) {
-    const { data, error } = getOneCamera(uuid);
-    if (typeof error === "string") {
-      if (error === "ERROR") {
-        fullData = false;
-        fullError = "ERROR";
-        break;
-      }
-    } else {
-      if (Array.isArray(fullData)) {
-        fullData.push(data);
+  if (
+    Array.isArray(uuids) &&
+    uuids.length > 0 &&
+    uuids.every((uuid) => typeof uuid === "string")
+  ) {
+    const uniqueUuids = new Set(uuids);
+    let fullData = false;
+    let fullError = false;
+    for(const uuid of uniqueUuids) {
+      const { data, error } = getOneCamera(uuid);
+      if (typeof error === "string") {
+        if (error === "ERROR") {
+          fullData = false;
+          fullError = "ERROR";
+          break;
+        }
       } else {
-        fullData = [data];
+        if (Array.isArray(fullData)) {
+          fullData.push(data);
+        } else {
+          fullData = [data];
+        }
       }
     }
+    return {
+      data: fullData,
+      error: fullError
+    };
   }
-  return {data: fullData, error: fullError};
+  throw new Error("The uuids parameter must be an non empty array of strings");
 }
 
 /**
@@ -59,19 +70,22 @@ export async function getSomeCameras(uuids, getOneCamera = getOneCamera) {
  * @returns {Object} The fetch response.
  */
 export async function getOneCamera(uuid) {
-  let data = false;
-  let error = false;
-  const response = await fetch(API_URL + uuid)
-    .then(response => response)
-    .catch(() => false);
-  if (response) {
-    if (response.ok) {
-      data = await response.json();
+  if (typeof uuid === "string") {
+    let data = false;
+    let error = false;
+    const response = await fetch(API_URL + uuid)
+      .then(response => response)
+      .catch(() => false);
+    if (response) {
+      if (response.ok) {
+        data = await response.json();
+      } else {
+        error = "NOT_FOUND";
+      }
     } else {
-      error = "NOT_FOUND";
+      error = "ERROR";
     }
-  } else {
-    error = "ERROR";
+    return { data, error };
   }
-  return { data, error };
+  throw new Error("The uuid parameter must be a string");
 }
