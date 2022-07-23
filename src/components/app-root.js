@@ -1,5 +1,5 @@
+import { getLocalStorageCart, updateLocalStorageCart } from "@utils/camera-cart";
 import { getOneCamera } from "@utils/camera-api";
-import { updateLocalStorageCart, getCartWithCameras } from "@utils/camera-cart";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -54,54 +54,49 @@ class AppRoot extends HTMLElement {
     }
   }
 
-  navigateToIndexPage() {
-    fetch('http://localhost:3000/api/cameras/')
-      .then(response => response.json())
-      .then(cameras => {
-        this.appView.switchToIndexView(cameras);
-      })
-      .catch(error => {
-        this.appView.switchToErrorView();
-      });
+  async navigateToIndexPage() {
+
   }
 
   async navigateToProductPage(id) {
     if (typeof id === "string") {
-      const response = await fetch(`http://localhost:3000/api/cameras/${id}`)
-        .then(response => response)
-        .catch(error => false);
-      if (response) {
-        if (response.ok) {
-          const camera = await response.json();
-          this.appView.switchToProductView(camera);
-        } else {
-          this.appView.switchToNotFoundView();
-        }
-      } else {
-        this.appView.switchToErrorView();
-      }
-    } else {
-      this.appView.switchToNotFoundView();
+
     }
   }
 
   async navigateToCartPage() {
-    const response = await getCartWithCameras(getOneCamera);
-    if (response.status === "OK") {
-      const newLocalStorageCart = response.cart.map((item) => ({
-        id: item.id,
-        number: item.number,
-        variant: item.variant
-      }));
-      updateLocalStorageCart(newLocalStorageCart);
-      if (response.cart.length > 0) {
-        this.appView.switchToFilledCartView(response.cart);
-      } else {
-        this.appView.switchToEmptyCartView();
+    const localStorageCart = getLocalStorageCart();
+    let cart = {
+      status: "OK",
+      items: [],
+      cameras: [],
+    };
+    if (localStorageCart.length > 0) {
+      const uuids = new Set(localStorageCart.map((item) => item.uuid));
+      uuidsLoop:
+      for (const uuid of uuids) {
+        const { data, error } = await getOneCamera(uuid);
+        if (typeof error === "string") {
+          switch(error) {
+            case "ERROR":
+              cart.status = "ERROR";
+              break uuidsLoop;
+            case "NOT_FOUND":
+              if (cart.status !== "DEGRADED") cart.status = "DEGRADED";
+              break;
+            default:
+              throw new Error("unknown error");
+          }
+        } else {
+          cart.items = [...cart.items, ...localStorageCart.filter((item) => data._id === item.uuid)];
+          cart.cameras.push(data);
+        }
       }
-    } else if (response.status === "ERROR") {
-      this.appView.switchToErrorView();
+    } else {
+      this.appView.switchToEmptyCartView();
     }
+    console.log(cart);
+    //updateLocalStorageCart(cart.items);
   }
 }
 

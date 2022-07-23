@@ -24,46 +24,6 @@ export async function getAllCameras() {
 }
 
 /**
- * Get some cameras from the API.
- * 
- * @param {string[]} uuids - The uuids of the cameras.
- * @param {(uuid) => Object} getOneCamera - The function used to retrieve one camera.
- * @returns {Object} The fetch response.
- */
-export async function getSomeCameras(uuids, getOneCamera = getOneCamera) {
-  if (
-    Array.isArray(uuids) &&
-    uuids.length > 0 &&
-    uuids.every((uuid) => typeof uuid === "string")
-  ) {
-    const uniqueUuids = new Set(uuids);
-    let fullData = false;
-    let fullError = false;
-    for(const uuid of uniqueUuids) {
-      const { data, error } = getOneCamera(uuid);
-      if (typeof error === "string") {
-        if (error === "ERROR") {
-          fullData = false;
-          fullError = "ERROR";
-          break;
-        }
-      } else {
-        if (Array.isArray(fullData)) {
-          fullData.push(data);
-        } else {
-          fullData = [data];
-        }
-      }
-    }
-    return {
-      data: fullData,
-      error: fullError
-    };
-  }
-  throw new Error("The uuids parameter must be an non empty array of strings");
-}
-
-/**
  * Get one camera from the API.
  * 
  * @param {string} uuid - The camera uuid.
