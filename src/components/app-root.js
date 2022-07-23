@@ -1,4 +1,5 @@
-import { getLocalStorageCart, validateCart, cartItemIsValid } from "@utils/cart";
+import { getOneCamera } from "@utils/api";
+import { getCartWithCameras } from "@utils/cart";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -85,7 +86,7 @@ class AppRoot extends HTMLElement {
   }
 
   async navigateToCartPage(href) {
-    const cart = getLocalStorageCart("orinoco-cart", validateCart, cartItemIsValid);
+    const cartWithCameras = await getCartWithCameras(getOneCamera);
     // TODO GET CART IN EVERY FUNCTIONS of CART UTILS
   }
 }

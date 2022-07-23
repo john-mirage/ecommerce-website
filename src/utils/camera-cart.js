@@ -1,26 +1,35 @@
-const LOCAL_STORAGE_KEY = "orinoco-cart";
+export const CART_LOCAL_STORAGE_KEY = "orinoco-cart";
 
-export function getLocalStorageCart(validateCart, cartItemIsValid) {
-  const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  return validateCart(cart, cartItemIsValid);
+export function getLocalStorageCart(
+  validateCart = validateCart
+) {
+  const cart = JSON.parse(localStorage.getItem(CART_LOCAL_STORAGE_KEY));
+  return validateCart(cart);
 }
 
-export function updateLocalStorageCart(newValue) {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
+export function updateLocalStorageCart(
+  newValue
+) {
+  localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(newValue));
 }
 
-export function validateCart(cart, itemIsValid) {
+export function validateCart(
+  cart,
+  cartItemIsValid = cartItemIsValid
+) {
   const cleanCart = [];
   if (Array.isArray(cart) && cart.length > 0) {
     cart.forEach((item) => {
-      const itemToTestIsValid = itemIsValid(item);
+      const itemToTestIsValid = cartItemIsValid(item);
       if (itemToTestIsValid) cleanCart.push(item);
     });
   }
   return cleanCart;
 }
 
-export function cartItemIsValid(item) {
+export function cartItemIsValid(
+  item
+) {
   if (
     item.hasOwnProperty("id") &&
     item.hasOwnProperty("number") &&
@@ -39,14 +48,20 @@ export function cartItemIsValid(item) {
   return false;
 }
 
-export function getCartItemCount(getCart) {
+export function getCartItemCount(
+  getCart = getLocalStorageCart
+) {
   const cart = getCart();
-  return cart.length > 0 ? cleanCart.reduce((count, item) => count + item.number, 0) : 0;
+  return cart.length > 0 ? cart.reduce((count, item) => count + item.number, 0) : 0;
 }
 
-export function addCartItem(getCart, itemToAdd, itemIsValid) {
+export function addCartItem(
+  itemToAdd,
+  getCart = getLocalStorageCart,
+  cartItemIsValid = cartItemIsValid
+) {
   const cart = getCart();
-  const itemToAddIsValid = itemIsValid(itemToAdd);
+  const itemToAddIsValid = cartItemIsValid(itemToAdd);
   if (itemToAddIsValid) {
     let itemToAddIsInCart = false;
     const newCart = cart.map((item) => {
@@ -76,9 +91,14 @@ export function addCartItem(getCart, itemToAdd, itemIsValid) {
   throw new Error("the item you want to add is not valid");
 }
 
-export function updateCartItemNumber(getCart, itemToUpdate, itemIsValid, itemNumber) {
+export function updateCartItemNumber(
+  itemToUpdate,
+  itemNumber,
+  getCart = getLocalStorageCart,
+  cartItemIsValid = cartItemIsValid
+) {
   const cart = getCart();
-  const itemToUpdateIsValid = itemIsValid(itemToUpdate);
+  const itemToUpdateIsValid = cartItemIsValid(itemToUpdate);
   if (cart.length > 0) {
     if (itemToUpdateIsValid) {
       let itemIsInTheCart = false;
@@ -106,9 +126,13 @@ export function updateCartItemNumber(getCart, itemToUpdate, itemIsValid, itemNum
   }
 }
 
-export function deleteCartItem(getCart, itemToDelete, itemIsValid) {
+export function deleteCartItem(
+  itemToDelete,
+  getCart = getLocalStorageCart,
+  cartItemIsValid = cartItemIsValid
+) {
   const cart = getCart();
-  const itemToDeleteIsValid = itemIsValid(itemToDelete);
+  const itemToDeleteIsValid = cartItemIsValid(itemToDelete);
   if (cart.length > 0) {
     if (itemToDeleteIsValid) {
       return cart.filter((item) => {
@@ -122,7 +146,10 @@ export function deleteCartItem(getCart, itemToDelete, itemIsValid) {
   }
 }
 
- export async function getCartWithCameras(getCart, getCameraFromApi) {
+export async function getCartWithCameras(
+  getCameraFromApi,
+  getCart = getLocalStorageCart
+) {
   const cart = getCart();
   let fullResponse = {
     status: "OK",
