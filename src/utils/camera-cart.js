@@ -14,6 +14,16 @@ export function validateCart(
   return cleanCart;
 }
 
+export function cartIsValid(
+  cart,
+  _cartItemIsValid = cartItemIsValid
+) {
+  if (Array.isArray(cart)) {
+    return cart.length > 0 ? cart.every((item) => _cartItemIsValid(item)) : true;
+  }
+  return false;
+}
+
 export function cartItemIsValid(
   item
 ) {
@@ -21,12 +31,12 @@ export function cartItemIsValid(
     Object.keys(item).length === 3 &&
     item.hasOwnProperty("uuid") &&
     item.hasOwnProperty("number") &&
-    item.hasOwnProperty("variant")
+    item.hasOwnProperty("lens")
   ) {
     if (
       typeof item.uuid === "string" &&
       typeof item.number === "number" &&
-      typeof item.variant === "string"
+      typeof item.lens === "string"
     ) {
       return true;
     } else {
@@ -44,9 +54,19 @@ export function getLocalStorageCart(
 }
 
 export function updateLocalStorageCart(
-  newValue
+  cart,
+  _cartIsValid = cartIsValid
 ) {
-  localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(newValue));
+  const cartIsValid = _cartIsValid(cart);
+  if (cartIsValid) {
+    if (cart.length > 0) {
+      localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
+    } else {
+      localStorage.removeItem(CART_LOCAL_STORAGE_KEY);
+    }
+  } else {
+    throw new Error("The cart is not valid");
+  }
 }
 
 export function getCartItemCount(
@@ -68,7 +88,7 @@ export function addCartItem(
     const newCart = cart.map((item) => {
       if (
         item.uuid === itemToAdd.uuid &&
-        item.variant === itemToAdd.variant
+        item.lens === itemToAdd.lens
       ) {
         itemToAddIsInCart = true;
         return {...item, number: item.number + 1}
@@ -82,7 +102,7 @@ export function addCartItem(
         {
           uuid: itemToAdd.uuid,
           number: 1,
-          variant: itemToAdd.variant,
+          variant: itemToAdd.lens,
         }
       ];
     } else {
@@ -106,7 +126,7 @@ export function updateCartItemNumber(
       const newCart = cart.map((item) => {
         if (
           item.uuid === itemToUpdate.uuid &&
-          item.variant === itemToUpdate.variant
+          item.lens === itemToUpdate.lens
         ) {
           itemIsInTheCart = true;
           return {...item, number: itemNumber};
@@ -137,7 +157,7 @@ export function deleteCartItem(
   if (cart.length > 0) {
     if (itemToDeleteIsValid) {
       return cart.filter((item) => {
-        return (item.uuid !== itemToDelete.uuid) && (item.variant !== itemToDelete.variant);
+        return (item.uuid !== itemToDelete.uuid) && (item.lens !== itemToDelete.lens);
       });
     } else {
       throw new Error("the item you want to delete is not valid");

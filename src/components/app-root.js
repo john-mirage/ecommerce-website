@@ -1,5 +1,5 @@
 import { getLocalStorageCart, updateLocalStorageCart } from "@utils/camera-cart";
-import { getOneCamera } from "@utils/camera-api";
+import { getOneCamera, getCartCameras } from "@utils/camera-api";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -58,45 +58,35 @@ class AppRoot extends HTMLElement {
 
   }
 
-  async navigateToProductPage(id) {
-    if (typeof id === "string") {
+  async navigateToProductPage(uuid) {
+    if (typeof uuid === "string") {
 
     }
   }
 
   async navigateToCartPage() {
-    const localStorageCart = getLocalStorageCart();
-    let cart = {
-      status: "OK",
-      items: [],
-      cameras: [],
-    };
-    if (localStorageCart.length > 0) {
-      const uuids = new Set(localStorageCart.map((item) => item.uuid));
-      uuidsLoop:
-      for (const uuid of uuids) {
-        const { data, error } = await getOneCamera(uuid);
-        if (typeof error === "string") {
-          switch(error) {
-            case "ERROR":
-              cart.status = "ERROR";
-              break uuidsLoop;
-            case "NOT_FOUND":
-              if (cart.status !== "DEGRADED") cart.status = "DEGRADED";
-              break;
-            default:
-              throw new Error("unknown error");
-          }
+    const cart = getLocalStorageCart();
+    console.log(cart);
+    if (cart.length > 0) {
+      const { data, isError, isDegraded } = await getCartCameras(cart);
+      console.log(data, isError, isDegraded);
+      if (isError) {
+        this.appView.switchToErrorView();
+      } else if (isDegraded) {
+        if (data.cart && data.cameras) {
+          this.appView.switchToFilledCartView(data.cart, data.cameras, isDegraded);
         } else {
-          cart.items = [...cart.items, ...localStorageCart.filter((item) => data._id === item.uuid)];
-          cart.cameras.push(data);
+          this.appView.switchToEmptyCartView(isDegraded);
         }
+        updateLocalStorageCart(data.cart || []);
+      } else if (data.cart && data.cameras) {
+        this.appView.switchToFilledCartView(data.cart, data.cameras, isDegraded);
+      } else {
+        throw new Error("Something went wrong");
       }
     } else {
       this.appView.switchToEmptyCartView();
     }
-    console.log(cart);
-    //updateLocalStorageCart(cart.items);
   }
 }
 
