@@ -1,5 +1,3 @@
-import { cartIsValid } from "@utils/camera-cart";
-
 const API_URL = "http://localhost:3000/api/cameras/";
 
 /**
@@ -8,8 +6,9 @@ const API_URL = "http://localhost:3000/api/cameras/";
  * @returns {Object} The fetch response.
  */
 export async function getAllCameras() {
-  let data = false;
-  let error = false;
+  let data = [];
+  let isError = false;
+  let isNotFound = false;
   const response = await fetch(API_URL)
     .then(response => response)
     .catch(() => false);
@@ -17,12 +16,46 @@ export async function getAllCameras() {
     if (response.ok) {
       data = await response.json();
     } else {
-      error = "ERROR";
+      isNotFound = true;
     }
   } else {
-    error = "ERROR";
+    isError = true;
   }
-  return { data, error };
+  return { data, isError, isNotFound };
+}
+
+/**
+ * Get some cameras from the API.
+ * 
+ * @param {uuids} uuids - The camera uuids.
+ * @param {(uuid) => Object} _getOneCamera - The function used to retrieve one camera from the API.
+ */
+export async function getSomeCameras(
+  uuids,
+  _getOneCamera = getOneCamera
+) {
+  const uuidsAreValid = Array.isArray(uuids) && uuids.every((uuid) => typeof uuid === "string");
+  if (uuidsAreValid) {
+    let data = [];
+    let isError = false;
+    let hasData = false;
+    let hasPartialData = false;
+    const uniqueUuids = new Set(uuids);
+    for (const uuid of uniqueUuids) {
+      const response = await _getOneCamera(uuid);
+      if (response.isError) {
+        isError = true;
+        break;
+      } else if (response.isNotFound) {
+        if (!hasPartialData) hasPartialData = true;
+      } else if (response.data) {
+        data.push(response.data);
+        if (!hasData) hasData = true;
+      }
+    }
+    return { data, isError, hasData, hasPartialData };
+  }
+  throw new Error("The uuids parameter must be an array of strings");
 }
 
 /**
@@ -34,7 +67,8 @@ export async function getAllCameras() {
 export async function getOneCamera(uuid) {
   if (typeof uuid === "string") {
     let data = false;
-    let error = false;
+    let isError = false;
+    let isNotFound = false;
     const response = await fetch(API_URL + uuid)
       .then(response => response)
       .catch(() => false);
@@ -42,56 +76,12 @@ export async function getOneCamera(uuid) {
       if (response.ok) {
         data = await response.json();
       } else {
-        error = "NOT_FOUND";
+        isNotFound = true;
       }
     } else {
-      error = "ERROR";
+      isError = true;
     }
-    return { data, error };
+    return { data, isError, isNotFound };
   }
   throw new Error("The uuid parameter must be a string");
-}
-
-/**
- * Get the cameras corresponding to the cart.
- * 
- * @param {CartItem[]} cart - The cart items. 
- * @param {(uuid) => Object} - The function used to retrieve a camera from the API.
- */
-export async function getCartCameras(
-  cart,
-  _cartIsValid = cartIsValid,
-  _getOneCamera = getOneCamera
-) {
-  if (_cartIsValid(cart)) {
-    let data = {
-      cart: false,
-      cameras: false,
-    };
-    let isError = false;
-    let isDegraded = false;
-    if (cart.length > 0) {
-      const uuids = new Set(cart.map((item) => item.uuid));
-      for (const uuid of uuids) {
-        const response = await _getOneCamera(uuid);
-        if (typeof response.error === "string") {
-          if (response.error === "ERROR") {
-            isError = true;
-            break;
-          } else if (response.error === "NOT_FOUND" && !isDegraded) {
-            isDegraded = true;
-          } else {
-            throw new Error("unknown error");
-          }
-        } else {
-          const cartItems = cart.filter((item) => response.data._id === item.uuid)
-          data.cart = Array.isArray(data.cart) ? [...data.cart, ...cartItems] : [...cartItems];
-          data.cameras = Array.isArray(data.cameras) ? data.cameras.push(response.data) : [response.data];
-        }
-      }
-      return { data, isError, isDegraded };
-    }
-    return { data, isError, isDegraded };
-  }
-  throw new Error("The cart is not valid");
 }

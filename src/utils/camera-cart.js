@@ -59,11 +59,7 @@ export function updateLocalStorageCart(
 ) {
   const cartIsValid = _cartIsValid(cart);
   if (cartIsValid) {
-    if (cart.length > 0) {
-      localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
-    } else {
-      localStorage.removeItem(CART_LOCAL_STORAGE_KEY);
-    }
+    localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
   } else {
     throw new Error("The cart is not valid");
   }
@@ -165,4 +161,18 @@ export function deleteCartItem(
   } else {
     throw new Error("the cart is empty");
   }
+}
+
+export function getCartItemsForCameras(cart, cameras) {
+  const filteredCart = [];
+  const filteredCameras = [];
+  cart.forEach((item) => {
+    const camera = cameras.find((camera) => camera._id === item.uuid && camera.lens.includes(item.lens));
+    if (camera) {
+      filteredCart.push(item);
+      const cameraHasNotBeenPushed = filteredCameras.findIndex((filteredCamera) => filteredCamera._id === item.uuid) < 0;
+      if (cameraHasNotBeenPushed) filteredCameras.push(camera);
+    }
+  });
+  return { filteredCart, filteredCameras };
 }

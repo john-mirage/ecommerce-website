@@ -1,5 +1,11 @@
-import { getLocalStorageCart, updateLocalStorageCart } from "@utils/camera-cart";
-import { getOneCamera, getCartCameras } from "@utils/camera-api";
+import {
+  getLocalStorageCart,
+  updateLocalStorageCart,
+  getCartItemsForCameras
+} from "@utils/camera-cart";
+import {
+  getSomeCameras
+} from "@utils/camera-api";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -66,26 +72,26 @@ class AppRoot extends HTMLElement {
 
   async navigateToCartPage() {
     const cart = getLocalStorageCart();
-    console.log(cart);
     if (cart.length > 0) {
-      const { data, isError, isDegraded } = await getCartCameras(cart);
-      console.log(data, isError, isDegraded);
+      const { data, isError, hasData, hasPartialData } = await getSomeCameras(cart.map((item) => item.uuid));
       if (isError) {
         this.appView.switchToErrorView();
-      } else if (isDegraded) {
-        if (data.cart && data.cameras) {
-          this.appView.switchToFilledCartView(data.cart, data.cameras, isDegraded);
+      } else if (hasData) {
+        const { filteredCart, filteredCameras } = getCartItemsForCameras(cart, data);
+        if (filteredCart.length > 0) {
+          this.appView.switchToFilledCartView(filteredCart, filteredCameras, hasPartialData);
+          updateLocalStorageCart(filteredCart);
         } else {
-          this.appView.switchToEmptyCartView(isDegraded);
+          this.appView.switchToEmptyCartView(hasPartialData);
+          updateLocalStorageCart([]);
         }
-        updateLocalStorageCart(data.cart || []);
-      } else if (data.cart && data.cameras) {
-        this.appView.switchToFilledCartView(data.cart, data.cameras, isDegraded);
       } else {
-        throw new Error("Something went wrong");
+        this.appView.switchToEmptyCartView(hasPartialData);
+        updateLocalStorageCart([]);
       }
     } else {
-      this.appView.switchToEmptyCartView();
+      this.appView.switchToEmptyCartView(false);
+      updateLocalStorageCart([]);
     }
   }
 }
