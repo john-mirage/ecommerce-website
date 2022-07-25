@@ -2,12 +2,12 @@ import {
   getLocalStorageCart,
   updateLocalStorageCart,
   getCartItemsForCameras,
-  addCartItem
 } from "@utils/camera-cart";
 import {
-  getSomeCameras
+  getAllCameras,
+  getSomeCameras,
+  getOneCamera
 } from "@utils/camera-api";
-import { getAllCameras, getOneCamera } from "../utils/camera-api";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -20,7 +20,6 @@ class AppRoot extends HTMLElement {
   }
 
   connectedCallback() {
-    this.appHeader.updateCartBadge(0);
     this.handleNavigation(window.location.href);
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);

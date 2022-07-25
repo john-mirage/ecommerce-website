@@ -10,7 +10,6 @@ class AppCartView extends HTMLElement {
     this.fragment = viewTemplate.content.cloneNode(true);
     this.listElement = this.fragment.querySelector('[data-name="list"]');
     this.totalPriceElement = this.fragment.querySelector('[data-name="total-price"]');
-    this.totalPrice = 0;
   }
 
   get cart() {
@@ -29,7 +28,8 @@ class AppCartView extends HTMLElement {
       const cartItemCard = this.getCartItemCard(item, camera);
       this.listElement.append(cartItemCard);
     });
-    this.renderTotalPrice();
+    const totalPrice = this.getTotalPrice();
+    this.totalPriceElement.textContent = formatCameraPrice(totalPrice);
   }
 
   connectedCallback() {
@@ -39,12 +39,11 @@ class AppCartView extends HTMLElement {
     }
   }
 
-  renderTotalPrice() {
-    const totalPrice = this.cart.items.reduce((totalPrice, currentItem) => {
+  getTotalPrice() {
+    return this.cart.items.reduce((totalPrice, currentItem) => {
       const camera = this.cart.cameras.find((camera) => camera._id === currentItem.uuid);
       return camera ? totalPrice + currentItem.number * camera.price : totalPrice;
     }, 0);
-    this.totalPriceElement.textContent = formatCameraPrice(totalPrice);
   }
 
   getCartItemCard(item, camera) {

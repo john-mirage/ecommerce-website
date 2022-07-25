@@ -65,7 +65,7 @@ export function updateLocalStorageCart(
   }
 }
 
-export function getCartItemCount(
+export function getCartItemNumber(
   _getCart = getLocalStorageCart
 ) {
   const cart = _getCart();

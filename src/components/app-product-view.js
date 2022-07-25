@@ -25,6 +25,10 @@ class AppProductView extends HTMLElement {
 
   set camera(camera) {
     this._camera = camera;
+    this.imageElement.setAttribute("src", this.camera.imageUrl);
+    this.nameElement.textContent = this.camera.name;
+    this.priceElement.textContent = formatCameraPrice(this.camera.price);
+    this.descriptionElement.textContent = this.camera.description;
   }
 
   connectedCallback() {
@@ -32,11 +36,11 @@ class AppProductView extends HTMLElement {
       this.append(this.fragment);
       this.initialCall = false;
     }
-    this.imageElement.setAttribute("src", this.camera.imageUrl);
-    this.nameElement.textContent = this.camera.name;
-    this.priceElement.textContent = formatCameraPrice(this.camera.price);
-    this.descriptionElement.textContent = this.camera.description;
     this.buttonElement.addEventListener("click", this.handleButtonClick);
+  }
+
+  disconnectedCallback() {
+    this.buttonElement.removeEventListener("click", this.handleButtonClick);
   }
 
   handleButtonClick(event) {

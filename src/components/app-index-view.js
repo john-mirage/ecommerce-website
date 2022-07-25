@@ -22,13 +22,6 @@ class WebIndexView extends HTMLElement {
 
   set cameras(cameras) {
     this._cameras = cameras;
-  }
-
-  connectedCallback() {
-    if (this.initialCall) {
-      this.append(this.fragment);
-      this.initialCall = false;
-    }
     this.listElement.innerHTML = "";
     this.cameras.forEach(camera => {
       const productCard = this.getProductCard(camera);
@@ -36,13 +29,23 @@ class WebIndexView extends HTMLElement {
     });
   }
 
+  connectedCallback() {
+    if (this.initialCall) {
+      this.append(this.fragment);
+      this.initialCall = false;
+    }
+    const links = this.listElement.querySelectorAll('[data-name="link"]');
+    if (links.length > 0) {
+      console.log("add listeners")
+      links.forEach((link) => link.addEventListener("click", this.handleProductCardClick));
+    }
+  }
+
   disconnectedCallback() {
     const links = this.listElement.querySelectorAll('[data-name="link"]');
     if (links.length > 0) {
       console.log("remove listeners")
-      links.forEach((link) => {
-        link.removeEventListener("click", this.handleProductCardClick);
-      });
+      links.forEach((link) => link.removeEventListener("click", this.handleProductCardClick));
     }
   }
 
@@ -56,8 +59,6 @@ class WebIndexView extends HTMLElement {
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
     priceElement.textContent = formatCameraPrice(camera.price);
-    console.log("add listener");
-    linkElement.addEventListener("click", this.handleProductCardClick);
     return fragment;
   }
 

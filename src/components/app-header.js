@@ -1,3 +1,5 @@
+import { getCartItemNumber } from "@utils/camera-cart";
+
 const template = document.getElementById("template-app-header");
 
 const heartBeatAnimation = [
@@ -30,14 +32,32 @@ const heartBeatAnimationTiming = {
 class AppHeader extends HTMLElement {
   constructor() {
     super();
+    this.initialCall = true;
     this.fragment = template.content.cloneNode(true);
     this.logoLinkElement = this.fragment.querySelector('[data-name="logo-link"]');
     this.cartLinkElement = this.fragment.querySelector('[data-name="cart-link"]');
     this.cartBadgeElement = this.fragment.querySelector('[data-name="cart-badge"]');
   }
 
+  get cartItemsNumber() {
+    if (this.hasOwnProperty("_cartItemNumber") && this._cartItemsNumber !== undefined) {
+      return this._cartItemsNumber;
+    } else {
+      throw new Error("The cameras are not defined");
+    }
+  }
+
+  set cartItemsNumber(cartItemsNumber) {
+    this._cartItemsNumber = cartItemsNumber;
+    this.updateCartBadge(this._cartItemsNumber);
+  }
+
   connectedCallback() {
-    this.append(this.fragment);
+    if (this.initialCall) {
+      this.append(this.fragment);
+      this.initialCall = false;
+    }
+    this.cartItemsNumber = getCartItemNumber();
     this.logoLinkElement.addEventListener("click", this.handleLinkClick);
     this.cartLinkElement.addEventListener("click", this.handleLinkClick);
   }
