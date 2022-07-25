@@ -12,15 +12,22 @@ import {
 class AppRoot extends HTMLElement {
   constructor() {
     super();
+    this.initialCall = true;
     this.appHeader = this.querySelector("app-header");
     this.appView = this.querySelector("app-view");
     this.appFooter = this.querySelector("app-footer");
     this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
     this.handleNavigationLink = this.handleNavigationLink.bind(this);
+    this.currentUrl = "";
   }
 
   connectedCallback() {
-    this.handleNavigation(window.location.href);
+    if (this.initialCall) {
+      const href = window.location.href;
+      this.handleNavigation(href);
+      this.currentUrl = href;
+      this.initialCall = false;
+    }
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);
     this.addEventListener("cart-update", (event) => {
@@ -35,13 +42,20 @@ class AppRoot extends HTMLElement {
   }
 
   handleNavigationPopState(event) {
-    this.handleNavigation(window.location.href);
+    const href = window.location.href;
+    if (this.currentUrl !== href) {
+      this.handleNavigation(window.location.href);
+      this.currentUrl = href;
+    }
   }
 
   handleNavigationLink(event) {
     const href = event.detail.href;
-    window.history.pushState({}, "", href);
-    this.handleNavigation(href);
+    if (this.currentUrl !== href) {
+      window.history.pushState({}, "", href);
+      this.handleNavigation(href);
+      this.currentUrl = href;
+    }
   }
 
   handleNavigation(href) {
