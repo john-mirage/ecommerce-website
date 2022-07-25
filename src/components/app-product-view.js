@@ -40,7 +40,10 @@ class AppProductView extends HTMLElement {
   }
 
   handleButtonClick(event) {
-    const customEvent = new CustomEvent("cart-add", {bubbles: true, detail: {id: this.camera._id}});
+    const customEvent = new CustomEvent("cart-update", {bubbles: true, detail: {
+      uuid: this.camera._id,
+      number: 1,
+    }});
     this.dispatchEvent(customEvent);
   }
 }

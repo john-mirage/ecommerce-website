@@ -47,11 +47,10 @@ class AppView extends HTMLElement {
     console.log("PRODUCT VIEW")
   }
 
-  switchToFilledCartView(cart, cameras, isDegraded) {
+  switchToFilledCartView(cart, isDegraded) {
     this.mainElement.innerHTML = "";
     this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
     this.appCartView.cart = cart;
-    this.appCartView.cameras = cameras;
     this.mainElement.append(this.appCartView);
     console.log("FILLED CART VIEW")
   }

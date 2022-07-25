@@ -87,7 +87,7 @@ export function addCartItem(
         item.lens === itemToAdd.lens
       ) {
         itemToAddIsInCart = true;
-        return {...item, number: item.number + 1}
+        return {...item, number: item.number + itemToAdd.number}
       } else {
         return item;
       }
@@ -97,7 +97,7 @@ export function addCartItem(
         ...cart,
         {
           uuid: itemToAdd.uuid,
-          number: 1,
+          number: itemToAdd.number,
           variant: itemToAdd.lens,
         }
       ];

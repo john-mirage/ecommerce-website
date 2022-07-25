@@ -1,7 +1,8 @@
 import {
   getLocalStorageCart,
   updateLocalStorageCart,
-  getCartItemsForCameras
+  getCartItemsForCameras,
+  addCartItem
 } from "@utils/camera-cart";
 import {
   getSomeCameras
@@ -23,8 +24,9 @@ class AppRoot extends HTMLElement {
     this.handleNavigation(window.location.href);
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);
-    this.addEventListener("cart-add", (event) => {
-      console.log("cart change");
+    this.addEventListener("cart-update", (event) => {
+      const cartItem = event.detail;
+      console.log("cart change", cartItem);
     });
   }
 
@@ -97,7 +99,10 @@ class AppRoot extends HTMLElement {
         const { filteredCart, filteredCameras } = getCartItemsForCameras(cart, data);
         if (filteredCart.length > 0) {
           console.log(filteredCart, filteredCameras)
-          this.appView.switchToFilledCartView(filteredCart, filteredCameras, hasPartialData);
+          this.appView.switchToFilledCartView({
+            items: filteredCart,
+            cameras: filteredCameras,
+          }, hasPartialData);
           updateLocalStorageCart(filteredCart);
         } else {
           this.appView.switchToEmptyCartView(hasPartialData);

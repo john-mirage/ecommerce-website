@@ -21,24 +21,13 @@ class AppCartView extends HTMLElement {
     }
   }
 
-  get cameras() {
-    if (this.hasOwnProperty("_cameras") && this._cameras !== undefined) {
-      return this._cameras;
-    } else {
-      throw new Error("The cameras are not defined");
-    }
-  }
-
   set cart(cart) {
     this._cart = cart;
-  }
-
-  set cameras(cameras) {
-    this._cameras = cameras;
     this.listElement.innerHTML = "";
-    this.cameras.forEach((camera) => {
-      const cameraCard = this.getCameraCard(camera);
-      this.listElement.append(cameraCard);
+    this.cart.items.forEach((item) => {
+      const camera = this.cart.cameras.find((camera) => camera._id === item.uuid);
+      const cartItemCard = this.getCartItemCard(item, camera);
+      this.listElement.append(cartItemCard);
     });
     this.renderTotalPrice();
   }
@@ -51,14 +40,14 @@ class AppCartView extends HTMLElement {
   }
 
   renderTotalPrice() {
-    const totalPrice = this.cart.reduce((totalPrice, currentItem) => {
-      const camera = this.cameras.find((camera) => camera._id === currentItem.uuid);
+    const totalPrice = this.cart.items.reduce((totalPrice, currentItem) => {
+      const camera = this.cart.cameras.find((camera) => camera._id === currentItem.uuid);
       return camera ? totalPrice + currentItem.number * camera.price : totalPrice;
     }, 0);
     this.totalPriceElement.textContent = formatCameraPrice(totalPrice);
   }
 
-  getCameraCard(camera) {
+  getCartItemCard(item, camera) {
     const fragment = itemTemplate.content.cloneNode(true);
     const imageElement = fragment.querySelector('[data-name="image"]');
     const nameElement = fragment.querySelector('[data-name="name"]');
