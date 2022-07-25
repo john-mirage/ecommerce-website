@@ -8,6 +8,7 @@ import {
   getSomeCameras,
   getOneCamera
 } from "@utils/camera-api";
+import { getCartItemNumber } from "../utils/camera-cart";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -128,6 +129,8 @@ class AppRoot extends HTMLElement {
       this.appView.switchToEmptyCartView(false);
       updateLocalStorageCart([]);
     }
+    const newCartItemsNumber = getCartItemNumber();
+    this.appHeader.cartItemsNumber = newCartItemsNumber;
   }
 }
 

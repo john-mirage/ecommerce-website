@@ -40,16 +40,16 @@ class AppHeader extends HTMLElement {
   }
 
   get cartItemsNumber() {
-    if (this.hasOwnProperty("_cartItemNumber") && this._cartItemsNumber !== undefined) {
+    if (this.hasOwnProperty("_cartItemsNumber") && this._cartItemsNumber !== undefined) {
       return this._cartItemsNumber;
     } else {
-      throw new Error("The cameras are not defined");
+      throw new Error("The cart items number is not defined");
     }
   }
 
   set cartItemsNumber(cartItemsNumber) {
     this._cartItemsNumber = cartItemsNumber;
-    this.updateCartBadge(this._cartItemsNumber);
+    this.updateCartBadge(this.cartItemsNumber);
   }
 
   connectedCallback() {
@@ -57,6 +57,7 @@ class AppHeader extends HTMLElement {
       this.append(this.fragment);
       this.initialCall = false;
     }
+    console.log("connectedCallback", getCartItemNumber());
     this.cartItemsNumber = getCartItemNumber();
     this.logoLinkElement.addEventListener("click", this.handleLinkClick);
     this.cartLinkElement.addEventListener("click", this.handleLinkClick);
@@ -74,14 +75,13 @@ class AppHeader extends HTMLElement {
     this.dispatchEvent(customEvent);
   }
 
-  updateCartBadge(itemNumber, animated = false) {
+  updateCartBadge(itemNumber) {
+    console.log("updateCartBadge", itemNumber);
     if (itemNumber > 0) {
       if (!this.contains(this.cartBadgeElement)) {
         this.cartLinkElement.append(this.cartBadgeElement);
       }
-      if (animated) {
-        this.cartBadgeElement.animate(heartBeatAnimation, heartBeatAnimationTiming);
-      }
+      this.cartBadgeElement.animate(heartBeatAnimation, heartBeatAnimationTiming);
     } else {
       if (this.contains(this.cartBadgeElement)) {
         this.cartLinkElement.removeChild(this.cartBadgeElement);

@@ -66,18 +66,18 @@ export function updateLocalStorageCart(
 }
 
 export function getCartItemNumber(
-  _getCart = getLocalStorageCart
+  _getLocalStorageCart = getLocalStorageCart
 ) {
-  const cart = _getCart();
+  const cart = _getLocalStorageCart();
   return cart.length > 0 ? cart.reduce((count, item) => count + item.number, 0) : 0;
 }
 
 export function addCartItem(
   itemToAdd,
-  _getCart = getLocalStorageCart,
+  _getLocalStorageCart = getLocalStorageCart,
   _cartItemIsValid = cartItemIsValid
 ) {
-  const cart = _getCart();
+  const cart = _getLocalStorageCart();
   const itemToAddIsValid = _cartItemIsValid(itemToAdd);
   if (itemToAddIsValid) {
     let itemToAddIsInCart = false;
@@ -111,10 +111,10 @@ export function addCartItem(
 export function updateCartItemNumber(
   itemToUpdate,
   itemNumber,
-  _getCart = getLocalStorageCart,
+  _getLocalStorageCart = getLocalStorageCart,
   _cartItemIsValid = cartItemIsValid
 ) {
-  const cart = _getCart();
+  const cart = _getLocalStorageCart();
   const itemToUpdateIsValid = _cartItemIsValid(itemToUpdate);
   if (cart.length > 0) {
     if (itemToUpdateIsValid) {
@@ -145,10 +145,10 @@ export function updateCartItemNumber(
 
 export function deleteCartItem(
   itemToDelete,
-  _getCart = getLocalStorageCart,
+  _getLocalStorageCart = getLocalStorageCart,
   _cartItemIsValid = cartItemIsValid
 ) {
-  const cart = _getCart();
+  const cart = _getLocalStorageCart();
   const itemToDeleteIsValid = _cartItemIsValid(itemToDelete);
   if (cart.length > 0) {
     if (itemToDeleteIsValid) {
