@@ -51,9 +51,13 @@ class AppCartView extends HTMLElement {
     const imageElement = fragment.querySelector('[data-name="image"]');
     const nameElement = fragment.querySelector('[data-name="name"]');
     const priceElement = fragment.querySelector('[data-name="price"]');
+    const numberElement = fragment.querySelector('[data-name="number"]');
+    const lensElement = fragment.querySelector('[data-name="lens"]');
     imageElement.setAttribute("src", camera.imageUrl);
     nameElement.textContent = camera.name;
     priceElement.textContent = formatCameraPrice(camera.price);
+    numberElement.textContent = String(item.number);
+    lensElement.textContent = String(item.lens);
     return fragment;
   }
 }

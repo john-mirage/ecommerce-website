@@ -130,7 +130,9 @@ class AppRoot extends HTMLElement {
       updateLocalStorageCart([]);
     }
     const newCartItemsNumber = getCartItemNumber();
-    this.appHeader.cartItemsNumber = newCartItemsNumber;
+    if (newCartItemsNumber !== this.appHeader.cartItemsNumber) {
+      this.appHeader.cartItemsNumber = newCartItemsNumber;
+    }
   }
 }
 
