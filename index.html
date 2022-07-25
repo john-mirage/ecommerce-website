@@ -131,6 +131,82 @@
     </div>
   </template>
 
+  <!-- template | app cart view -->
+  <template id="template-app-cart-view">
+    <div class="mx-auto container px-6 pt-16 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 lg:px-10">
+      <div class="flex flex-col px-6 py-4 bg-neutral-100 rounded-lg lg:order-2">
+        <h2 class="font-semibold text-xl text-neutral-800">Détail du panier</h2>
+        <ul class="divide-y divide-neutral-300" data-name="list"></ul>
+        <div class="mt-auto flex flex-row justify-between items-center py-4 border-t border-t-neutral-200">
+          <h3 class="font-semibold text-lg text-neutral-800">Total</h3>
+          <p class="font-semibold text-lg text-neutral-600" data-name="total-price"></p>
+        </div>
+      </div>
+      <div class="lg:order-1">
+        <h2 class="font-semibold text-2xl text-neutral-800">Formulaire de commande</h2>
+        <form class="grid grid-cols-1 gap-6 pt-6">
+          <h3 class="font-semibold text-lg text-neutral-800">Information de contact</h3>
+          <label>
+            <span class="font-normal text-base text-neutral-800">Adresse email</span>
+            <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+          </label>
+          <h3 class="font-semibold text-lg text-neutral-800">Information de paiement</h3>
+          <label>
+            <span class="font-normal text-base text-neutral-800">Numéro de la carte</span>
+            <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+          </label>
+          <div class="flex flex-row justify-start items-center">
+            <label class="mr-6 flex-1">
+              <span class="font-normal text-base text-neutral-800">Date d'expiration</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+            <label class="flex-none w-24">
+              <span class="font-normal text-base text-neutral-800">CVC</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+          </div>
+          <h3 class="font-semibold text-lg text-neutral-800">Adresse de livraison</h3>
+          <label>
+            <span class="font-normal text-base text-neutral-800">Adresse</span>
+            <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+          </label>
+          <div class="grid grid-cols-3 gap-6">
+            <label>
+              <span class="font-normal text-base text-neutral-800">Ville</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+            <label>
+              <span class="font-normal text-base text-neutral-800">Région</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+            <label>
+              <span class="font-normal text-base text-neutral-800">Code postal</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+          </div>
+          <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Commander</button>
+        </form>
+      </div>
+    </div>
+  </template>
+
+  <!-- template | app cart item -->
+  <template id="template-app-cart-item">
+    <li class="flex flex-row justify-start items-start py-6">
+      <div class="mr-6 flex-none w-1/4">
+        <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+          <img class="w-full h-full object-cover" src="" alt="" data-name="image">
+        </div>
+      </div>
+      <div class="flex-1">
+        <div>
+          <h3 class="font-semibold text-lg text-neutral-700" data-name="name"></h3>
+          <p class="font-semibold text-lg text-neutral-500" data-name="price"></p>
+        </div>
+      </div>
+    </li>
+  </template>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 

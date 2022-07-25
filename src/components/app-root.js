@@ -6,6 +6,7 @@ import {
 import {
   getSomeCameras
 } from "@utils/camera-api";
+import { getAllCameras, getOneCamera } from "../utils/camera-api";
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -61,12 +62,28 @@ class AppRoot extends HTMLElement {
   }
 
   async navigateToIndexPage() {
-
+    const { data, isError } = await getAllCameras();
+    if (isError) {
+      this.appView.switchToErrorView();
+    } else if (data) {
+      this.appView.switchToIndexView(data);
+    } else {
+      throw new Error("No data has been received");
+    }
   }
 
   async navigateToProductPage(uuid) {
     if (typeof uuid === "string") {
-
+      const { data, isError, isNotFound } = await getOneCamera(uuid);
+      if (isError) {
+        this.appView.switchToErrorView();
+      } else if (isNotFound) {
+        this.appView.switchToNotFoundView();
+      } else if (data) {
+        this.appView.switchToProductView(data);
+      } else {
+        throw new Error("No data has been received");
+      }
     }
   }
 
@@ -79,6 +96,7 @@ class AppRoot extends HTMLElement {
       } else if (hasData) {
         const { filteredCart, filteredCameras } = getCartItemsForCameras(cart, data);
         if (filteredCart.length > 0) {
+          console.log(filteredCart, filteredCameras)
           this.appView.switchToFilledCartView(filteredCart, filteredCameras, hasPartialData);
           updateLocalStorageCart(filteredCart);
         } else {

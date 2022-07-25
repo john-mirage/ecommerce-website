@@ -167,7 +167,7 @@ export function getCartItemsForCameras(cart, cameras) {
   const filteredCart = [];
   const filteredCameras = [];
   cart.forEach((item) => {
-    const camera = cameras.find((camera) => camera._id === item.uuid && camera.lens.includes(item.lens));
+    const camera = cameras.find((camera) => camera._id === item.uuid && camera.lenses.includes(item.lens));
     if (camera) {
       filteredCart.push(item);
       const cameraHasNotBeenPushed = filteredCameras.findIndex((filteredCamera) => filteredCamera._id === item.uuid) < 0;

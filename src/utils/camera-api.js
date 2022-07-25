@@ -8,7 +8,6 @@ const API_URL = "http://localhost:3000/api/cameras/";
 export async function getAllCameras() {
   let data = [];
   let isError = false;
-  let isNotFound = false;
   const response = await fetch(API_URL)
     .then(response => response)
     .catch(() => false);
@@ -16,12 +15,12 @@ export async function getAllCameras() {
     if (response.ok) {
       data = await response.json();
     } else {
-      isNotFound = true;
+      isError = true;
     }
   } else {
     isError = true;
   }
-  return { data, isError, isNotFound };
+  return { data, isError };
 }
 
 /**

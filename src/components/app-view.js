@@ -6,6 +6,7 @@ class AppView extends HTMLElement {
     this.mainElement.classList.add("my-16");
     this.appIndexView = false;
     this.appProductView = false;
+    this.appCartView = false;
   }
 
   connectedCallback() {
@@ -46,8 +47,12 @@ class AppView extends HTMLElement {
     console.log("PRODUCT VIEW")
   }
 
-  switchToFilledCartView(cart) {
+  switchToFilledCartView(cart, cameras, isDegraded) {
     this.mainElement.innerHTML = "";
+    this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
+    this.appCartView.cart = cart;
+    this.appCartView.cameras = cameras;
+    this.mainElement.append(this.appCartView);
     console.log("FILLED CART VIEW")
   }
 
