@@ -19,6 +19,7 @@ class AppView extends HTMLElement {
 
   switchToIndexView(cameras) {
     if (this.currentView !== "index") {
+      document.title = "Orinoco — Appareil photos anciens";
       this.mainElement.innerHTML = "";
       this.appIndexView = this.indexView ? this.indexView : document.createElement("app-index-view");
       this.appIndexView.cameras = cameras;
@@ -33,12 +34,13 @@ class AppView extends HTMLElement {
 
   switchToProductView(camera) {
     if (this.currentView !== "product") {
+      document.title = `Orinoco — ${camera.name}`;
       this.mainElement.innerHTML = "";
       this.appProductView = this.appProductView ? this.appProductView : document.createElement("app-product-view");
       this.appProductView.camera = camera;
       this.mainElement.append(this.appProductView);
       this.currentView = "product";
-      console.log("switch to index view");
+      console.log("switch to product view");
     } else {
       this.appProductView.camera = camera;
       console.log("only reload the camera");
@@ -47,6 +49,7 @@ class AppView extends HTMLElement {
 
   switchToFilledCartView(cart, isDegraded) {
     if (this.currentView !== "cart") {
+      document.title = "Orinoco — Mon panier";
       this.mainElement.innerHTML = "";
       this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
       this.appCartView.cart = cart;
@@ -61,6 +64,7 @@ class AppView extends HTMLElement {
 
   switchToErrorView() {
     if (this.currentView !== "error") {
+      document.title = "Orinoco — Erreur";
       this.mainElement.innerHTML = "";
       console.log("switch to error view");
       this.currentView = "error";
@@ -69,6 +73,7 @@ class AppView extends HTMLElement {
 
   switchToNotFoundView() {
     if (this.currentView !== "not-found") {
+      document.title = "Orinoco — Page introuvable";
       this.mainElement.innerHTML = "";
       console.log("switch to not found view");
       this.currentView = "not-found";
@@ -77,6 +82,7 @@ class AppView extends HTMLElement {
 
   switchToEmptyCartView() {
     if (this.currentView !== "empty-cart") {
+      document.title = "Orinoco — Le panier est vide";
       this.mainElement.innerHTML = "";
       console.log("switch to empty cart view");
       this.currentView = "empty-cart";

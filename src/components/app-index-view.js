@@ -36,7 +36,7 @@ class WebIndexView extends HTMLElement {
     }
     const links = this.listElement.querySelectorAll('[data-name="link"]');
     if (links.length > 0) {
-      console.log("add listeners")
+      console.log("add listeners for the links")
       links.forEach((link) => link.addEventListener("click", this.handleProductCardClick));
     }
   }
@@ -44,7 +44,7 @@ class WebIndexView extends HTMLElement {
   disconnectedCallback() {
     const links = this.listElement.querySelectorAll('[data-name="link"]');
     if (links.length > 0) {
-      console.log("remove listeners")
+      console.log("remove listeners of the links")
       links.forEach((link) => link.removeEventListener("click", this.handleProductCardClick));
     }
   }

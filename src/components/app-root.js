@@ -97,7 +97,6 @@ class AppRoot extends HTMLElement {
       } else if (hasData) {
         const { filteredCart, filteredCameras } = getCartItemsForCameras(cart, data);
         if (filteredCart.length > 0) {
-          console.log(filteredCart, filteredCameras)
           this.appView.switchToFilledCartView({
             items: filteredCart,
             cameras: filteredCameras,
