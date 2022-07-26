@@ -1,7 +1,6 @@
 export const CART_LOCAL_STORAGE_KEY = "orinoco-cart";
 
 /*
-
 {
   "0000-0000-0000-0001": {
     numberByLens: {
@@ -37,7 +36,6 @@ export const CART_LOCAL_STORAGE_KEY = "orinoco-cart";
     },
   }
 }
-
 */
 
 export function getLocalStorageCart() {
@@ -50,13 +48,13 @@ export function updateLocalStorageCart(cart) {
 
 export function getCamerasNumberFromCart(cart) {
   let totalCameraCount = 0;
-  for (const camera of cart) {
+  Object.values(cart).forEach((camera) => {
     let cameraCount = 0;
-    for (const cameraNumberForCurrentLens of camera.numberByLens) {
+    Object.values(camera.numberByLens).forEach((cameraNumberForCurrentLens) => {
       cameraCount += cameraNumberForCurrentLens;
-    }
+    });
     totalCameraCount += cameraCount;
-  }
+  });
   return totalCameraCount;
 }
 
@@ -69,10 +67,11 @@ export function addCamerasToCartBasedOnLens(
   const camera = cart[cameraUuid];
   if (camera) {
     const cameraNumberForSelectedLens = camera.numberByLens[cameraLensName];
-    camera.numberByLens[cameraLensName] = cameraNumberForSelectedLens ? cameraNumberForSelectedLens + cameraNumber : cameraNumber;
+    const cloneOfCamera = { ...camera };
+    cloneOfCamera.numberByLens[cameraLensName] = cameraNumberForSelectedLens ? cameraNumberForSelectedLens + cameraNumber : cameraNumber;
     return {
       ...cart,
-      [cameraUuid]: camera
+      [cameraUuid]: cloneOfCamera
     }
   }
   return {
@@ -93,10 +92,16 @@ export function updateCamerasFromCartBasedOnLens(
 ) {
   const camera = cart[cameraUuid];
   if (camera) {
-    camera.numberByLens[cameraLensName] = cameraNumber;
-    return {
-      ...cart,
-      [cameraUuid]: camera
+    const cameraHasLens = camera.numberByLens.hasOwnProperty(cameraLensName);
+    if (cameraHasLens) {
+      const cloneOfCamera = { ...camera };
+      cloneOfCamera.numberByLens[cameraLensName] = cameraNumber;
+      return {
+        ...cart,
+        [cameraUuid]: cloneOfCamera
+      }
+    } else {
+      throw new Error("the camera lens is not in the cart");
     }
   }
   throw new Error("the camera is not in the cart");
@@ -105,9 +110,28 @@ export function updateCamerasFromCartBasedOnLens(
 export function deleteCamerasFromCartBasedOnLens(
   cart,
   cameraUuid,
-  cameraLensName
+  cameraLensName,
+  _deleteCamerasFromCartBasedOnUuid = deleteCamerasFromCartBasedOnUuid
 ) {
-  // TODO
+  const camera = cart[cameraUuid];
+  if (camera) {
+    const cameraHasLens = camera.numberByLens.hasOwnProperty(cameraLensName);
+    if (cameraHasLens) {
+      if (Object.keys(camera.numberByLens).length === 1) {
+        return _deleteCamerasFromCartBasedOnUuid(cart, cameraUuid);
+      } else {
+        const cloneOfCamera = { ...camera };
+        delete cloneOfCamera.numberByLens[cameraLensName];
+        return {
+          ...cart,
+          [cameraUuid]: cloneOfCamera,
+        }
+      }
+    } else {
+      throw new Error(`Their is no cameras to delete for this lens: ${cameraLensName}`);
+    }
+  }
+  throw new Error(`Their is no cameras to delete for this uuid: ${cameraUuid}`);
 }
 
 export function deleteCamerasFromCartBasedOnUuid(
@@ -116,14 +140,14 @@ export function deleteCamerasFromCartBasedOnUuid(
 ) {
   const camera = cart[cameraUuid];
   if (camera) {
-    const cloneOfCameras = {...cart};
+    const cloneOfCameras = { ...cart };
     delete cloneOfCameras[cameraUuid];
     return cloneOfCameras;
   }
   throw new Error("the camera is not in the cart");
 }
 
-export function getCartCamerasWithApiData(
+export function getCartWithApiData(
   cart,
   cameras
 ) {
@@ -136,7 +160,7 @@ export function getCartCamerasWithApiData(
         description: cameraFromApi.description,
         price: cameraFromApi.price,
         imageUrl: cameraFromApi.imageUrl,
-        lenses: cameraFromCart.lenses,
+        numberByLens: cameraFromCart.numberByLens,
       }
     }
     throw new Error("The localstorage do not contain the camera from the api");

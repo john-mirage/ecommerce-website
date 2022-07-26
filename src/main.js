@@ -1,5 +1,14 @@
 import "./main.css";
 
+import {
+  getCamerasNumberFromCart,
+  addCamerasToCartBasedOnLens,
+  updateCamerasFromCartBasedOnLens,
+  deleteCamerasFromCartBasedOnLens,
+  deleteCamerasFromCartBasedOnUuid,
+  getCartWithApiData
+} from "@utils/new-camera-cart";
+
 import AppRoot from "@components/app-root";
 import AppHeader from "@components/app-header";
 import AppView from "@components/app-view";
@@ -20,3 +29,42 @@ customElements.define("app-cart-view", AppCartView);
 customElements.define("app-error-view", AppErrorView);
 
 customElements.define("app-root", AppRoot);
+
+const cart = {
+  "0000-0000-0000-0001": {
+    numberByLens: {
+      "20mm": 1,
+      "30mm": 3,
+    }
+  },
+  "0000-0000-0000-0002": {
+    numberByLens: {
+      "50mm": 1,
+      "60mm": 3,
+    }
+  },
+  "0000-0000-0000-0003": {
+    numberByLens: {
+      "80mm": 1,
+    }
+  },
+};
+
+const cameras = [
+  {
+    _id: "0000-0000-0000-0001",
+    name: "name",
+    description: "description",
+    price: 2500,
+    imageUrl: "path/to/image.jpg",
+  },
+  {
+    _id: "0000-0000-0000-0002",
+    name: "name",
+    description: "description",
+    price: 2500,
+    imageUrl: "path/to/image.jpg",
+  },
+];
+
+console.log(getCartWithApiData(cart, cameras));
