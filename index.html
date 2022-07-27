@@ -29,12 +29,12 @@
   <meta property="twitter:image" content="https://john-mirage.github.io/orinoco/banner.jpg">
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
   <!-- app -->
-  <app-root class="flex flex-col h-screen overflow-hidden">
-    <app-header class="flex-none"></app-header>
-    <app-view class="flex-1 overflow-y-auto"></app-view>
+  <app-root>
+    <app-header class="fixed z-50 inset-x-0"></app-header>
+    <app-view></app-view>
   </app-root>
 
   <!-- template | web app header -->
@@ -83,7 +83,7 @@
 
   <!-- template | web index view -->
   <template id="template-app-index-view">
-    <main class="flex-1 mb-16">
+    <main class="flex-1 my-16">
       <div class="mb-12 py-20 bg-neutral-800">
         <div class="mx-auto container px-6 lg:px-10">
           <div class="max-w-lg lg:max-w-2xl">
@@ -120,7 +120,7 @@
 
   <!-- template | app product view -->
   <template id="template-app-product-view">
-    <main class="flex-1 mb-16">
+    <main class="flex-1 my-16">
       <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
         <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
           <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
@@ -138,7 +138,7 @@
 
   <!-- template | app cart view -->
   <template id="template-app-cart-view">
-    <main class="flex-1 mb-16">
+    <main class="flex-1 my-16">
       <div class="mx-auto container px-6 pt-16 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 lg:px-10">
         <div class="flex flex-col px-6 py-4 bg-neutral-100 rounded-lg lg:order-2">
           <h2 class="font-semibold text-xl text-neutral-800">Détail du panier</h2>

@@ -63,18 +63,14 @@ class AppView extends HTMLElement {
 
   switchToIndexView(cameras) {
     if (this.currentView) {
-      this.classList.replace("overflow-y-auto", "overflow-hidden");
       const fadeOut = this.currentView.animate(fadeOutAnimation, fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.innerHTML = "";
         this.appIndexView = this.indexView ? this.indexView : document.createElement("app-index-view");
         this.appIndexView.cameras = cameras;
         this.append(this.appIndexView);
-        this.scrollTo({top: 0, left: 0});
-        const fadeIn = this.appIndexView.animate(fadeInAnimation, fadeInAnimationTiming);
-        fadeIn.onfinish = (event) => {
-          this.classList.replace("overflow-hidden", "overflow-y-auto");
-        }
+        window.scrollTo({top: 0, left: 0});
+        this.appIndexView.animate(fadeInAnimation, fadeInAnimationTiming);
         this.currentView = this.appIndexView;
         document.title = "Orinoco — Appareil photos anciens";
         console.log("switch to index view");
@@ -92,18 +88,14 @@ class AppView extends HTMLElement {
 
   switchToProductView(camera) {
     if (this.currentView) {
-      this.classList.replace("overflow-y-auto", "overflow-hidden");
       const fadeOut = this.currentView.animate(fadeOutAnimation, fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.innerHTML = "";
         this.appProductView = this.appProductView ? this.appProductView : document.createElement("app-product-view");
         this.appProductView.camera = camera;
         this.append(this.appProductView);
-        this.scrollTo({top: 0, left: 0});
-        const fadeIn = this.appProductView.animate(fadeInAnimation, fadeInAnimationTiming);
-        fadeIn.onfinish = (event) => {
-          this.classList.replace("overflow-hidden", "overflow-y-auto");
-        }
+        window.scrollTo({top: 0, left: 0});
+        this.appProductView.animate(fadeInAnimation, fadeInAnimationTiming);
         this.currentView = this.appProductView;
         document.title = `Orinoco — ${camera.name}`;
         console.log("switch to product view");
@@ -121,24 +113,19 @@ class AppView extends HTMLElement {
 
   switchToFilledCartView(cart) {
     if (this.currentView) {
-      this.classList.replace("overflow-y-auto", "overflow-hidden");
       const fadeOut = this.currentView.animate(fadeOutAnimation, fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.innerHTML = "";
         this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
         this.appCartView.cart = cart;
         this.append(this.appCartView);
-        this.scrollTo({top: 0, left: 0});
-        const fadeIn = this.appCartView.animate(fadeInAnimation, fadeInAnimationTiming);
-        fadeIn.onfinish = (event) => {
-          this.classList.replace("overflow-hidden", "overflow-y-auto");
-        }
+        window.scrollTo({top: 0, left: 0});
+        this.appCartView.animate(fadeInAnimation, fadeInAnimationTiming);
         this.currentView = this.appCartView;
         document.title = "Orinoco — Mon panier";
         console.log("switch to cart view");
       };
     } else {
-      this.style.overflowY = "auto";
       this.innerHTML = "";
       this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
       this.appCartView.cart = cart;
