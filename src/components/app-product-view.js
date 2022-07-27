@@ -33,6 +33,7 @@ class AppProductView extends HTMLElement {
 
   connectedCallback() {
     if (this.initialCall) {
+      this.classList.add("flex", "flex-col", "h-full");
       this.append(this.fragment);
       this.initialCall = false;
     }
