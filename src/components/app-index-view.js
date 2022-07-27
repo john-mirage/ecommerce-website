@@ -7,6 +7,7 @@ class WebIndexView extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.level = 1;
     this.fragment = viewTemplate.content.cloneNode(true);
     this.listElement = this.fragment.querySelector('[data-name="list"]');
     this.handleProductCardClick = this.handleProductCardClick.bind(this);

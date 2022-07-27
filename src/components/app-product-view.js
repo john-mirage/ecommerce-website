@@ -6,6 +6,7 @@ class AppProductView extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.level = 2;
     this.fragment = template.content.cloneNode(true);
     this.imageElement = this.fragment.querySelector('[data-name="image"]');
     this.nameElement = this.fragment.querySelector('[data-name="name"]');

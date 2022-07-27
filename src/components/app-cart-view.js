@@ -7,6 +7,7 @@ class AppCartView extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.level = 3;
     this.fragment = viewTemplate.content.cloneNode(true);
     this.listElement = this.fragment.querySelector('[data-name="list"]');
     this.totalPriceElement = this.fragment.querySelector('[data-name="total-price"]');
