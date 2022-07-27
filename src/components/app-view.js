@@ -66,84 +66,67 @@ class AppView extends HTMLElement {
   }
 
   switchToIndexView(cameras) {
+    this.appIndexView = this.appIndexView ? this.appIndexView : document.createElement("app-index-view");
+    this.appIndexView.cameras = cameras;
     if (this.currentView) {
-      const level = this.appIndexView ? this.appIndexView.level : 1;
-      const toLeft = this.currentView.level < level;
+      const toLeft = this.currentView.level < this.appIndexView.level;
       const fadeOut = this.currentView.animate(getFadeOutAnimation(toLeft), fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.innerHTML = "";
-        this.appIndexView = this.indexView ? this.indexView : document.createElement("app-index-view");
-        this.appIndexView.cameras = cameras;
         this.append(this.appIndexView);
         window.scrollTo({top: 0, left: 0});
         this.appIndexView.animate(getFadeInAnimation(toLeft), fadeInAnimationTiming);
-        this.currentView = this.appIndexView;
-        document.title = "Orinoco — Appareil photos anciens";
-        console.log("switch to index view");
       };
     } else {
       this.innerHTML = "";
-      this.appIndexView = this.indexView ? this.indexView : document.createElement("app-index-view");
-      this.appIndexView.cameras = cameras;
       this.append(this.appIndexView);
-      this.currentView = this.appIndexView;
-      document.title = "Orinoco — Appareil photos anciens";
-      console.log("switch to index view");
     }
+    this.currentView = this.appIndexView;
+    document.title = "Orinoco — Appareil photos anciens";
+    console.log("switch to index view");
   }
 
   switchToProductView(camera) {
+    this.appProductView = this.appProductView ? this.appProductView : document.createElement("app-product-view");
+    this.appProductView.camera = camera;
     if (this.currentView) {
-      const level = this.appProductView ? this.appProductView.level : 2;
-      const toLeft = this.currentView.level < level;
+      const toLeft = this.currentView.level < this.appProductView.level;
       const fadeOut = this.currentView.animate(getFadeOutAnimation(toLeft), fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.innerHTML = "";
-        this.appProductView = this.appProductView ? this.appProductView : document.createElement("app-product-view");
-        this.appProductView.camera = camera;
         this.append(this.appProductView);
         window.scrollTo({top: 0, left: 0});
         this.appProductView.animate(getFadeInAnimation(toLeft), fadeInAnimationTiming);
-        this.currentView = this.appProductView;
-        document.title = `Orinoco — ${camera.name}`;
-        console.log("switch to product view");
       };
     } else {
       this.innerHTML = "";
-      this.appProductView = this.appProductView ? this.appProductView : document.createElement("app-product-view");
-      this.appProductView.camera = camera;
       this.append(this.appProductView);
-      this.currentView = this.appProductView;
-      document.title = `Orinoco — ${camera.name}`;
-      console.log("switch to product view"); 
     }
+    this.currentView = this.appProductView;
+    document.title = `Orinoco — ${camera.name}`;
+    console.log("switch to product view");
   }
 
   switchToFilledCartView(cart) {
+    this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
+    this.appCartView.cart = cart;
     if (this.currentView) {
-      const level = this.appCartView ? this.appCartView.level : 3;
-      const toLeft = this.currentView.level < level;
+      const toLeft = this.currentView.level < this.appCartView.level;
       const fadeOut = this.currentView.animate(getFadeOutAnimation(toLeft), fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.innerHTML = "";
-        this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
-        this.appCartView.cart = cart;
         this.append(this.appCartView);
         window.scrollTo({top: 0, left: 0});
         this.appCartView.animate(getFadeInAnimation(toLeft), fadeInAnimationTiming);
-        this.currentView = this.appCartView;
-        document.title = "Orinoco — Mon panier";
-        console.log("switch to cart view");
+        
       };
     } else {
       this.innerHTML = "";
-      this.appCartView = this.appCartView ? this.appCartView : document.createElement("app-cart-view");
-      this.appCartView.cart = cart;
       this.append(this.appCartView);
-      this.currentView = this.appCartView;
-      document.title = "Orinoco — Mon panier";
-      console.log("switch to cart view");
     }
+    this.currentView = this.appCartView;
+    document.title = "Orinoco — Mon panier";
+    console.log("switch to cart view");
   }
 
   switchToErrorView() {
