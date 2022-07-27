@@ -5,7 +5,7 @@ import emptyCartImage from "@images/empty-cart.svg";
 const fadeInAnimation = [
   {
     opacity: 0,
-    transform: "translateX(-4rem)",
+    transform: "translateX(4rem)",
     offset: 0
   },
   {
@@ -23,7 +23,7 @@ const fadeOutAnimation = [
   },
   {
     opacity: 0,
-    transform: "translateX(4rem)",
+    transform: "translateX(-4rem)",
     offset: 1
   }
 ];
