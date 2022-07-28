@@ -9,22 +9,22 @@ const level = {
 class AppView extends HTMLElement {
   constructor() {
     super();
-    this.currentView = false;
+    this.currentPage = false;
     this.appPage = this.querySelector("app-page");
   }
 
-  switchView(nextView, isAnimated) {
-    if (this.currentView && isAnimated) {
-      const isLeft = level[this.currentView] < level[nextView];
+  switchPage(nextPage, isAnimated) {
+    if (isAnimated) {
+      const isLeft = level[this.currentPage] < level[nextPage];
       const fadeOut = this.animate(getFadeOutAnimation(isLeft), fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
-        
+        this.appPage.setAttribute("page", nextPage);
         this.animate(getFadeInAnimation(isLeft), fadeInAnimationTiming);
       };
     } else {
-      
+      this.appPage.setAttribute("page", nextPage);
     }
-    this.currentView = nextView;
+    this.currentPage = nextPage;
   }
 }
 

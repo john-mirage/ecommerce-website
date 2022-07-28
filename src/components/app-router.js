@@ -12,13 +12,13 @@ class AppRouter extends HTMLElement {
     this.appView = this.querySelector("app-view");
     this.currentHref = "";
     this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
-    this.handleNavigationLink = this.handleOneNavigationLink.bind(this);
+    this.handleNavigationLink = this.handleNavigationLink.bind(this);
   }
 
   connectedCallback() {
     if (this.initialCall) {
       const href = window.location.href;
-      this.handleNavigation(href, false);
+      this.handleNavigation(href);
       this.currentHref = href;
       this.initialCall = false;
     }
@@ -33,7 +33,7 @@ class AppRouter extends HTMLElement {
 
   handleNavigationPopState(event) {
     const href = window.location.href;
-    if (this.currentUrl !== href) {
+    if (this.currentHref !== href) {
       this.handleNavigation(window.location.href);
       this.currentHref = href;
     }
@@ -41,7 +41,7 @@ class AppRouter extends HTMLElement {
 
   handleNavigationLink(event) {
     const href = event.detail.href;
-    if (this.currentUrl !== href) {
+    if (this.currentHref !== href) {
       window.history.pushState({}, "", href);
       this.handleNavigation(href, true);
       this.currentHref = href;
@@ -50,8 +50,8 @@ class AppRouter extends HTMLElement {
 
   handleNavigation(href, isAnimated = false) {
     const url = new URL(href);
-    const nextView = view[url.pathname] ?? "not-found";
-    this.appView.switchView(nextView, isAnimated);
+    const nextPage= view[url.pathname] ?? "not-found";
+    this.appView.switchPage(nextPage, isAnimated);
   }
 }
 

@@ -34,9 +34,9 @@
   <!-- app -->
   <app-router class="block overflow-x-hidden">
     <app-header class="block fixed z-50 inset-x-0"></app-header>
-    <app-view class="block min-h-screen">
-      <app-page class="flex flex-col h-full">
-        <app-content class="flex-1 my-16"></app-content>
+    <app-view class="block">
+      <app-page class="flex flex-col min-h-screen">
+        <main class="flex-1 my-16" data-name="main"></main>
         <app-footer class="flex-none"></app-footer>
       </app-page>
     </app-view>
@@ -84,6 +84,21 @@
         </div>
       </div>
     </footer>
+  </template>
+
+  <!-- template | app index page -->
+  <template id="template-index-page">
+    <h1 class="text-4xl">INDEX PAGE</h1>
+  </template>
+
+  <!-- template | app product page -->
+  <template id="template-product-page">
+    <h1 class="text-4xl">PRODUCT PAGE</h1>
+  </template>
+
+  <!-- template | app cart page -->
+  <template id="template-cart-page">
+    <h1 class="text-4xl">CART PAGE</h1>
   </template>
 
   <!-- template | web index view -->
