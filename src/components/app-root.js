@@ -31,10 +31,6 @@ class AppRoot extends HTMLElement {
     }
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("router-link-click", this.handleNavigationLink);
-    this.addEventListener("cart-update", (event) => {
-      const cartItem = event.detail;
-      console.log("cart change", cartItem);
-    });
   }
 
   disconnectedCallback() {
@@ -60,6 +56,7 @@ class AppRoot extends HTMLElement {
   }
 
   handleNavigation(href) {
+    this.appView.switchToLoadingView();
     const url = new URL(href);
     switch(url.pathname) {
       case "/orinoco/":
@@ -69,7 +66,7 @@ class AppRoot extends HTMLElement {
         this.navigateToProductPage(url.searchParams.get("id"));
         break;
       case "/orinoco/panier":
-        this.navigateToCartPage(href);
+        this.navigateToCartPage();
         break;
       default:
         this.appView.switchToNotFoundView();

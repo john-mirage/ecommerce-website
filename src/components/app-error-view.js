@@ -37,6 +37,7 @@ class AppErrorView extends HTMLElement {
 
   connectedCallback() {
     if (this.initialCall) {
+      this.classList.add("flex", "flex-col", "min-h-screen");
       this.append(this.fragment);
       this.initialCall = false;
     }

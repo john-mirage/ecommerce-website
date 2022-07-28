@@ -18,6 +18,7 @@ import AppIndexView from "@components/app-index-view";
 import AppProductView from "@components/app-product-view";
 import AppCartView from "@components/app-cart-view";
 import AppErrorView from "@components/app-error-view";
+import AppLoadingView from "@components/app-loading-view";
 
 customElements.define("app-header", AppHeader);
 customElements.define("app-view", AppView);
@@ -27,6 +28,7 @@ customElements.define("app-index-view", AppIndexView);
 customElements.define("app-product-view", AppProductView);
 customElements.define("app-cart-view", AppCartView);
 customElements.define("app-error-view", AppErrorView);
+customElements.define("app-loading-view", AppLoadingView);
 
 customElements.define("app-root", AppRoot);
 

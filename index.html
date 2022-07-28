@@ -219,13 +219,21 @@
 
   <!-- template | app error view -->
   <template id="template-app-error-view">
-    <main class="my-16">
+    <main class="flex-1 my-16">
       <div class="mx-auto container flex flex-col items-center px-6 pt-16 gap-6 lg:px-10">
         <h1 class="mb-6 text-xl font-semibold text-neutral-800" data-name="title"></h1>
         <img class="w-full h-auto max-w-3xl" src="" alt="" draggable="false" data-name="image">
       </div>
     </main>
-    <app-footer></app-footer>
+    <app-footer class="flex-none"></app-footer>
+  </template>
+
+  <!-- template | app loading view -->
+  <template id="template-app-loading-view">
+    <main class="flex-1 flex flex-col justify-center items-center my-16">
+      <div class="w-16 h-16 rounded-full border-8 border-neutral-200 border-t-neutral-600 animate-spin"></div>
+    </main>
+    <app-footer class="flex-none"></app-footer>
   </template>
 
   <script type="module" src="/src/main.js"></script>

@@ -51,7 +51,10 @@ class AppView extends HTMLElement {
     this.appProductView = false;
     this.appCartView = false;
     this.appErrorView = false;
+    this.appLoadingView = false;
     this.currentView = false;
+    this.isLoading = false;
+    this.timeout = false;
   }
 
   connectedCallback() {
@@ -62,7 +65,15 @@ class AppView extends HTMLElement {
   }
   
   switchToLoadingView() {
-
+    this.isLoading = true;
+    this.timeout = setTimeout(() => {
+      this.appLoadingView = this.appLoadingView ? this.appLoadingView : document.createElement("app-loading-view");
+      this.innerHTML = "";
+      this.append(this.appLoadingView);
+      this.currentView = this.appLoadingView;
+      console.log("switch to loading view");
+      this.isLoading = false;
+    }, 600);
   }
 
   switchToIndexView(cameras) {
@@ -83,6 +94,11 @@ class AppView extends HTMLElement {
     }
     this.currentView = this.appIndexView;
     document.title = "Orinoco — Appareil photos anciens";
+    if (this.isLoading) {
+      clearTimeout(this.timeout);
+      this.isLoading = false;
+      console.log("prevent loading view to load");
+    }
     console.log("switch to index view");
   }
 
@@ -104,6 +120,11 @@ class AppView extends HTMLElement {
     }
     this.currentView = this.appProductView;
     document.title = `Orinoco — ${camera.name}`;
+    if (this.isLoading) {
+      clearTimeout(this.timeout);
+      this.isLoading = false;
+      console.log("prevent loading view to load");
+    }
     console.log("switch to product view");
   }
 
@@ -118,7 +139,6 @@ class AppView extends HTMLElement {
         this.append(this.appCartView);
         window.scrollTo({top: 0, left: 0});
         this.appCartView.animate(getFadeInAnimation(toLeft), fadeInAnimationTiming);
-        
       };
     } else {
       this.innerHTML = "";
@@ -126,6 +146,11 @@ class AppView extends HTMLElement {
     }
     this.currentView = this.appCartView;
     document.title = "Orinoco — Mon panier";
+    if (this.isLoading) {
+      clearTimeout(this.timeout);
+      this.isLoading = false;
+      console.log("prevent loading view to load");
+    }
     console.log("switch to cart view");
   }
 
