@@ -34,7 +34,12 @@
   <!-- app -->
   <app-router class="block overflow-x-hidden">
     <app-header class="block fixed z-50 inset-x-0"></app-header>
-    <app-view class="block"></app-view>
+    <app-view class="block min-h-screen">
+      <app-page class="flex flex-col h-full">
+        <app-content class="flex-1 my-16"></app-content>
+        <app-footer class="flex-none"></app-footer>
+      </app-page>
+    </app-view>
   </app-router>
 
   <!-- template | web app header -->
@@ -83,24 +88,31 @@
 
   <!-- template | web index view -->
   <template id="template-app-index-view">
-    <main class="flex-1 my-16">
-      <div class="mb-12 py-20 bg-neutral-800">
-        <div class="mx-auto container px-6 lg:px-10">
-          <div class="max-w-lg lg:max-w-2xl">
-            <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
-            <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-            <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400/50" href="#trending">
-              <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
-            </a>
+    <div class="flex flex-col min-h-screen">
+      <main class="flex-1 my-16" data-name="main">
+        <div class="mb-12 py-20 bg-neutral-800">
+          <div class="mx-auto container px-6 lg:px-10">
+            <div class="max-w-lg lg:max-w-2xl">
+              <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
+              <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+              <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400/50" href="#trending">
+                <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="mx-auto container px-6 lg:px-10" id="trending">
-        <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
-        <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list"></ul>
-      </div>
-    </main>
-    <app-footer class="flex-none"></app-footer>
+        <app-index-product-list></app-index-product-list>
+      </main>
+      <app-footer class="flex-none"></app-footer>
+    </div>
+  </template>
+
+  <!-- template | app index product list -->
+  <template id="template-app-index-product-list">
+    <div class="mx-auto container px-6 lg:px-10" id="trending">
+      <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list"></ul>
+    </div>
   </template>
 
   <!-- template | app index product -->
@@ -116,6 +128,19 @@
         </div>
       </a>
     </li>
+  </template>
+
+  <!-- template | app error -->
+  <template id="template-app-error">
+    <div class="flex flex-col min-h-screen">
+      <main class="flex-1 my-16">
+        <div class="mx-auto container flex flex-col items-center px-6 pt-16 gap-6 lg:px-10">
+          <h1 class="mb-6 text-xl font-semibold text-neutral-800" data-name="title"></h1>
+          <img class="w-full h-auto max-w-3xl" src="" alt="" draggable="false" data-name="image">
+        </div>
+      </main>
+      <app-footer class="flex-none"></app-footer>
+    </div>
   </template>
 
   <!-- template | app product view -->
@@ -215,17 +240,6 @@
         </div>
       </div>
     </li>
-  </template>
-
-  <!-- template | app error view -->
-  <template id="template-app-error-view">
-    <main class="flex-1 my-16">
-      <div class="mx-auto container flex flex-col items-center px-6 pt-16 gap-6 lg:px-10">
-        <h1 class="mb-6 text-xl font-semibold text-neutral-800" data-name="title"></h1>
-        <img class="w-full h-auto max-w-3xl" src="" alt="" draggable="false" data-name="image">
-      </div>
-    </main>
-    <app-footer class="flex-none"></app-footer>
   </template>
 
   <!-- template | app loading view -->

@@ -1,10 +1,15 @@
+const view = {
+  "/orinoco/": "index",
+  "/orinoco/produit": "product",
+  "/orinoco/panier": "cart",
+};
+
 class AppRouter extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
     this.appHeader = this.querySelector("app-header");
     this.appView = this.querySelector("app-view");
-    this.appFooter = this.querySelector("app-footer");
     this.currentHref = "";
     this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
     this.handleNavigationLink = this.handleOneNavigationLink.bind(this);
@@ -29,7 +34,7 @@ class AppRouter extends HTMLElement {
   handleNavigationPopState(event) {
     const href = window.location.href;
     if (this.currentUrl !== href) {
-      this.handleNavigation(window.location.href, false);
+      this.handleNavigation(window.location.href);
       this.currentHref = href;
     }
   }
@@ -38,28 +43,14 @@ class AppRouter extends HTMLElement {
     const href = event.detail.href;
     if (this.currentUrl !== href) {
       window.history.pushState({}, "", href);
-      this.handleNavigation(href);
+      this.handleNavigation(href, true);
       this.currentHref = href;
     }
   }
 
-  handleNavigation(href, isAnimated = true) {
+  handleNavigation(href, isAnimated = false) {
     const url = new URL(href);
-    let nextView = false;
-    switch(url.pathname) {
-      case "/orinoco/":
-        nextView = this.appView.appIndexView;
-        break;
-      case "/orinoco/produit":
-        nextView = this.appView.appProductView;
-        break;
-      case "/orinoco/panier":
-        nextView = this.appView.appCartView;
-        break;
-      default:
-        nextView = this.appView.appNotFoundView;
-        break;
-    }
+    const nextView = view[url.pathname] ?? "not-found";
     this.appView.switchView(nextView, isAnimated);
   }
 }

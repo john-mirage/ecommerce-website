@@ -5,26 +5,25 @@ class AppIndexView extends HTMLElement {
     super();
     this.initialCall = true;
     this.navigationLevel = 1;
-    this.fragment = viewTemplate.content.cloneNode(true);
-    this.errorElement = false;
-    this.displayError = this.displayError.bind(this);
+    this.fragment = template.content.cloneNode(true);
+    this.displayAppError = this.displayAppError.bind(this);
   }
 
   connectedCallback() {
     if (this.initialCall) {
-      this.classList.add("flex", "flex-col", "min-h-screen");
       this.append(this.fragment);
       this.initialCall = false;
     }
-    this.addEventListener("display-error", this.displayError);
+    this.addEventListener("display-error", this.displayAppError);
   }
 
   disconnectedCallback() {
-    this.removeEventListener("display-error", this.displayError);
+    this.removeEventListener("display-error", this.displayAppError);
   }
 
-  displayError(event) {
+  displayAppError(event) {
     const { title } = event.detail;
+    console.log(title);
   }
 }
 

@@ -20,10 +20,10 @@ class AppIndexProductList extends HTMLElement {
       this.innerHTML = "";
       this.append(...this.skeletons);
     }
-    this.displayCameras();
+    this.displayProducts();
   }
 
-  async displayCameras() {
+  async displayProducts() {
     const { cameras, isError } = await getAllCameras();
     if (isError) {
       const title = "Oups, il semble que l'application ne fonctionne pas correctement";

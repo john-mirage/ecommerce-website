@@ -1,40 +1,28 @@
+import { getFadeInAnimation, getFadeOutAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
+
+const level = {
+  "index": 1,
+  "product": 2,
+  "cart": 3,
+};
+
 class AppView extends HTMLElement {
   constructor() {
     super();
     this.currentView = false;
-  }
-
-  get appIndexView() {
-    const appIndexViewIsDefined = this.hasOwnProperty("_appIndexView");
-    return appIndexViewIsDefined ? this._appIndexView : document.createElement("app-index-view");
-  }
-
-  get appProductView() {
-    const appProductViewIsDefined = this.hasOwnProperty("_appProductView");
-    return appProductViewIsDefined ? this._appProductView : document.createElement("app-product-view");
-  }
-
-  get appCartView() {
-    const appCartViewIsDefined = this.hasOwnProperty("_appCartView");
-    return appCartViewIsDefined ? this._appCartView : document.createElement("app-cart-view");
-  }
-
-  get appNotFoundView() {
-    const appNotFoundViewIsDefined = this.hasOwnProperty("_appNotFoundView");
-    return appNotFoundViewIsDefined ? this._appNotFoundView : document.createElement("app-not-found-view");
+    this.appPage = this.querySelector("app-page");
   }
 
   switchView(nextView, isAnimated) {
     if (this.currentView && isAnimated) {
-      const fadeOut = this.currentView.animate();
+      const isLeft = level[this.currentView] < level[nextView];
+      const fadeOut = this.animate(getFadeOutAnimation(isLeft), fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
-        this.appView.innerHTML = "";
-        this.appView.append(nextView);
-        nextView.animate();
+        
+        this.animate(getFadeInAnimation(isLeft), fadeInAnimationTiming);
       };
     } else {
-      this.appView.innerHTML = "";
-      this.appView.append(nextView);
+      
     }
     this.currentView = nextView;
   }
