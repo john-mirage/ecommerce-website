@@ -7,6 +7,7 @@ class AppIndexView extends HTMLElement {
     this.navigationLevel = 1;
     this.fragment = viewTemplate.content.cloneNode(true);
     this.errorElement = false;
+    this.displayError = this.displayError.bind(this);
   }
 
   connectedCallback() {
@@ -15,10 +16,15 @@ class AppIndexView extends HTMLElement {
       this.append(this.fragment);
       this.initialCall = false;
     }
+    this.addEventListener("display-error", this.displayError);
   }
 
-  displayError(title, subtitle, link) {
-    
+  disconnectedCallback() {
+    this.removeEventListener("display-error", this.displayError);
+  }
+
+  displayError(event) {
+    const { title } = event.detail;
   }
 }
 

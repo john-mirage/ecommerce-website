@@ -6,11 +6,12 @@ class AppIndexProduct extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
-    this.fragment = productTemplate.content.cloneNode(true);
+    this.fragment = template.content.cloneNode(true);
     this.linkElement = fragment.querySelector('[data-name="link"]');
     this.imageElement = fragment.querySelector('[data-name="image"]');
     this.nameElement = fragment.querySelector('[data-name="name"]');
     this.priceElement = fragment.querySelector('[data-name="price"]');
+    this.handleLink = this.handleLink.bind(this);
   }
 
   get camera() {
@@ -20,25 +21,35 @@ class AppIndexProduct extends HTMLElement {
     } else {
       throw new Error("The camera is not defin");
     }
-    return appIndexViewIsDefined ? this._appIndexView : document.createElement("app-index-view");
   }
 
   set camera(camera) {
-    
+    this._camera = camera;
+    this.linkElement.setAttribute("href", `/orinoco/produit?id=${this.camera._id}`);
+    this.imageElement.setAttribute("src", this.camera.imageUrl);
+    this.nameElement.textContent = this.camera.name;
+    this.priceElement.textContent = formatCameraPrice(this.camera.price);
   }
 
   connectedCallback() {
     if (this.initialCall) {
+      this.append(this.fragment);
       this.initialCall = false;
     }
+    this.linkElement.addEventListener("click", this.handleLink);
   }
 
-  getProductCard(camera) {
-    linkElement.setAttribute("href", `/orinoco/produit?id=${camera._id}`);
-    imageElement.setAttribute("src", camera.imageUrl);
-    nameElement.textContent = camera.name;
-    priceElement.textContent = formatCameraPrice(camera.price);
-    return fragment;
+  disconnectedCallback() {
+    this.linkElement.removeEventListener("click", this.handleLink);
+  }
+
+  handleLink(event) {
+    const href = event.currentTarget.href;
+    const customEvent = new CustomEvent("navigation-link-click", {
+      bubbles: true,
+      detail: { href }
+    });
+    this.dispatchEvent(customEvent);
   }
 }
 

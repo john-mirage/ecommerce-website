@@ -6,21 +6,21 @@ const API_URL = "http://localhost:3000/api/cameras/";
  * @returns {Object} The fetch response.
  */
 export async function getAllCameras() {
-  let data = [];
+  let cameras = [];
   let isError = false;
   const response = await fetch(API_URL)
     .then(response => response)
     .catch(() => false);
   if (response) {
     if (response.ok) {
-      data = await response.json();
+      cameras = await response.json();
     } else {
       isError = true;
     }
   } else {
     isError = true;
   }
-  return { data, isError };
+  return { cameras, isError };
 }
 
 /**
@@ -35,7 +35,7 @@ export async function getSomeCameras(
 ) {
   const uuidsAreValid = Array.isArray(uuids) && uuids.every((uuid) => typeof uuid === "string");
   if (uuidsAreValid) {
-    let data = [];
+    let cameras = [];
     let isError = false;
     let hasData = false;
     let hasPartialData = false;
@@ -48,11 +48,11 @@ export async function getSomeCameras(
       } else if (response.isNotFound) {
         if (!hasPartialData) hasPartialData = true;
       } else if (response.data) {
-        data.push(response.data);
+        cameras.push(response.data);
         if (!hasData) hasData = true;
       }
     }
-    return { data, isError, hasData, hasPartialData };
+    return { cameras, isError, hasData, hasPartialData };
   }
   throw new Error("The uuids parameter must be an array of strings");
 }
@@ -65,7 +65,7 @@ export async function getSomeCameras(
  */
 export async function getOneCamera(uuid) {
   if (typeof uuid === "string") {
-    let data = false;
+    let camera = false;
     let isError = false;
     let isNotFound = false;
     const response = await fetch(API_URL + uuid)
@@ -73,14 +73,14 @@ export async function getOneCamera(uuid) {
       .catch(() => false);
     if (response) {
       if (response.ok) {
-        data = await response.json();
+        camera = await response.json();
       } else {
         isNotFound = true;
       }
     } else {
       isError = true;
     }
-    return { data, isError, isNotFound };
+    return { camera, isError, isNotFound };
   }
   throw new Error("The uuid parameter must be a string");
 }
