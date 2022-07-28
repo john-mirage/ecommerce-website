@@ -1,4 +1,26 @@
-export function getFadeInAnimation(toLeft) {
+export const fadeInAnimation = [
+  {
+    opacity: 0,
+    offset: 0
+  },
+  {
+    opacity: 1,
+    offset: 1
+  }
+];
+
+export const fadeOutAnimation = [
+  {
+    opacity: 1,
+    offset: 0
+  },
+  {
+    opacity: 0,
+    offset: 1
+  }
+];
+
+export function getFadeInAndTranslateAnimation(toLeft) {
   return [
     {
       opacity: 0,
@@ -13,7 +35,7 @@ export function getFadeInAnimation(toLeft) {
   ];
 }
 
-export function getFadeOutAnimation(toLeft) {
+export function getFadeOutAndTranslateAnimation(toLeft) {
   return [
     {
       opacity: 1,

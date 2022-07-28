@@ -1,3 +1,5 @@
+import { fadeInAnimation, fadeOutAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
+
 const indexPageTemplate = document.getElementById("template-index-page");
 const productPageTemplate = document.getElementById("template-product-page");
 const cartPageTemplate = document.getElementById("template-cart-page");
@@ -15,7 +17,7 @@ class AppPage extends HTMLElement {
 
   get indexPage() {
     const indexPageIsDefined = this.hasOwnProperty("_indexPage");
-    return indexPageIsDefined ? this._indexpage : indexPageTemplate.content.cloneNode(true);
+    return indexPageIsDefined ? this._indexPage : indexPageTemplate.content.cloneNode(true);
   }
 
   get productPage() {
@@ -42,11 +44,11 @@ class AppPage extends HTMLElement {
   }
 
   handleErrorPage(event) {
-    const fadeOut = this.animate();
+    const fadeOut = this.animate(fadeOutAnimation, fadeOutAnimationTiming);
     fadeOut.onfinish = (event) => {
       this.mainElement.innerHTML = "";
       this.mainElement.append(this.errorPage);
-      this.animate();
+      this.animate(fadeInAnimation, fadeInAnimationTiming);
     };
   }
 

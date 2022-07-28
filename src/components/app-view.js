@@ -1,4 +1,4 @@
-import { getFadeInAnimation, getFadeOutAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
+import { getFadeInAndTranslateAnimation, getFadeOutAndTranslateAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
 
 const level = {
   "index": 1,
@@ -16,10 +16,10 @@ class AppView extends HTMLElement {
   switchPage(nextPage, isAnimated) {
     if (isAnimated) {
       const isLeft = level[this.currentPage] < level[nextPage];
-      const fadeOut = this.animate(getFadeOutAnimation(isLeft), fadeOutAnimationTiming);
+      const fadeOut = this.animate(getFadeOutAndTranslateAnimation(isLeft), fadeOutAnimationTiming);
       fadeOut.onfinish = (event) => {
         this.appPage.setAttribute("page", nextPage);
-        this.animate(getFadeInAnimation(isLeft), fadeInAnimationTiming);
+        this.animate(getFadeInAndTranslateAnimation(isLeft), fadeInAnimationTiming);
       };
     } else {
       this.appPage.setAttribute("page", nextPage);

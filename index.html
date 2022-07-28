@@ -42,7 +42,7 @@
     </app-view>
   </app-router>
 
-  <!-- template | web app header -->
+  <!-- template | app header -->
   <template id="template-app-header">
     <header class="w-full h-16 bg-neutral-900 shadow-lg">
       <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
@@ -59,7 +59,7 @@
     </header>
   </template>
 
-  <!-- template | web app footer -->
+  <!-- template | app footer -->
   <template id="template-app-footer">
     <footer class="pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
       <div class="mx-auto container px-6 lg:px-10">
@@ -88,7 +88,90 @@
 
   <!-- template | app index page -->
   <template id="template-index-page">
-    <h1 class="text-4xl">INDEX PAGE</h1>
+    <div class="mb-12 py-20 bg-neutral-800">
+      <div class="mx-auto container px-6 lg:px-10">
+        <div class="max-w-lg lg:max-w-2xl">
+          <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
+          <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+          <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400/50" href="#trending">
+            <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <app-index-product-list></app-index-product-list>
+  </template>
+
+  <!-- template | app index product list -->
+  <template id="template-app-index-product-list">
+    <div class="mx-auto container px-6 lg:px-10" id="trending">
+      <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list">
+        <li class="animate-pulse" data-name="skeleton">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
+          </div>
+          <div class="flex flex-row justify-between items-center mt-3">
+            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+          </div>
+        </li>
+        <li class="animate-pulse" data-name="skeleton">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
+          </div>
+          <div class="flex flex-row justify-between items-center mt-3">
+            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+          </div>
+        </li>
+        <li class="animate-pulse" data-name="skeleton">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
+          </div>
+          <div class="flex flex-row justify-between items-center mt-3">
+            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+          </div>
+        </li>
+        <li class="animate-pulse" data-name="skeleton">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
+          </div>
+          <div class="flex flex-row justify-between items-center mt-3">
+            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+          </div>
+        </li>
+        <li class="animate-pulse" data-name="skeleton">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
+          </div>
+          <div class="flex flex-row justify-between items-center mt-3">
+            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+          </div>
+        </li>
+        <li class="animate-pulse" data-name="skeleton">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
+          </div>
+          <div class="flex flex-row justify-between items-center mt-3">
+            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </template>
+
+  <!-- template | app index product -->
+  <template id="template-app-index-product">
+    <li>
+      <a class="space-y-1 group" href="#" data-name="link">
+        <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+          <img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-name="image" src="" alt="" draggable="false">
+        </div>
+        <div class="flex flex-row justify-between items-center">
+          <h3 class="font-sans font-semibold text-lg text-neutral-700" data-name="name"></h3>
+          <p class="font-sans font-semibold text-lg text-neutral-500" data-name="price"></p>
+        </div>
+      </a>
+    </li>
   </template>
 
   <!-- template | app product page -->
@@ -101,48 +184,9 @@
     <h1 class="text-4xl">CART PAGE</h1>
   </template>
 
-  <!-- template | web index view -->
-  <template id="template-app-index-view">
-    <div class="flex flex-col min-h-screen">
-      <main class="flex-1 my-16" data-name="main">
-        <div class="mb-12 py-20 bg-neutral-800">
-          <div class="mx-auto container px-6 lg:px-10">
-            <div class="max-w-lg lg:max-w-2xl">
-              <h1 class="mb-6 font-sans font-semibold text-2xl text-neutral-200 lg:text-4xl">Trouvez l'appareil qui vous ressemble et qui saura sublimer votre talent</h1>
-              <p class="mb-8 font-sans font-normal text-base text-neutral-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-              <a class="flex w-48 h-12 rounded-lg bg-neutral-500 shadow-md hover:bg-neutral-400/50" href="#trending">
-                <span class="m-auto font-sans font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir les tendances</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <app-index-product-list></app-index-product-list>
-      </main>
-      <app-footer class="flex-none"></app-footer>
-    </div>
-  </template>
-
-  <!-- template | app index product list -->
-  <template id="template-app-index-product-list">
-    <div class="mx-auto container px-6 lg:px-10" id="trending">
-      <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
-      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list"></ul>
-    </div>
-  </template>
-
-  <!-- template | app index product -->
-  <template id="template-app-index-product">
-    <li class="space-y-1">
-      <a class="group" href="#" data-name="link">
-        <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-          <img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-name="image" src="" alt="" draggable="false">
-        </div>
-        <div class="flex flex-row justify-between items-center">
-          <h3 class="font-sans font-semibold text-lg text-neutral-700" data-name="name"></h3>
-          <p class="font-sans font-semibold text-lg text-neutral-500" data-name="price"></p>
-        </div>
-      </a>
-    </li>
+  <!-- template | app cart page -->
+  <template id="template-error-page">
+    <h1 class="text-4xl">ERROR PAGE</h1>
   </template>
 
   <!-- template | app error -->
@@ -158,7 +202,7 @@
     </div>
   </template>
 
-  <!-- template | app product view -->
+  <!-- template | app product page -->
   <template id="template-app-product-view">
     <main class="flex-1 my-16">
       <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
@@ -255,14 +299,6 @@
         </div>
       </div>
     </li>
-  </template>
-
-  <!-- template | app loading view -->
-  <template id="template-app-loading-view">
-    <main class="flex-1 flex flex-col justify-center items-center my-16">
-      <div class="w-16 h-16 rounded-full border-8 border-neutral-200 border-t-neutral-600 animate-spin"></div>
-    </main>
-    <app-footer class="flex-none"></app-footer>
   </template>
 
   <script type="module" src="/src/main.js"></script>

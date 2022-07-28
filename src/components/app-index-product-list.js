@@ -17,7 +17,7 @@ class AppIndexProductList extends HTMLElement {
       this.append(this.fragment);
       this.initialCall = false;
     } else {
-      this.innerHTML = "";
+      this.listElement.innerHTML = "";
       this.append(...this.skeletons);
     }
     this.displayProducts();
@@ -27,7 +27,7 @@ class AppIndexProductList extends HTMLElement {
     const { cameras, isError } = await getAllCameras();
     if (isError) {
       const title = "Oups, il semble que l'application ne fonctionne pas correctement";
-      const customEvent = new CustomEvent("display error", {
+      const customEvent = new CustomEvent("display-error-page", {
         bubbles: true,
         detail: { title }
       });
@@ -38,7 +38,8 @@ class AppIndexProductList extends HTMLElement {
         product.camera = camera;
         return product;
       });
-      this.append(...products);
+      this.listElement.innerHTML = "";
+      this.listElement.append(...products);
     }
   }
 }

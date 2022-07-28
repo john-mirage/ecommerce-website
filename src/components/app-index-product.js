@@ -7,10 +7,10 @@ class AppIndexProduct extends HTMLElement {
     super();
     this.initialCall = true;
     this.fragment = template.content.cloneNode(true);
-    this.linkElement = fragment.querySelector('[data-name="link"]');
-    this.imageElement = fragment.querySelector('[data-name="image"]');
-    this.nameElement = fragment.querySelector('[data-name="name"]');
-    this.priceElement = fragment.querySelector('[data-name="price"]');
+    this.linkElement = this.fragment.querySelector('[data-name="link"]');
+    this.imageElement = this.fragment.querySelector('[data-name="image"]');
+    this.nameElement = this.fragment.querySelector('[data-name="name"]');
+    this.priceElement = this.fragment.querySelector('[data-name="price"]');
     this.handleLink = this.handleLink.bind(this);
   }
 
@@ -19,7 +19,7 @@ class AppIndexProduct extends HTMLElement {
     if (cameraIsDefined) {
       return this._camera;
     } else {
-      throw new Error("The camera is not defin");
+      throw new Error("The camera is not defined");
     }
   }
 
@@ -44,6 +44,7 @@ class AppIndexProduct extends HTMLElement {
   }
 
   handleLink(event) {
+    event.preventDefault();
     const href = event.currentTarget.href;
     const customEvent = new CustomEvent("navigation-link-click", {
       bubbles: true,
