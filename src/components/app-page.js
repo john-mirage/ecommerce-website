@@ -1,13 +1,10 @@
 import { fadeInAnimation, fadeOutAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
 
 class AppPage extends HTMLElement {
-  static get observedAttributes() {
-    return ["page"];
-  }
-
   constructor() {
     super();
     this.mainElement = this.querySelector('[data-name="main"]');
+    this.handleError = this.handleError.bind(this);
   }
 
   get indexPage() {
@@ -43,41 +40,41 @@ class AppPage extends HTMLElement {
   }
 
   connectedCallback() {
-    this.addEventListener("display-error-page", this.handleErrorPage);
+    this.addEventListener("display-error-page", this.handleError);
   }
 
   disconnectedCallback() {
-    this.removeEventListener("display-error-page", this.handleErrorPage);
+    this.removeEventListener("display-error-page", this.handleError);
   }
 
-  handleErrorPage(event) {
-    const fadeOut = this.animate(fadeOutAnimation, fadeOutAnimationTiming);
-    fadeOut.onfinish = (event) => {
+  handleError(customEvent) {
+    if (customEvent instanceof CustomEvent) {
+      const { title } = customEvent.detail;
+      this.errorPage.title = title;
+      this.updatePageWithAnimation(this.errorPage);
+    } else {
+      throw new Error("The event must be a custom event in order to extract the title");
+    }
+  }
+
+  updatePage(page) {
+    if (page instanceof HTMLElement) {
       this.mainElement.innerHTML = "";
-      this.mainElement.append(this.errorPage);
-      this.animate(fadeInAnimation, fadeInAnimationTiming);
-    };
+      this.mainElement.append(page);
+    } else {
+      throw new Error("The page must be an HTML element");
+    }
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.mainElement.innerHTML = "";
-    if (name === "page") {
-      switch(newValue) {
-        case "index":
-          this.mainElement.append(this.indexPage);
-          break;
-        case "product":
-          this.mainElement.append(this.productPage);
-          break;
-        case "cart":
-          this.mainElement.append(this.cartPage);
-          break;
-        case "error":
-          this.mainElement.append(this.errorPage);
-          break;
-        default:
-          throw new Error("The page do not exist");
-      }
+  updatePageWithAnimation(page) {
+    if (page instanceof HTMLElement) {
+      const fadeOut = this.animate(fadeOutAnimation, fadeOutAnimationTiming);
+      fadeOut.onfinish = () => {
+        this.updatePage(page);
+        this.animate(fadeInAnimation, fadeInAnimationTiming);
+      };
+    } else {
+      throw new Error("The page must be an HTML element");
     }
   }
 }

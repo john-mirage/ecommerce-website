@@ -13,18 +13,53 @@ class AppView extends HTMLElement {
     this.appPage = this.querySelector("app-page");
   }
 
-  switchPage(nextPage, isAnimated) {
-    if (isAnimated) {
-      const isLeft = level[this.currentPage] < level[nextPage];
-      const fadeOut = this.animate(getFadeOutAndTranslateAnimation(isLeft), fadeOutAnimationTiming);
-      fadeOut.onfinish = (event) => {
-        this.appPage.setAttribute("page", nextPage);
-        this.animate(getFadeInAndTranslateAnimation(isLeft), fadeInAnimationTiming);
-      };
+  getNextPage(page) {
+    if (typeof page === "string") {
+      switch (pageName) {
+        case "index":
+          return this.appPage.indexPage;
+        case "product":
+          return this.appPage.productPage;
+        case "cart":
+          return this.appPage.cartPage;
+        case "not-found":
+          return this.appPage.errorPage;
+        default:
+          throw new Error("the page do not exist");
+      }
     } else {
-      this.appPage.setAttribute("page", nextPage);
+      throw new Error("The page must be a string");
     }
-    this.currentPage = nextPage;
+  }
+
+  updateView(page) {
+    if (typeof page === "string") {
+      const nextPage = this.getNextPage(page);
+      this.appPage.updatePage(nextPage);
+      this.currentPage = nextPage;
+    } else {
+      throw new Error("The page must be a string");
+    }
+  }
+
+  updateViewWithAnimation(page) {
+    if (typeof page === "string") {
+      if (this.currentPage) {
+        const isLeft = level[this.currentPage] < level[pageName];
+        const fadeOutAndTranslateAnimation = getFadeOutAndTranslateAnimation(isLeft);
+        const fadeOut = this.animate(fadeOutAndTranslateAnimation, fadeOutAnimationTiming);
+        fadeOut.onfinish = (event) => {
+          this.appPage.setAttribute("page", pageName);
+          const fadeInAndTranslateAnimation = getFadeInAndTranslateAnimation(isLeft);
+          this.animate(fadeInAndTranslateAnimation, fadeInAnimationTiming);
+        };
+        this.currentPage = pageName;
+      } else {
+        throw new Error("A current page must be defined in order to animate the transition");
+      }
+    } else {
+      throw new Error("The page must be a string");
+    }
   }
 }
 

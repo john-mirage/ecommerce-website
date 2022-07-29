@@ -1,4 +1,4 @@
-const view = {
+const page = {
   "/orinoco/": "index",
   "/orinoco/produit": "product",
   "/orinoco/panier": "cart",
@@ -50,7 +50,7 @@ class AppRouter extends HTMLElement {
 
   handleNavigation(href, isAnimated = false) {
     const url = new URL(href);
-    const nextPage= view[url.pathname] ?? "not-found";
+    const nextPage= page[url.pathname] ?? "not-found";
     this.appView.switchPage(nextPage, isAnimated);
   }
 }

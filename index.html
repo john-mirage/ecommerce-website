@@ -146,7 +146,7 @@
 
   <!-- template | app product description skeleton -->
   <template id="template-app-product-description-skeleton">
-    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2" data-name="skeleton">
+    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
       <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-200 animate-pulse"></div>
       <div class="animate-pulse">
         <h1 class="mb-2 h-7 max-w-xs rounded-full bg-neutral-200"></h1>
@@ -220,6 +220,25 @@
 
   <!-- template | app cart item -->
   <template id="template-app-cart-item">
+    <li class="flex flex-row justify-start items-start py-6">
+      <div class="mr-6 flex-none w-1/4">
+        <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+          <img class="w-full h-full object-cover" src="" alt="" data-name="image">
+        </div>
+      </div>
+      <div class="flex-1">
+        <div>
+          <h3 class="font-semibold text-lg text-neutral-700" data-name="name"></h3>
+          <p class="font-semibold text-lg text-neutral-500" data-name="price"></p>
+          <p class="font-normal text-base text-neutral-600" data-name="number"></p>
+          <p class="font-normal text-base text-neutral-600" data-name="lens"></p>
+        </div>
+      </div>
+    </li>
+  </template>
+
+  <!-- template | app cart item skeleton -->
+  <template id="template-app-cart-item-skeleton">
     <li class="flex flex-row justify-start items-start py-6">
       <div class="mr-6 flex-none w-1/4">
         <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
