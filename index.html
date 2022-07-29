@@ -98,56 +98,7 @@
   <template id="template-app-index-product-list">
     <div class="mx-auto container px-6 lg:px-10" id="trending">
       <h2 class="mb-4 font-sans font-semibold text-2xl text-neutral-800">Tendances</h2>
-      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list">
-        <li class="animate-pulse" data-name="skeleton">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
-          </div>
-          <div class="flex flex-row justify-between items-center mt-3">
-            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
-            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
-          </div>
-        </li>
-        <li class="animate-pulse" data-name="skeleton">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
-          </div>
-          <div class="flex flex-row justify-between items-center mt-3">
-            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
-            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
-          </div>
-        </li>
-        <li class="animate-pulse" data-name="skeleton">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
-          </div>
-          <div class="flex flex-row justify-between items-center mt-3">
-            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
-            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
-          </div>
-        </li>
-        <li class="animate-pulse" data-name="skeleton">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
-          </div>
-          <div class="flex flex-row justify-between items-center mt-3">
-            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
-            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
-          </div>
-        </li>
-        <li class="animate-pulse" data-name="skeleton">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
-          </div>
-          <div class="flex flex-row justify-between items-center mt-3">
-            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
-            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
-          </div>
-        </li>
-        <li class="animate-pulse" data-name="skeleton">
-          <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
-          </div>
-          <div class="flex flex-row justify-between items-center mt-3">
-            <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
-            <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
-          </div>
-        </li>
-      </ul>
+      <ul class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10" data-name="list"></ul>
     </div>
   </template>
 
@@ -166,23 +117,20 @@
     </li>
   </template>
 
-  <!-- template | app product page -->
-  <template id="template-app-product-page">
-    <app-product-camera>
-      <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2" data-name="skeleton">
-        <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-200 animate-pulse"></div>
-        <div class="animate-pulse">
-          <h1 class="mb-2 h-7 max-w-xs rounded-full bg-neutral-200"></h1>
-          <p class="mb-4 h-7 max-w-xs rounded-full bg-neutral-200"></p>
-          <p class="mb-6 h-6 max-w-xs rounded-full bg-neutral-200"></p>
-          <button class="block w-48 h-12 rounded-lg bg-neutral-200"></button>
-        </div>
+  <!-- template | app index product skeleton -->
+  <template id="template-app-index-product-skeleton">
+    <li class="animate-pulse">
+      <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
       </div>
-    </app-product-camera>
+      <div class="flex flex-row justify-between items-center mt-3">
+        <div class="w-32 h-5 rounded-full bg-neutral-200"></div>
+        <div class="w-16 h-5 rounded-full bg-neutral-200"></div>
+      </div>
+    </li>
   </template>
 
-  <!-- template | app product camera -->
-  <template id="template-app-product-camera">
+  <!-- template | app product description -->
+  <template id="template-app-product-description">
     <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
       <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
         <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
@@ -196,9 +144,22 @@
     </div>
   </template>
 
+  <!-- template | app product description skeleton -->
+  <template id="template-app-product-description-skeleton">
+    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2" data-name="skeleton">
+      <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-200 animate-pulse"></div>
+      <div class="animate-pulse">
+        <h1 class="mb-2 h-7 max-w-xs rounded-full bg-neutral-200"></h1>
+        <p class="mb-4 h-7 max-w-xs rounded-full bg-neutral-200"></p>
+        <p class="mb-6 h-6 max-w-xs rounded-full bg-neutral-200"></p>
+        <button class="block w-48 h-12 rounded-lg bg-neutral-200"></button>
+      </div>
+    </div>
+  </template>
+
   <!-- template | app cart page -->
   <template id="template-app-cart-page">
-    <app-cart class="mx-auto container px-6 pt-16 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 lg:px-10">
+    <div class="mx-auto container px-6 pt-16 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 lg:px-10">
       <app-cart-summary class="lg:order-2">
         <div class="flex flex-col px-6 py-4 bg-neutral-100 rounded-lg">
           <h2 class="font-semibold text-xl text-neutral-800">Détail du panier</h2>
@@ -254,7 +215,7 @@
           <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Commander</button>
         </form>
       </app-cart-form>
-    </app-cart>
+    </div>
   </template>
 
   <!-- template | app cart item -->
