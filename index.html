@@ -33,61 +33,53 @@
 
   <!-- app -->
   <app-router class="block overflow-x-hidden">
-    <app-header class="block fixed z-50 inset-x-0"></app-header>
+    <app-header class="block fixed z-50 inset-x-0">
+      <header class="w-full h-16 bg-neutral-900 shadow-lg">
+        <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
+          <a href="/orinoco/" data-name="logo-link">
+            <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
+          </a>
+          <a class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" href="/orinoco/panier" data-name="cart-link">
+            <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-500 font-semibold text-xs text-neutral-100" data-name="cart-badge"></span>
+          </a>
+        </div>
+      </header>
+    </app-header>
     <app-view class="block">
       <app-page class="flex flex-col min-h-screen">
         <main class="flex-1 my-16" data-name="main"></main>
-        <app-footer class="flex-none"></app-footer>
+        <footer class="pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
+          <div class="mx-auto container px-6 lg:px-10">
+            <div class="divide-y divide-neutral-200">
+              <div class="grid grid-cols-1 gap-8 pb-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+                <div class="max-w-lg">
+                  <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Pas de frais de transport</h3>
+                  <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+                </div>
+                <div class="max-w-lg">
+                  <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Service client disponible 24/7</h3>
+                  <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+                </div>
+                <div class="max-w-lg">
+                  <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">10 ans de garanties</h3>
+                  <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
+                </div>
+              </div>
+              <div class="pt-6">
+                <p class="font-sans font-normal text-sm text-neutral-600">copyright Orinoco</p>
+              </div>
+            </div>
+          </div>
+        </footer>
       </app-page>
     </app-view>
   </app-router>
 
-  <!-- template | app header -->
-  <template id="template-app-header">
-    <header class="w-full h-16 bg-neutral-900 shadow-lg">
-      <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
-        <a href="/orinoco/" data-name="logo-link">
-          <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
-        </a>
-        <a class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" href="/orinoco/panier" data-name="cart-link">
-          <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-          <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-500 font-semibold text-xs text-neutral-100" data-name="cart-badge"></span>
-        </a>
-      </div>
-    </header>
-  </template>
-
-  <!-- template | app footer -->
-  <template id="template-app-footer">
-    <footer class="pt-16 pb-6 bg-neutral-100 border-t border-neutral-200">
-      <div class="mx-auto container px-6 lg:px-10">
-        <div class="divide-y divide-neutral-200">
-          <div class="grid grid-cols-1 gap-8 pb-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-            <div class="max-w-lg">
-              <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Pas de frais de transport</h3>
-              <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
-            </div>
-            <div class="max-w-lg">
-              <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">Service client disponible 24/7</h3>
-              <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
-            </div>
-            <div class="max-w-lg">
-              <h3 class="mb-2 font-sans font-semibold text-lg text-neutral-800">10 ans de garanties</h3>
-              <p class="font-sans font-normal text-sm text-neutral-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quae perspiciatis facilis dolores id cupiditate sit animi iusto! Repellendus temporibus facilis officiis.</p>
-            </div>
-          </div>
-          <div class="pt-6">
-            <p class="font-sans font-normal text-sm text-neutral-600">copyright Orinoco</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </template>
-
   <!-- template | app index page -->
-  <template id="template-index-page">
+  <template id="template-app-index-page">
     <div class="mb-12 py-20 bg-neutral-800">
       <div class="mx-auto container px-6 lg:px-10">
         <div class="max-w-lg lg:max-w-2xl">
@@ -175,56 +167,40 @@
   </template>
 
   <!-- template | app product page -->
-  <template id="template-product-page">
-    <h1 class="text-4xl">PRODUCT PAGE</h1>
-  </template>
-
-  <!-- template | app cart page -->
-  <template id="template-cart-page">
-    <h1 class="text-4xl">CART PAGE</h1>
-  </template>
-
-  <!-- template | app cart page -->
-  <template id="template-error-page">
-    <h1 class="text-4xl">ERROR PAGE</h1>
-  </template>
-
-  <!-- template | app error -->
-  <template id="template-app-error">
-    <div class="flex flex-col min-h-screen">
-      <main class="flex-1 my-16">
-        <div class="mx-auto container flex flex-col items-center px-6 pt-16 gap-6 lg:px-10">
-          <h1 class="mb-6 text-xl font-semibold text-neutral-800" data-name="title"></h1>
-          <img class="w-full h-auto max-w-3xl" src="" alt="" draggable="false" data-name="image">
+  <template id="template-app-product-page">
+    <app-product-camera>
+      <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2" data-name="skeleton">
+        <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-200 animate-pulse"></div>
+        <div class="animate-pulse">
+          <h1 class="mb-2 h-7 max-w-xs rounded-full bg-neutral-200"></h1>
+          <p class="mb-4 h-7 max-w-xs rounded-full bg-neutral-200"></p>
+          <p class="mb-6 h-6 max-w-xs rounded-full bg-neutral-200"></p>
+          <button class="block w-48 h-12 rounded-lg bg-neutral-200"></button>
         </div>
-      </main>
-      <app-footer class="flex-none"></app-footer>
+      </div>
+    </app-product-camera>
+  </template>
+
+  <!-- template | app product camera -->
+  <template id="template-app-product-camera">
+    <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
+      <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+        <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
+      </div>
+      <div>
+        <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
+        <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
+        <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
+        <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700" data-name="button">Ajouter au panier</button>
+      </div>
     </div>
   </template>
 
-  <!-- template | app product page -->
-  <template id="template-app-product-view">
-    <main class="flex-1 my-16">
-      <div class="mx-auto container grid grid-cols-1 gap-6 px-6 pt-16 lg:px-10 lg:gap-10 lg:grid-cols-2">
-        <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
-          <img class="w-full h-full object-cover" src="" alt="" data-name="image" draggable="false">
-        </div>
-        <div>
-          <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
-          <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
-          <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
-          <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700" data-name="button">Ajouter au panier</button>
-        </div>
-      </div>
-    </main>
-    <app-footer class="flex-none"></app-footer>
-  </template>
-
-  <!-- template | app cart view -->
-  <template id="template-app-cart-view">
-    <main class="flex-1 my-16">
-      <div class="mx-auto container px-6 pt-16 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 lg:px-10">
-        <div class="flex flex-col px-6 py-4 bg-neutral-100 rounded-lg lg:order-2">
+  <!-- template | app cart page -->
+  <template id="template-app-cart-page">
+    <app-cart class="mx-auto container px-6 pt-16 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10 lg:px-10">
+      <app-cart-summary class="lg:order-2">
+        <div class="flex flex-col px-6 py-4 bg-neutral-100 rounded-lg">
           <h2 class="font-semibold text-xl text-neutral-800">Détail du panier</h2>
           <ul class="divide-y divide-neutral-300" data-name="list"></ul>
           <div class="mt-auto flex flex-row justify-between items-center py-4 border-t border-t-neutral-200">
@@ -232,54 +208,53 @@
             <p class="font-semibold text-lg text-neutral-600" data-name="total-price"></p>
           </div>
         </div>
-        <div class="lg:order-1">
-          <h2 class="font-semibold text-2xl text-neutral-800">Formulaire de commande</h2>
-          <form class="grid grid-cols-1 gap-6 pt-6">
-            <h3 class="font-semibold text-lg text-neutral-800">Information de contact</h3>
-            <label>
-              <span class="font-normal text-base text-neutral-800">Adresse email</span>
+      </app-cart-summary>
+      <app-cart-form class="lg:order-1">
+        <h2 class="font-semibold text-2xl text-neutral-800">Formulaire de commande</h2>
+        <form class="grid grid-cols-1 gap-6 pt-6">
+          <h3 class="font-semibold text-lg text-neutral-800">Information de contact</h3>
+          <label>
+            <span class="font-normal text-base text-neutral-800">Adresse email</span>
+            <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+          </label>
+          <h3 class="font-semibold text-lg text-neutral-800">Information de paiement</h3>
+          <label>
+            <span class="font-normal text-base text-neutral-800">Numéro de la carte</span>
+            <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+          </label>
+          <div class="flex flex-row justify-start items-center">
+            <label class="mr-6 flex-1">
+              <span class="font-normal text-base text-neutral-800">Date d'expiration</span>
               <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
             </label>
-            <h3 class="font-semibold text-lg text-neutral-800">Information de paiement</h3>
-            <label>
-              <span class="font-normal text-base text-neutral-800">Numéro de la carte</span>
+            <label class="flex-none w-24">
+              <span class="font-normal text-base text-neutral-800">CVC</span>
               <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
             </label>
-            <div class="flex flex-row justify-start items-center">
-              <label class="mr-6 flex-1">
-                <span class="font-normal text-base text-neutral-800">Date d'expiration</span>
-                <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
-              </label>
-              <label class="flex-none w-24">
-                <span class="font-normal text-base text-neutral-800">CVC</span>
-                <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
-              </label>
-            </div>
-            <h3 class="font-semibold text-lg text-neutral-800">Adresse de livraison</h3>
+          </div>
+          <h3 class="font-semibold text-lg text-neutral-800">Adresse de livraison</h3>
+          <label>
+            <span class="font-normal text-base text-neutral-800">Adresse</span>
+            <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+          </label>
+          <div class="grid grid-cols-3 gap-6">
             <label>
-              <span class="font-normal text-base text-neutral-800">Adresse</span>
+              <span class="font-normal text-base text-neutral-800">Ville</span>
               <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
             </label>
-            <div class="grid grid-cols-3 gap-6">
-              <label>
-                <span class="font-normal text-base text-neutral-800">Ville</span>
-                <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
-              </label>
-              <label>
-                <span class="font-normal text-base text-neutral-800">Région</span>
-                <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
-              </label>
-              <label>
-                <span class="font-normal text-base text-neutral-800">Code postal</span>
-                <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
-              </label>
-            </div>
-            <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Commander</button>
-          </form>
-        </div>
-      </div>
-    </main>
-    <app-footer class="flex-none"></app-footer>
+            <label>
+              <span class="font-normal text-base text-neutral-800">Région</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+            <label>
+              <span class="font-normal text-base text-neutral-800">Code postal</span>
+              <input class="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50" type="text">
+            </label>
+          </div>
+          <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700">Commander</button>
+        </form>
+      </app-cart-form>
+    </app-cart>
   </template>
 
   <!-- template | app cart item -->
@@ -299,6 +274,11 @@
         </div>
       </div>
     </li>
+  </template>
+
+  <!-- template | app error page -->
+  <template id="template-app-error-page">
+    <h1 class="text-4xl">ERROR PAGE</h1>
   </template>
 
   <script type="module" src="/src/main.js"></script>

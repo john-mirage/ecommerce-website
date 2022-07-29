@@ -1,7 +1,5 @@
 import { getCartItemNumber } from "@utils/camera-cart";
 
-const template = document.getElementById("template-app-header");
-
 const heartBeatAnimation = [
   {
     transform: "scale(1)",
@@ -32,11 +30,9 @@ const heartBeatAnimationTiming = {
 class AppHeader extends HTMLElement {
   constructor() {
     super();
-    this.initialCall = true;
-    this.fragment = template.content.cloneNode(true);
-    this.logoLinkElement = this.fragment.querySelector('[data-name="logo-link"]');
-    this.cartLinkElement = this.fragment.querySelector('[data-name="cart-link"]');
-    this.cartBadgeElement = this.fragment.querySelector('[data-name="cart-badge"]');
+    this.logoLinkElement = this.querySelector('[data-name="logo-link"]');
+    this.cartLinkElement = this.querySelector('[data-name="cart-link"]');
+    this.cartBadgeElement = this.querySelector('[data-name="cart-badge"]');
   }
 
   get cartItemsNumber() {
@@ -53,11 +49,6 @@ class AppHeader extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.initialCall) {
-      this.append(this.fragment);
-      this.initialCall = false;
-    }
-    console.log("connectedCallback", getCartItemNumber());
     this.cartItemsNumber = getCartItemNumber();
     this.logoLinkElement.addEventListener("click", this.handleLinkClick);
     this.cartLinkElement.addEventListener("click", this.handleLinkClick);
@@ -76,7 +67,6 @@ class AppHeader extends HTMLElement {
   }
 
   updateCartBadge(itemNumber) {
-    console.log("updateCartBadge", itemNumber);
     if (itemNumber > 0) {
       if (!this.contains(this.cartBadgeElement)) {
         this.cartLinkElement.append(this.cartBadgeElement);

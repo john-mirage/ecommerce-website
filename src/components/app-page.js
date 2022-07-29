@@ -1,10 +1,5 @@
 import { fadeInAnimation, fadeOutAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
 
-const indexPageTemplate = document.getElementById("template-index-page");
-const productPageTemplate = document.getElementById("template-product-page");
-const cartPageTemplate = document.getElementById("template-cart-page");
-const errorPageTemplate = document.getElementById("template-error-page");
-
 class AppPage extends HTMLElement {
   static get observedAttributes() {
     return ["page"];
@@ -17,22 +12,34 @@ class AppPage extends HTMLElement {
 
   get indexPage() {
     const indexPageIsDefined = this.hasOwnProperty("_indexPage");
-    return indexPageIsDefined ? this._indexPage : indexPageTemplate.content.cloneNode(true);
+    if (!indexPageIsDefined) {
+      this._indexPage = document.createElement("app-index-page");
+    }
+    return this._indexPage;
   }
 
   get productPage() {
     const productPageIsDefined = this.hasOwnProperty("_productPage");
-    return productPageIsDefined ? this._productPage : productPageTemplate.content.cloneNode(true);
+    if (!productPageIsDefined) {
+      this._productPage = document.createElement("app-product-page");
+    }
+    return this._productPage;
   }
 
   get cartPage() {
     const cartPageIsDefined = this.hasOwnProperty("_cartPage");
-    return cartPageIsDefined ? this._cartPage : cartPageTemplate.content.cloneNode(true);
+    if (!cartPageIsDefined) {
+      this._cartPage = document.createElement("app-cart-page");
+    }
+    return this._cartPage;
   }
 
   get errorPage() {
     const errorPageIsDefined = this.hasOwnProperty("_errorPage");
-    return errorPageIsDefined ? this._errorPage : errorPageTemplate.content.cloneNode(true);
+    if (!errorPageIsDefined) {
+      this._errorPage = document.createElement("app-error-page");
+    }
+    return this._errorPage;
   }
 
   connectedCallback() {

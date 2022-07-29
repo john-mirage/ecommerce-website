@@ -18,7 +18,7 @@ class AppIndexProductList extends HTMLElement {
       this.initialCall = false;
     } else {
       this.listElement.innerHTML = "";
-      this.append(...this.skeletons);
+      this.listElement.append(...this.skeletons);
     }
     this.displayProducts();
   }
