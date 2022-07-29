@@ -1,9 +1,3 @@
-const page = {
-  "/orinoco/": "index",
-  "/orinoco/produit": "product",
-  "/orinoco/panier": "cart",
-};
-
 class AppRouter extends HTMLElement {
   constructor() {
     super();
@@ -31,7 +25,7 @@ class AppRouter extends HTMLElement {
     this.removeEventListener("navigation-link-click", this.handleNavigationLink);
   }
 
-  handleNavigationPopState(event) {
+  handleNavigationPopState() {
     const href = window.location.href;
     if (this.currentHref !== href) {
       this.handleNavigation(window.location.href);
@@ -39,19 +33,52 @@ class AppRouter extends HTMLElement {
     }
   }
 
-  handleNavigationLink(event) {
-    const href = event.detail.href;
-    if (this.currentHref !== href) {
-      window.history.pushState({}, "", href);
-      this.handleNavigation(href, true);
-      this.currentHref = href;
+  handleNavigationLink(customEvent) {
+    if (customEvent instanceof CustomEvent) {
+      const { href } = customEvent.detail;
+      if (this.currentHref !== href) {
+        window.history.pushState({}, "", href);
+        this.handleNavigation(href, true);
+        this.currentHref = href;
+      }
+    } else {
+      throw new Error("The event must be a custom event in order to extract the href");
+    }
+  }
+
+  getPageName(pathname) {
+    if (typeof pathname === "string") {
+      switch(pathname) {
+        case "/orinoco/":
+          return "index";
+        case "/orinoco/produit":
+          return "product";
+        case "/orinoco/panier":
+          return "cart";
+        default:
+          return "not-found";
+      } 
+    } else {
+      throw new Error("The pathname must be a string");
     }
   }
 
   handleNavigation(href, isAnimated = false) {
-    const url = new URL(href);
-    const nextPage= page[url.pathname] ?? "not-found";
-    this.appView.switchPage(nextPage, isAnimated);
+    if (typeof href === "string") {
+      const url = new URL(href);
+      const pageName = this.getPageName(url.pathname);
+      if (typeof isAnimated === "boolean") {
+        if (isAnimated) {
+          this.appView.updateViewWithAnimation(pageName);
+        } else {
+          this.appView.updateView(pageName);
+        }
+      } else {
+        throw new Error("IsAnimated must be a boolean");
+      }
+    } else {
+      throw new Error("The href must be a string");
+    }
   }
 }
 

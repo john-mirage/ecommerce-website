@@ -1,8 +1,14 @@
-import { fadeInAnimation, fadeOutAnimation, fadeInAnimationTiming, fadeOutAnimationTiming } from "@utils/fade-animations";
+import {
+  fadeInAnimation,
+  fadeOutAnimation,
+  fadeInAnimationTiming,
+  fadeOutAnimationTiming
+} from "@utils/fade-animations";
 
 class AppPage extends HTMLElement {
   constructor() {
     super();
+    this.currentPage = false;
     this.mainElement = this.querySelector('[data-name="main"]');
     this.handleError = this.handleError.bind(this);
   }
@@ -61,6 +67,7 @@ class AppPage extends HTMLElement {
     if (page instanceof HTMLElement) {
       this.mainElement.innerHTML = "";
       this.mainElement.append(page);
+      this.currentPage = page;
     } else {
       throw new Error("The page must be an HTML element");
     }

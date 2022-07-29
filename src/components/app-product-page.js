@@ -3,6 +3,7 @@ import { getOneCamera } from "@utils/camera-api";
 class AppProductPage extends HTMLElement {
   constructor() {
     super();
+    this.level = 2;
     this.appProductDescription = document.createElement("app-product-description");
     this.appProductDescriptionSkeleton = document.createElement("app-product-description-skeleton");
   }

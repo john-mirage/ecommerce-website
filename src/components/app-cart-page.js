@@ -4,6 +4,7 @@ class AppCartPage extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.level = 3;
     this.fragment = template.content.cloneNode(true);
   }
 

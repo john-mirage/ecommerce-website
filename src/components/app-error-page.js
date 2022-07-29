@@ -4,6 +4,7 @@ class AppErrorPage extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.level = 4;
     this.fragment = template.content.cloneNode(true);
   }
 

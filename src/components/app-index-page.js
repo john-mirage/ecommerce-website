@@ -4,6 +4,7 @@ class AppIndexPage extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
+    this.level = 1;
     this.fragment = template.content.cloneNode(true);
   }
 
