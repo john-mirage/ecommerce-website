@@ -64,7 +64,7 @@ export async function getSomeCameras(
  * @returns {Object} The fetch response.
  */
 export async function getOneCamera(uuid) {
-  if (typeof uuid === "string") {
+  if (typeof uuid === "string" && uuid.length > 0) {
     let camera = false;
     let isError = false;
     let isNotFound = false;

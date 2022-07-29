@@ -50,13 +50,7 @@ export function getFadeOutAndTranslateAnimation(toLeft) {
   ];
 }
 
-export const fadeInAnimationTiming = {
-  duration: 300,
-  fill: "forwards",
-  easing: "ease-in-out",
-}
-
-export const fadeOutAnimationTiming = {
+export const fadeAnimationTiming = {
   duration: 300,
   easing: "ease-in-out",
 }

@@ -14,26 +14,29 @@ class AppProductPage extends HTMLElement {
     const url = new URL(window.location.href);
     const cameraUuid = url.searchParams.get("id");
     if (cameraUuid) {
-      this.displayCamera(cameraUuid);
+      this.displayCamera(cameraUuid ?? "");
+    } else {
+      const title = "Oups, il semble que le produit que vous cherchez n'existe pas";
+      this.askErrorPage(title);
     }
+  }
+
+  askErrorPage(title) {
+    const customEvent = new CustomEvent("display-error-page", {
+      bubbles: true,
+      detail: { title }
+    });
+    this.dispatchEvent(customEvent);
   }
 
   async displayCamera(cameraUuid) {
     const { camera, isError, isNotFound } = await getOneCamera(cameraUuid);
     if (isError) {
       const title = "Oups, il semble que l'application ne fonctionne pas correctement";
-      const customEvent = new CustomEvent("display-error-page", {
-        bubbles: true,
-        detail: { title }
-      });
-      this.dispatchEvent(customEvent);
+      this.askErrorPage(title);
     } else if (isNotFound) {
       const title = "Oups, il semble que le produit que vous cherchez n'existe pas";
-      const customEvent = new CustomEvent("display-error-page", {
-        bubbles: true,
-        detail: { title }
-      });
-      this.dispatchEvent(customEvent);
+      this.askErrorPage(title);
     } else {
       this.appProductDescription.camera = camera;
       this.innerHTML = "";

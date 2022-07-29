@@ -46,9 +46,10 @@ class AppRouter extends HTMLElement {
     }
   }
 
-  getPageName(pathname) {
-    if (typeof pathname === "string") {
-      switch(pathname) {
+  getPageName(href) {
+    if (typeof href === "string") {
+      const url = new URL(href);
+      switch(url.pathname) {
         case "/orinoco/":
           return "index";
         case "/orinoco/produit":
@@ -59,14 +60,13 @@ class AppRouter extends HTMLElement {
           return "not-found";
       } 
     } else {
-      throw new Error("The pathname must be a string");
+      throw new Error("The href must be a string");
     }
   }
 
   handleNavigation(href, isAnimated = false) {
     if (typeof href === "string") {
-      const url = new URL(href);
-      const pageName = this.getPageName(url.pathname);
+      const pageName = this.getPageName(href);
       if (typeof isAnimated === "boolean") {
         if (isAnimated) {
           this.appView.updateViewWithAnimation(pageName);

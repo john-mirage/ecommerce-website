@@ -1,8 +1,7 @@
 import {
   getFadeInAndTranslateAnimation,
   getFadeOutAndTranslateAnimation,
-  fadeInAnimationTiming,
-  fadeOutAnimationTiming
+  fadeAnimationTiming,
 } from "@utils/fade-animations";
 
 class AppView extends HTMLElement {
@@ -47,11 +46,11 @@ class AppView extends HTMLElement {
         if (typeof currentPage.level === "number" && typeof nextPage.level === "number") {
           const isLeft = currentPage.level < nextPage.level;
           const fadeOutAndTranslateAnimation = getFadeOutAndTranslateAnimation(isLeft);
-          const fadeOut = this.animate(fadeOutAndTranslateAnimation, fadeOutAnimationTiming);
+          const fadeOut = this.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
           fadeOut.onfinish = () => {
             this.appPage.updatePage(nextPage);
             const fadeInAndTranslateAnimation = getFadeInAndTranslateAnimation(isLeft);
-            this.animate(fadeInAndTranslateAnimation, fadeInAnimationTiming);
+            this.animate(fadeInAndTranslateAnimation, fadeAnimationTiming);
           };
         } else {
           throw new Error("Both current page and next page must have a valid level");

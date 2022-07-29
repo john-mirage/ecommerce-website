@@ -1,8 +1,7 @@
 import {
   fadeInAnimation,
   fadeOutAnimation,
-  fadeInAnimationTiming,
-  fadeOutAnimationTiming
+  fadeAnimationTiming,
 } from "@utils/fade-animations";
 
 class AppPage extends HTMLElement {
@@ -66,6 +65,7 @@ class AppPage extends HTMLElement {
   updatePage(page) {
     if (page instanceof HTMLElement) {
       this.mainElement.innerHTML = "";
+      window.scrollTo({top: 0, left: 0});
       this.mainElement.append(page);
       this.currentPage = page;
     } else {
@@ -75,10 +75,10 @@ class AppPage extends HTMLElement {
 
   updatePageWithAnimation(page) {
     if (page instanceof HTMLElement) {
-      const fadeOut = this.animate(fadeOutAnimation, fadeOutAnimationTiming);
+      const fadeOut = this.animate(fadeOutAnimation, fadeAnimationTiming);
       fadeOut.onfinish = () => {
         this.updatePage(page);
-        this.animate(fadeInAnimation, fadeInAnimationTiming);
+        this.animate(fadeInAnimation, fadeAnimationTiming);
       };
     } else {
       throw new Error("The page must be an HTML element");
