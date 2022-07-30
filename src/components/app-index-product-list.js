@@ -51,8 +51,8 @@ class AppIndexProductList extends HTMLElement {
         product.camera = camera;
         this.listElement.append(product);
       });
-      this.abortController = false;
     }
+    this.abortController = false;
   }
 }
 

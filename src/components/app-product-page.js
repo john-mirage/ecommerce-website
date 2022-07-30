@@ -59,8 +59,8 @@ class AppProductPage extends HTMLElement {
       this.innerHTML = "";
       this.appProductDescription.camera = camera;
       this.append(this.appProductDescription);
-      this.abortController = false;
     }
+    this.abortController = false;
   }
 }
 
