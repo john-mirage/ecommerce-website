@@ -36,7 +36,7 @@ class AppHeader extends HTMLElement {
   }
 
   get cartItemsNumber() {
-    if (this.hasOwnProperty("_cartItemsNumber") && this._cartItemsNumber !== undefined) {
+    if (this.hasOwnProperty("_cartItemsNumber")) {
       return this._cartItemsNumber;
     } else {
       throw new Error("The cart items number is not defined");

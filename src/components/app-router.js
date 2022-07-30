@@ -1,3 +1,5 @@
+import { Cart } from "@utils/cart";
+
 class AppRouter extends HTMLElement {
   constructor() {
     super();
@@ -7,6 +9,7 @@ class AppRouter extends HTMLElement {
     this.currentHref = "";
     this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
     this.handleNavigationLink = this.handleNavigationLink.bind(this);
+    this.cart = new Cart();
   }
 
   connectedCallback() {
@@ -16,6 +19,7 @@ class AppRouter extends HTMLElement {
       this.currentHref = href;
       this.initialCall = false;
     }
+    this.appHeader.cartItemsNumber = this.cart.itemsNumber;
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("navigation-link-click", this.handleNavigationLink);
   }

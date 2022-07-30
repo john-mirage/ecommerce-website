@@ -37,7 +37,3 @@ customElements.define("app-page", AppPage);
 customElements.define("app-view", AppView);
 customElements.define("app-header", AppHeader);
 customElements.define("app-router", AppRouter);
-
-const cart = new Cart();
-
-cart.addCameraByLens("0000-0000-0000-0001", "100mm" , 2);

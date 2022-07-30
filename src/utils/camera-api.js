@@ -26,7 +26,6 @@ export async function getAllCameras(
     } else {
       throw new Error("unknown response");
     }
-    console.log(response, cameras, error);
     return { cameras, error };
   } else {
     throw new Error("Invalid parameters");
