@@ -45,13 +45,12 @@ class AppIndexProductList extends HTMLElement {
         this.dispatchEvent(customEvent);
       }
     } else {
-      const products = cameras.map((camera) => {
+      this.listElement.innerHTML = "";
+      cameras.forEach((camera) => {
         const product = this.appIndexProduct.cloneNode(true);
         product.camera = camera;
-        return product;
+        this.listElement.append(product);
       });
-      this.listElement.innerHTML = "";
-      this.listElement.append(...products);
       this.abortController = false;
     }
   }

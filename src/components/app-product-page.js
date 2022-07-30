@@ -6,6 +6,7 @@ class AppProductPage extends HTMLElement {
     this.level = 2;
     this.appProductDescription = document.createElement("app-product-description");
     this.appProductDescriptionSkeleton = document.createElement("app-product-description-skeleton");
+    this.abortController = false;
   }
 
   connectedCallback() {
@@ -21,6 +22,12 @@ class AppProductPage extends HTMLElement {
     }
   }
 
+  disconnectedCallback() {
+    if (this.abortController instanceof AbortController) {
+      this.abortController.abort();
+    }
+  }
+
   askErrorPage(title) {
     const customEvent = new CustomEvent("display-error-page", {
       bubbles: true,
@@ -30,17 +37,29 @@ class AppProductPage extends HTMLElement {
   }
 
   async displayCamera(cameraUuid) {
-    const { camera, isError, isNotFound } = await getOneCamera(cameraUuid);
-    if (isError) {
-      const title = "Oups, il semble que l'application ne fonctionne pas correctement";
-      this.askErrorPage(title);
-    } else if (isNotFound) {
-      const title = "Oups, il semble que le produit que vous cherchez n'existe pas";
-      this.askErrorPage(title);
+    this.abortController = new AbortController();
+    const { camera, error } = await getOneCamera(cameraUuid, this.abortController.signal);
+    if (typeof error === "string") {
+      if (error !== "aborted") {
+        let title = "";
+        switch(error) {
+          case "error":
+            title = "Oups, il semble que l'application ne fonctionne pas correctement";
+            break;
+          case "not-found":
+            title = "Oups, il semble que le produit que vous cherchez n'existe pas";
+            break;
+          default:
+            title = "Erreur inconnue";
+            break;
+        }
+        this.askErrorPage(title);
+      }
     } else {
-      this.appProductDescription.camera = camera;
       this.innerHTML = "";
+      this.appProductDescription.camera = camera;
       this.append(this.appProductDescription);
+      this.abortController = false;
     }
   }
 }
