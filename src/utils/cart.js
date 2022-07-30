@@ -132,8 +132,8 @@ export class Cart {
   save() {
     if (this.cart.size > 0) {
       const cartAsArray = Array.from(this.cart);
-      const cart = cartAsArray.map((item) => Array.from(item));
-      localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
+      const cartAndCameraAsArray = cartAsArray.map((item) => Array.from(item));
+      localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cartAndCameraAsArray));
     } else if (localStorage.getItem(CART_LOCAL_STORAGE_KEY)) {
       localStorage.removeItem(CART_LOCAL_STORAGE_KEY);
     }
