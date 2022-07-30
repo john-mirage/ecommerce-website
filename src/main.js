@@ -1,5 +1,7 @@
 import "./main.css";
 
+import { Cart } from "@utils/cart";
+
 import AppRouter from "@components/app-router";
 import AppHeader from "@components/app-header";
 import AppView from "@components/app-view";
@@ -35,3 +37,19 @@ customElements.define("app-page", AppPage);
 customElements.define("app-view", AppView);
 customElements.define("app-header", AppHeader);
 customElements.define("app-router", AppRouter);
+
+const cart = new Cart([
+  ["0000-0000-0000-0001", [
+    ["50mm", 2],
+    ["40mm", 1],
+  ]],
+  ["0000-0000-0000-0002", [
+    ["100mm", 2],
+    ["250mm", 3],
+  ]],
+]);
+
+cart.deleteCameraByLens("0000-0000-0000-0002", "100mm");
+cart.deleteCameraByLens("0000-0000-0000-0002", "250mm");
+
+console.log(cart.cart);
