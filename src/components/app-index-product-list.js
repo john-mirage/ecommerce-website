@@ -10,6 +10,7 @@ class AppIndexProductList extends HTMLElement {
     this.listElement = this.fragment.querySelector('[data-name="list"]');
     this.appIndexProduct = document.createElement("app-index-product");
     this.appIndexProductSkeleton = document.createElement("app-index-product-skeleton");
+    this.abortController = false;
   }
 
   connectedCallback() {
@@ -18,22 +19,31 @@ class AppIndexProductList extends HTMLElement {
       this.initialCall = false;
     }
     this.listElement.innerHTML = "";
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < 6; ++index) {
       const skeleton = this.appIndexProductSkeleton.cloneNode(true);
       this.listElement.append(skeleton);
     }
     this.displayProducts();
   }
 
+  disconnectedCallback() {
+    if (this.abortController instanceof AbortController) {
+      this.abortController.abort();
+    }
+  }
+
   async displayProducts() {
-    const { cameras, isError } = await getAllCameras();
-    if (isError) {
-      const title = "Oups, il semble que l'application ne fonctionne pas correctement";
-      const customEvent = new CustomEvent("display-error-page", {
-        bubbles: true,
-        detail: { title }
-      });
-      this.dispatchEvent(customEvent);
+    this.abortController = new AbortController();
+    const { cameras, error } = await getAllCameras(this.abortController.signal);
+    if (typeof error === "string") {
+      if (error !== "aborted") {
+        const title = "Oups, il semble que l'application ne fonctionne pas correctement";
+        const customEvent = new CustomEvent("display-error-page", {
+          bubbles: true,
+          detail: { title }
+        });
+        this.dispatchEvent(customEvent);
+      }
     } else {
       const products = cameras.map((camera) => {
         const product = this.appIndexProduct.cloneNode(true);
@@ -42,6 +52,7 @@ class AppIndexProductList extends HTMLElement {
       });
       this.listElement.innerHTML = "";
       this.listElement.append(...products);
+      this.abortController = false;
     }
   }
 }

@@ -38,18 +38,6 @@ customElements.define("app-view", AppView);
 customElements.define("app-header", AppHeader);
 customElements.define("app-router", AppRouter);
 
-const cart = new Cart([
-  ["0000-0000-0000-0001", [
-    ["50mm", 2],
-    ["40mm", 1],
-  ]],
-  ["0000-0000-0000-0002", [
-    ["100mm", 2],
-    ["250mm", 3],
-  ]],
-]);
+const cart = new Cart();
 
-cart.deleteCameraByLens("0000-0000-0000-0002", "100mm");
-cart.deleteCameraByLens("0000-0000-0000-0002", "250mm");
-
-console.log(cart.cart);
+cart.addCameraByLens("0000-0000-0000-0001", "100mm" , 2);

@@ -1,36 +1,46 @@
 const API_URL = "http://localhost:3000/api/cameras/";
 
+const abortController = new AbortController();
+
 /**
  * Get all the cameras from the API.
  * 
+ * @param {AbortSignal} signal - the fetch abort signal.
  * @returns {Object} The fetch response.
  */
-export async function getAllCameras() {
+export async function getAllCameras(
+  signal
+) {
   let cameras = [];
-  let isError = false;
-  const response = await fetch(API_URL)
+  let error = false;
+  const response = await fetch(API_URL, { signal })
     .then(response => response)
-    .catch(() => false);
-  if (response) {
+    .catch((error) => error.message);
+  if (response instanceof Response) {
     if (response.ok) {
       cameras = await response.json();
     } else {
-      isError = true;
+      error = "not-found";
     }
+  } else if (typeof response === "string") {
+    error = response === "The user aborted a request." ? "aborted" : "error";
   } else {
-    isError = true;
+    throw new Error("unknown response");
   }
-  return { cameras, isError };
+  console.log(response, cameras, error);
+  return { cameras, error };
 }
 
 /**
  * Get some cameras from the API.
  * 
  * @param {uuids} uuids - The camera uuids.
+ * @param {AbortSignal} signal - the fetch abort signal.
  * @param {(uuid) => Object} _getOneCamera - The function used to retrieve one camera from the API.
  */
 export async function getSomeCameras(
   uuids,
+  signal,
   _getOneCamera = getOneCamera
 ) {
   const uuidsAreValid = Array.isArray(uuids) && uuids.every((uuid) => typeof uuid === "string");
@@ -61,9 +71,13 @@ export async function getSomeCameras(
  * Get one camera from the API.
  * 
  * @param {string} uuid - The camera uuid.
+ * @param {AbortSignal} signal - the fetch abort signal.
  * @returns {Object} The fetch response.
  */
-export async function getOneCamera(uuid) {
+export async function getOneCamera(
+  uuid,
+  signal
+) {
   if (typeof uuid === "string" && uuid.length > 0) {
     let camera = false;
     let isError = false;
