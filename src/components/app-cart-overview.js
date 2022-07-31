@@ -9,13 +9,13 @@ const heartBeatAnimation = [
 ];
 
 const fadeInAndTranslateAnimation = [
-  { opacity: 0, transform: "translateY(-2rem)", offset: 0},
+  { opacity: 0, transform: "translateY(-1rem)", offset: 0},
   { opacity: 1, transform: "translateY(0)", offset: 1 }
 ];
 
 const fadeOutAndTranslateAnimation = [
   { opacity: 1, transform: "translateY(0)", offset: 0 },
-  { opacity: 0, transform: "translateY(-2rem)", offset: 1 }
+  { opacity: 0, transform: "translateY(-1rem)", offset: 1 }
 ];
 
 const heartBeatAnimationTiming = {
@@ -38,11 +38,16 @@ class AppCartOverview extends HTMLElement {
     this.isOpen = false;
     this.isAnimating = false;
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   connectedCallback() {
     this.updateButtonBadge();
     this.buttonElement.addEventListener("click", this.handleButtonClick);
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener("click", this.handleOutsideClick);
   }
 
   handleButtonClick() {
@@ -56,6 +61,13 @@ class AppCartOverview extends HTMLElement {
     }
   }
 
+  handleOutsideClick(event) {
+    if (!this.contains(event.target)) {
+      console.log("outside click detected");
+      this.closeModal();
+    }
+  }
+
   openModal() {
     this.isAnimating = true;
     this.modalElement.classList.replace("hidden", "block");
@@ -63,10 +75,12 @@ class AppCartOverview extends HTMLElement {
     fadeIn.onfinish = () => {
       this.isOpen = true;
       this.isAnimating = false;
+      window.addEventListener("click", this.handleOutsideClick);
     };
   }
 
   closeModal() {
+    window.removeEventListener("click", this.handleOutsideClick);
     this.isAnimating = true;
     const fadeOut = this.modalElement.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
     fadeOut.onfinish = () => {
