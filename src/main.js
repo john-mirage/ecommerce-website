@@ -1,7 +1,5 @@
 import "./main.css";
 
-import { Cart } from "@utils/cart";
-
 import AppRouter from "@components/app-router";
 import AppHeader from "@components/app-header";
 import AppView from "@components/app-view";
@@ -16,6 +14,7 @@ import AppProductPage from "@components/app-product-page";
 import AppProductDescription from "@components/app-product-description";
 import AppProductDescriptionSkeleton from "@components/app-product-description-skeleton";
 
+import AppCartOverview from "@components/app-cart-overview";
 import AppCartPage from "@components/app-cart-page";
 
 import AppErrorPage from "@components/app-error-page";
@@ -29,6 +28,7 @@ customElements.define("app-product-description-skeleton", AppProductDescriptionS
 customElements.define("app-product-description", AppProductDescription);
 customElements.define("app-product-page", AppProductPage);
 
+customElements.define("app-cart-overview", AppCartOverview);
 customElements.define("app-cart-page", AppCartPage);
 
 customElements.define("app-error-page", AppErrorPage);

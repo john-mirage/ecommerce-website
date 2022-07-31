@@ -1,15 +1,15 @@
-import { Cart } from "@utils/cart";
+import { cart } from "@utils/cart";
 
 class AppRouter extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
     this.appHeader = this.querySelector("app-header");
+    this.appCartOverview = this.querySelector("app-cart-overview");
     this.appView = this.querySelector("app-view");
     this.currentHref = "";
     this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
     this.handleNavigationLink = this.handleNavigationLink.bind(this);
-    this.cart = new Cart();
   }
 
   connectedCallback() {
@@ -19,7 +19,6 @@ class AppRouter extends HTMLElement {
       this.currentHref = href;
       this.initialCall = false;
     }
-    this.appHeader.cartItemsNumber = this.cart.itemsNumber;
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("navigation-link-click", this.handleNavigationLink);
   }

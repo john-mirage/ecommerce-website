@@ -36,15 +36,25 @@
     <app-header class="block fixed z-50 inset-x-0">
       <header class="w-full h-16 bg-neutral-900 shadow-lg">
         <div class="mx-auto container px-6 flex flex-row justify-between items-center h-full lg:px-10">
-          <a href="/orinoco/" data-name="logo-link">
+          <a href="/orinoco/" data-name="link">
             <img class="h-8" src="/src/images/logo.svg" alt="" draggable="false">
           </a>
-          <a class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" href="/orinoco/panier" data-name="cart-link">
-            <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-500 font-semibold text-xs text-neutral-100" data-name="cart-badge"></span>
-          </a>
+          <app-cart-overview class="relative z-50">
+            <button class="-mr-3 relative flex w-12 h-12 rounded-full text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200" data-name="cart-button">
+              <svg class="m-auto h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-500 font-semibold text-xs text-neutral-100" data-name="cart-badge"></span>
+            </button>
+            <div class="mt-6 absolute right-0 flex flex-col w-screen max-w-sm h-96 p-6 rounded-xl shadow-lg bg-white divide-y divide-neutral-200" data-name="cart-modal">
+              <ul class="flex-1" data-name="cart-list"></ul>
+              <div class="flex-none pt-4">
+                <a class="flex w-full h-12 rounded-lg shadow-md bg-neutral-800 hover:bg-neutral-700" href="/orinoco/panier" data-name="link">
+                  <span class="m-auto font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir le panier</span>
+                </a>
+              </div>
+            </div>
+          </app-cart-overview>
         </div>
       </header>
     </app-header>
@@ -139,7 +149,9 @@
         <h1 class="mb-2 font-semibold text-3xl text-neutral-800" data-name="name"></h1>
         <p class="mb-4 font-semibold text-xl text-neutral-500" data-name="price"></p>
         <p class="mb-6 max-w-lg font-normal text-base text-neutral-500" data-name="description"></p>
-        <button class="h-12 px-6 rounded-lg bg-neutral-800 font-semibold uppercase tracking-widest text-xs text-neutral-200 hover:bg-neutral-700" data-name="button">Ajouter au panier</button>
+        <button class="flex h-12 px-6 rounded-lg bg-neutral-800 hover:bg-neutral-700" data-name="button">
+          <span class="m-auto font-semibold uppercase tracking-widest text-xs text-neutral-200">Ajouter au panier</span>
+        </button>
       </div>
     </div>
   </template>
