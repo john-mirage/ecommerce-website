@@ -1,14 +1,20 @@
 class AppHeader extends HTMLElement {
   constructor() {
     super();
+    this.links = this.querySelectorAll('[data-name="link"]');
+    this.handleLinkClick = this.handleLinkClick.bind(this);
   }
 
   connectedCallback() {
-
+    this.links.forEach((link) => {
+      link.addEventListener("click", this.handleLinkClick);
+    });
   }
 
   disconnectedCallback() {
-
+    this.links.forEach((link) => {
+      link.removeEventListener("click", this.handleLinkClick);
+    });
   }
 
   handleLinkClick(event) {
