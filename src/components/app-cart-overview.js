@@ -8,10 +8,6 @@ const heartBeatAnimation = [
   { transform: "scale(1)", offset: 0.7 },
 ];
 
-const heartBeatAnimationTiming = {
-  duration: 1000,
-}
-
 const fadeInAndTranslateAnimation = [
   { opacity: 0, transform: "translateY(-2rem)", offset: 0},
   { opacity: 1, transform: "translateY(0)", offset: 1 }
@@ -21,6 +17,10 @@ const fadeOutAndTranslateAnimation = [
   { opacity: 1, transform: "translateY(0)", offset: 0 },
   { opacity: 0, transform: "translateY(-2rem)", offset: 1 }
 ];
+
+const heartBeatAnimationTiming = {
+  duration: 1000,
+}
 
 const fadeAnimationTiming = {
   duration: 300,
@@ -41,8 +41,7 @@ class AppCartOverview extends HTMLElement {
   }
 
   connectedCallback() {
-    this.updateBadge();
-    this.modalElement.style.display = "none";
+    this.updateButtonBadge();
     this.buttonElement.addEventListener("click", this.handleButtonClick);
   }
 
@@ -59,7 +58,7 @@ class AppCartOverview extends HTMLElement {
 
   openModal() {
     this.isAnimating = true;
-    this.modalElement.style.display = "block";
+    this.modalElement.classList.replace("hidden", "block");
     const fadeIn = this.modalElement.animate(fadeInAndTranslateAnimation, fadeAnimationTiming);
     fadeIn.onfinish = () => {
       this.isOpen = true;
@@ -71,13 +70,13 @@ class AppCartOverview extends HTMLElement {
     this.isAnimating = true;
     const fadeOut = this.modalElement.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
     fadeOut.onfinish = () => {
-      this.modalElement.style.display = "none";
+      this.modalElement.classList.replace("block", "hidden");
       this.isOpen = false;
       this.isAnimating = false;
     };
   }
 
-  updateBadge() {
+  updateButtonBadge() {
     if (this.cart.itemsNumber > 0) {
       if (!this.contains(this.badgeElement)) {
         this.buttonElement.append(this.badgeElement);
