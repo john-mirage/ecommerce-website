@@ -1,4 +1,5 @@
 import { formatCameraPrice } from "@utils/camera-price-formatter";
+import { cart } from "@utils/cart";
 
 const template = document.getElementById("template-app-product-description");
 
@@ -13,6 +14,8 @@ class AppProductDescription extends HTMLElement {
     this.descriptionElement = this.fragment.querySelector('[data-name="description"]');
     this.buttonElement = this.fragment.querySelector('[data-name="button"]');
     this.skeleton = this.fragment.querySelector('[data-name="skeleton"]');
+    this.handleCartButtonClick = this.handleCartButtonClick.bind(this);
+    this.cart = cart
   }
 
   get camera() {
@@ -37,6 +40,17 @@ class AppProductDescription extends HTMLElement {
       this.append(this.fragment);
       this.initialCall = false;
     }
+    this.buttonElement.addEventListener("click", this.handleCartButtonClick);
+  }
+
+  disconnectedCallback() {
+    this.buttonElement.removeEventListener("click", this.handleCartButtonClick);
+  }
+
+  handleCartButtonClick() {
+    this.cart.addCameraByLens(this.camera._id, this.camera.lenses[0], 1);
+    const customEvent = new CustomEvent("cart-updated", { bubbles: true });
+    this.dispatchEvent(customEvent);
   }
 }
 

@@ -10,6 +10,7 @@ class AppRouter extends HTMLElement {
     this.currentHref = "";
     this.handleNavigationPopState = this.handleNavigationPopState.bind(this);
     this.handleNavigationLink = this.handleNavigationLink.bind(this);
+    this.handleCartUpdated = this.handleCartUpdated.bind(this);
   }
 
   connectedCallback() {
@@ -21,11 +22,13 @@ class AppRouter extends HTMLElement {
     }
     window.addEventListener("popstate", this.handleNavigationPopState);
     this.addEventListener("navigation-link-click", this.handleNavigationLink);
+    this.addEventListener("cart-updated", this.handleCartUpdated);
   }
 
   disconnectedCallback() {
     window.removeEventListener("popstate", this.handleNavigationPopState);
     this.removeEventListener("navigation-link-click", this.handleNavigationLink);
+    this.removeEventListener("cart-updated", this.handleCartUpdated);
   }
 
   handleNavigationPopState() {
@@ -47,6 +50,10 @@ class AppRouter extends HTMLElement {
     } else {
       throw new Error("The event must be a custom event in order to extract the href");
     }
+  }
+
+  handleCartUpdated() {
+    this.appCartOverview.update();
   }
 
   getPageName(href) {

@@ -14,6 +14,7 @@ import AppProductPage from "@components/app-product-page";
 import AppProductDescription from "@components/app-product-description";
 import AppProductDescriptionSkeleton from "@components/app-product-description-skeleton";
 
+import AppCartOverviewItem from "@components/app-cart-overview-item";
 import AppCartOverview from "@components/app-cart-overview";
 import AppCartPage from "@components/app-cart-page";
 
@@ -28,6 +29,7 @@ customElements.define("app-product-description-skeleton", AppProductDescriptionS
 customElements.define("app-product-description", AppProductDescription);
 customElements.define("app-product-page", AppProductPage);
 
+customElements.define("app-cart-overview-item", AppCartOverviewItem);
 customElements.define("app-cart-overview", AppCartOverview);
 customElements.define("app-cart-page", AppCartPage);
 

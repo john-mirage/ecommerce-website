@@ -68,3 +68,38 @@ export async function getOneCamera(
   }
   throw new Error("Invalid parameters");
 }
+
+/**
+ * Get one camera from the API.
+ * This request cannot be interupted.
+ * 
+ * @param {string} uuid - The camera uuid.
+ * @returns {Object} The fetch response.
+ */
+ export async function getOneCameraWithoutInteruption(
+  uuid,
+) {
+  if (
+    typeof uuid === "string" &&
+    uuid.length > 0
+  ) {
+    let camera = false;
+    let error = false;
+    const response = await fetch(API_URL + uuid)
+      .then(response => response)
+      .catch((error) => error.message);
+    if (response instanceof Response) {
+      if (response.ok) {
+        camera = await response.json();
+      } else {
+        error = "not-found";
+      }
+    } else if (typeof response === "string") {
+      error = "error";
+    } else {
+      throw new Error("unknown response");
+    }
+    return { camera, error };
+  }
+  throw new Error("Invalid parameters");
+}

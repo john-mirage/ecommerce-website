@@ -46,10 +46,12 @@
               </svg>
               <span class="absolute -top-1 -right-1 flex justify-center items-center w-5 h-5 rounded-full bg-orange-600 font-semibold text-xs text-white" data-name="cart-badge"></span>
             </button>
-            <div class="hidden mt-6 absolute right-0" data-name="cart-modal">
-              <div class="flex flex-col w-screen max-w-sm h-96 p-6 rounded-xl shadow-lg bg-white divide-y divide-neutral-200">
-                <ul class="flex-1" data-name="cart-list"></ul>
-                <div class="flex-none pt-4">
+            <div class="hidden mt-4 absolute right-0" data-name="cart-modal">
+              <div class="flex flex-col w-screen max-w-sm min-h-min px-4 rounded-xl shadow-lg border border-neutral-200 bg-white divide-y divide-neutral-200">
+                <ul class="flex-1 flex flex-col py-4 space-y-4" data-name="cart-list">
+                  <span class="m-auto self-center text-base font-medium text-neutral-800" data-name="cart-empty-message">Le panier est vide</span>
+                </ul>
+                <div class="flex-none py-4">
                   <a class="flex w-full h-12 rounded-lg shadow-md bg-neutral-800 hover:bg-neutral-700" href="/orinoco/panier" data-name="link">
                     <span class="m-auto font-semibold uppercase text-xs text-neutral-100 tracking-widest">Voir le panier</span>
                   </a>
@@ -266,6 +268,20 @@
           <p class="font-normal text-base text-neutral-600" data-name="number"></p>
           <p class="font-normal text-base text-neutral-600" data-name="lens"></p>
         </div>
+      </div>
+    </li>
+  </template>
+
+  <!-- template | app cart overview item -->
+  <template id="template-app-cart-overview-item">
+    <li class="flex flex-row">
+      <div class="mr-4 flex-none w-24">
+        <div class=" aspect-w-16 aspect-h-9 rounded overflow-hidden">
+          <img class="w-full h-full object-cover" src="" alt="" data-name="image">
+        </div>
+      </div>
+      <div class="flex-1">
+        <p class="text-sm font-medium text-neutral-800" data-name="name"></p>
       </div>
     </li>
   </template>

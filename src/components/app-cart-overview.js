@@ -1,4 +1,5 @@
 import { cart } from "@utils/cart";
+import { getOneCameraWithoutInteruption } from "@utils/camera-api";
 
 const heartBeatAnimation = [
   { transform: "scale(1)", offset: 0 },
@@ -24,7 +25,7 @@ const heartBeatAnimationTiming = {
 
 const fadeAnimationTiming = {
   duration: 300,
-  easing: "ease-in-out",
+  easing: "cubic-bezier(.43,1.6,.56,1)",
 }
 
 class AppCartOverview extends HTMLElement {
@@ -34,24 +35,54 @@ class AppCartOverview extends HTMLElement {
     this.badgeElement = this.querySelector('[data-name="cart-badge"]');
     this.modalElement = this.querySelector('[data-name="cart-modal"]');
     this.listElement = this.querySelector('[data-name="cart-list"]');
+    this.emptyMessageElement = this.querySelector('[data-name="cart-empty-message"]');
     this.cart = cart;
     this.isOpen = false;
     this.isAnimating = false;
+    this.appCartOverviewItem = document.createElement("app-cart-overview-item");
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   connectedCallback() {
-    this.updateButtonBadge();
+    this.update();
     this.buttonElement.addEventListener("click", this.handleButtonClick);
   }
 
   disconnectedCallback() {
+    this.buttonElement.removeEventListener("click", this.handleButtonClick);
     window.removeEventListener("click", this.handleOutsideClick);
   }
 
+  update() {
+    this.displayCartItems();
+    this.updateButtonBadge();
+  }
+
+  async displayCartItems() {
+    this.listElement.innerHTML = "";
+    uuidsLoop:
+    for (const uuid of this.cart.cart.keys()) {
+      const { camera, error } = await getOneCameraWithoutInteruption(uuid);
+      if (typeof error === "string") {
+        switch(error) {
+          case "error":
+            break uuidsLoop;
+          case "not-found":
+            this.cart.deleteCameraByUuid(uuid);
+            break;
+          default:
+            throw new Error("unknown error");
+        }
+      } else {
+        const appCartOverviewItem = this.appCartOverviewItem.cloneNode(true);
+        appCartOverviewItem.camera = camera;
+        this.listElement.append(appCartOverviewItem);
+      }
+    }
+  }
+
   handleButtonClick() {
-    console.log(this.isAnimating);
     if (!this.isAnimating) {
       if (this.isOpen) {
         this.closeModal();
@@ -63,7 +94,6 @@ class AppCartOverview extends HTMLElement {
 
   handleOutsideClick(event) {
     if (!this.contains(event.target)) {
-      console.log("outside click detected");
       this.closeModal();
     }
   }
@@ -75,12 +105,12 @@ class AppCartOverview extends HTMLElement {
     fadeIn.onfinish = () => {
       this.isOpen = true;
       this.isAnimating = false;
-      window.addEventListener("click", this.handleOutsideClick);
+      document.addEventListener("click", this.handleOutsideClick);
     };
   }
 
   closeModal() {
-    window.removeEventListener("click", this.handleOutsideClick);
+    document.removeEventListener("click", this.handleOutsideClick);
     this.isAnimating = true;
     const fadeOut = this.modalElement.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
     fadeOut.onfinish = () => {
