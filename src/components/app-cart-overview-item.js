@@ -9,19 +9,19 @@ class AppCartOverviewItem extends HTMLElement {
     this.nameElement = this.fragment.querySelector('[data-name="name"]');
   }
   
-  get camera() {
-    const cameraIsDefined = this.hasOwnProperty("_camera");
-    if (cameraIsDefined) {
-      return this._camera;
+  get item() {
+    const itemIsDefined = this.hasOwnProperty("_item");
+    if (itemIsDefined) {
+      return this._item;
     } else {
-      throw new Error("The camera is not defined");
+      throw new Error("The item is not defined");
     }
   }
 
-  set camera(camera) {
-    this._camera = camera;
-    this.imageElement.setAttribute("src", this.camera.imageUrl);
-    this.nameElement.textContent = this.camera.name;
+  set item(item) {
+    this._item = item;
+    this.imageElement.setAttribute("src", this.item.imageUrl);
+    this.nameElement.textContent = this.item.name;
   }
 
   connectedCallback() {

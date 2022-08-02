@@ -53,7 +53,7 @@ class AppRouter extends HTMLElement {
   }
 
   handleCartUpdated() {
-    this.appCartOverview.update();
+    this.appCartOverview.displayCartItems();
   }
 
   getPageName(href) {

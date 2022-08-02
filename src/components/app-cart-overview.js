@@ -1,5 +1,5 @@
 import { cart } from "@utils/cart";
-import { getOneCameraWithoutInteruption } from "@utils/camera-api";
+import { getOneCamera } from "@utils/camera-api";
 
 const heartBeatAnimation = [
   { transform: "scale(1)", offset: 0 },
@@ -40,46 +40,73 @@ class AppCartOverview extends HTMLElement {
     this.isOpen = false;
     this.isAnimating = false;
     this.appCartOverviewItem = document.createElement("app-cart-overview-item");
+    this.appCartOverviewItemSkeleton = document.createElement("app-cart-overview-item-skeleton");
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.abortController = false;
   }
 
   connectedCallback() {
-    this.update();
+    this.displayCartItems();
     this.buttonElement.addEventListener("click", this.handleButtonClick);
   }
 
   disconnectedCallback() {
     this.buttonElement.removeEventListener("click", this.handleButtonClick);
-    window.removeEventListener("click", this.handleOutsideClick);
+    //document.removeEventListener("click", this.handleOutsideClick);
   }
 
-  update() {
-    this.displayCartItems();
-    this.updateButtonBadge();
+  displayCartItemsSkeletons() {
+    this.listElement.innerHTML = "";
+    for (let index = 0; index < this.cart.cart.size; ++index) {
+      const skeleton = this.appCartOverviewItemSkeleton.cloneNode(true);
+      this.listElement.append(skeleton);
+    }
   }
 
   async displayCartItems() {
-    this.listElement.innerHTML = "";
-    uuidsLoop:
-    for (const uuid of this.cart.cart.keys()) {
-      const { camera, error } = await getOneCameraWithoutInteruption(uuid);
-      if (typeof error === "string") {
-        switch(error) {
-          case "error":
-            break uuidsLoop;
-          case "not-found":
-            this.cart.deleteCameraByUuid(uuid);
-            break;
-          default:
-            throw new Error("unknown error");
-        }
-      } else {
+    if (this.abortController) {
+      console.log("abort cart overview fetch");
+      this.abortController.abort();
+    }
+    this.updateButtonBadge();
+    this.displayCartItemsSkeletons();
+    const { items, error } = await this.getCartItems();
+    if (typeof error === "string") {
+      if (error === "aborted") {
+        console.log("aborted");
+      }
+    } else {
+      this.listElement.innerHTML = "";
+      items.forEach((item) => {
         const appCartOverviewItem = this.appCartOverviewItem.cloneNode(true);
-        appCartOverviewItem.camera = camera;
+        appCartOverviewItem.item = item;
         this.listElement.append(appCartOverviewItem);
+      });
+    }
+  }
+
+  async getCartItems() {
+    let items = [];
+    let itemsError = false;
+    for (const uuid of this.cart.cart.keys()) {
+      this.abortController = new AbortController();
+      const signal = this.abortController.signal;
+      const { camera, error } = await getOneCamera(uuid, signal);
+      if (typeof error === "string") {
+        if (error === "aborted" || error === "error") {
+          itemsError = error;
+          break;
+        }
+        itemsError = error;
+      } else if (error === "not-found") {
+        this.cart.deleteCameraByUuid(uuid);
+      } else {
+        items.push(camera);
       }
     }
+    this.abortController = false;
+    return { items, error: itemsError };
   }
 
   handleButtonClick() {
@@ -105,12 +132,12 @@ class AppCartOverview extends HTMLElement {
     fadeIn.onfinish = () => {
       this.isOpen = true;
       this.isAnimating = false;
-      document.addEventListener("click", this.handleOutsideClick);
+      //document.addEventListener("click", this.handleOutsideClick);
     };
   }
 
   closeModal() {
-    document.removeEventListener("click", this.handleOutsideClick);
+    //document.removeEventListener("click", this.handleOutsideClick);
     this.isAnimating = true;
     const fadeOut = this.modalElement.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
     fadeOut.onfinish = () => {

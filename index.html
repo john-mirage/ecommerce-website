@@ -238,7 +238,7 @@
   <template id="template-app-cart-summary-item">
     <li class="flex flex-row justify-start items-start py-6">
       <div class="mr-6 flex-none w-1/4">
-        <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+        <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
           <img class="w-full h-full object-cover" src="" alt="" data-name="image">
         </div>
       </div>
@@ -257,7 +257,7 @@
   <template id="template-app-cart-summary-item-skeleton">
     <li class="flex flex-row justify-start items-start py-6 animate-pulse">
       <div class="mr-6 flex-none w-1/4">
-        <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-200">
+        <div class="aspect-w-16 aspect-h-9 rounded-lg bg-neutral-200">
         </div>
       </div>
       <div class="flex-1">
@@ -281,6 +281,18 @@
       </div>
       <div class="flex-1">
         <p class="text-sm font-medium text-neutral-800" data-name="name"></p>
+      </div>
+    </li>
+  </template>
+
+  <!-- template | app cart overview item skeleton -->
+  <template id="template-app-cart-overview-item-skeleton">
+    <li class="flex flex-row animate-pulse">
+      <div class="mr-4 flex-none w-24">
+        <div class=" aspect-w-16 aspect-h-9 rounded bg-neutral-200"></div>
+      </div>
+      <div class="flex-1">
+        <div class="w-20 h-5 rounded-full bg-neutral-200"></div>
       </div>
     </li>
   </template>

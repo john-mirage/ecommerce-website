@@ -17,6 +17,7 @@ import AppProductDescriptionSkeleton from "@components/app-product-description-s
 import AppCartSummaryItemSkeleton from "@components/app-cart-summary-item-skeleton";
 import AppCartSummaryItem from "@components/app-cart-summary-item";
 import AppCartSummary from "@components/app-cart-summary";
+import AppCartOverviewItemSkeleton from "@components/app-cart-overview-item-skeleton";
 import AppCartOverviewItem from "@components/app-cart-overview-item";
 import AppCartOverview from "@components/app-cart-overview";
 import AppCartPage from "@components/app-cart-page";
@@ -35,6 +36,7 @@ customElements.define("app-product-page", AppProductPage);
 customElements.define("app-cart-summary-item-skeleton", AppCartSummaryItemSkeleton);
 customElements.define("app-cart-summary-item", AppCartSummaryItem);
 customElements.define("app-cart-summary", AppCartSummary);
+customElements.define("app-cart-overview-item-skeleton", AppCartOverviewItemSkeleton);
 customElements.define("app-cart-overview-item", AppCartOverviewItem);
 customElements.define("app-cart-overview", AppCartOverview);
 customElements.define("app-cart-page", AppCartPage);

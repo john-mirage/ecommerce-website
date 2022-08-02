@@ -29,33 +29,42 @@ class AppCartSummary extends HTMLElement {
   }
 
   async displayCartItems() {
+    const { items, error } = await this.getCartItems();
+    if (typeof error === "string") {
+      if (error === "error") {
+        console.log("error");
+      }
+    } else {
+      this.listElement.innerHTML = "";
+      items.forEach((item) => {
+        const appCartSummaryItem = this.appCartSummaryItem.cloneNode(true);
+        appCartSummaryItem.item = item;
+        this.listElement.append(appCartSummaryItem);
+      });
+    }
+  }
+
+  async getCartItems() {
     let items = [];
-    uuidsLoop:
+    let itemsError = false;
     for (const uuid of this.cart.cart.keys()) {
       this.abortController = new AbortController();
       const signal = this.abortController.signal;
       const { camera, error } = await getOneCamera(uuid, signal);
       if (typeof error === "string") {
-        switch(error) {
-          case "aborted":
-            break uuidsLoop;
-          case "error":
-            break uuidsLoop;
-          case "not-found":
-            this.cart.deleteCameraByUuid(uuid);
-            break;
-          default:
-            throw new Error("unknown error");
+        if (error === "aborted" || error === "error") {
+          itemsError = error;
+          break;
         }
+        itemsError = error;
+      } else if (error === "not-found") {
+        this.cart.deleteCameraByUuid(uuid);
       } else {
-        const appCartSummaryItem = this.appCartSummaryItem.cloneNode(true);
-        appCartSummaryItem.item = camera;
-        items.push(appCartSummaryItem);
+        items.push(camera);
       }
     }
-    this.listElement.innerHTML = "";
-    this.listElement.append(...items);
     this.abortController = false;
+    return { items, error: itemsError };
   }
 }
 
