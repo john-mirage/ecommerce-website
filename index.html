@@ -182,7 +182,7 @@
           <ul class="divide-y divide-neutral-300" data-name="list"></ul>
           <div class="mt-auto flex flex-row justify-between items-center py-4 border-t border-t-neutral-200">
             <h3 class="font-semibold text-lg text-neutral-800">Total</h3>
-            <p class="font-semibold text-lg text-neutral-600" data-name="total-price"></p>
+            <p class="font-semibold text-lg text-neutral-600" data-name="total"></p>
           </div>
         </div>
       </app-cart-summary>
@@ -234,8 +234,8 @@
     </div>
   </template>
 
-  <!-- template | app cart item -->
-  <template id="template-app-cart-item">
+  <!-- template | app cart summary item -->
+  <template id="template-app-cart-summary-item">
     <li class="flex flex-row justify-start items-start py-6">
       <div class="mr-6 flex-none w-1/4">
         <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
@@ -253,20 +253,19 @@
     </li>
   </template>
 
-  <!-- template | app cart item skeleton -->
-  <template id="template-app-cart-item-skeleton">
-    <li class="flex flex-row justify-start items-start py-6">
+  <!-- template | app cart summary item skeleton -->
+  <template id="template-app-cart-summary-item-skeleton">
+    <li class="flex flex-row justify-start items-start py-6 animate-pulse">
       <div class="mr-6 flex-none w-1/4">
-        <div class="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
-          <img class="w-full h-full object-cover" src="" alt="" data-name="image">
+        <div class="aspect-w-1 aspect-h-1 rounded-lg bg-neutral-200">
         </div>
       </div>
       <div class="flex-1">
         <div>
-          <h3 class="font-semibold text-lg text-neutral-700" data-name="name"></h3>
-          <p class="font-semibold text-lg text-neutral-500" data-name="price"></p>
-          <p class="font-normal text-base text-neutral-600" data-name="number"></p>
-          <p class="font-normal text-base text-neutral-600" data-name="lens"></p>
+          <div class="mb-2 w-32 h-4 rounded-full bg-neutral-200"></div>
+          <div class="mb-2 w-16 h-4 rounded-full bg-neutral-200"></div>
+          <div class="mb-2 w-16 h-4 rounded-full bg-neutral-200" ></div>
+          <div class="w-16 h-4 rounded-full bg-neutral-200"></div>
         </div>
       </div>
     </li>
