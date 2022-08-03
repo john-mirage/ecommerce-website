@@ -5,39 +5,39 @@ import AppHeader from "@components/app-header";
 import AppView from "@components/app-view";
 import AppPage from "@components/app-page";
 
-import AppIndexPage from "@components/app-index-page";
-import AppIndexProductList from "@components/app-index-product-list";
-import AppIndexProduct from "@components/app-index-product";
-import AppIndexProductSkeleton from "@components/app-index-product-skeleton";
+import AppHomePage from "@components/home/app-home-page";
+import AppHomeProductList from "@components/home/app-home-product-list";
+import AppHomeProduct from "@components/home/app-home-product";
+import AppHomeProductSkeleton from "@components/home/app-home-product-skeleton";
 
-import AppProductPage from "@components/app-product-page";
-import AppProductDescription from "@components/app-product-description";
-import AppProductDescriptionSkeleton from "@components/app-product-description-skeleton";
+import AppProductPage from "@components/product/app-product-page";
+import AppProductDescription from "@components/product/app-product-description";
+import AppProductDescriptionSkeleton from "@components/product/app-product-description-skeleton";
 
-import AppCartSummaryItemSkeleton from "@components/app-cart-summary-item-skeleton";
-import AppCartSummaryItem from "@components/app-cart-summary-item";
-import AppCartSummary from "@components/app-cart-summary";
-import AppCartOverviewItemSkeleton from "@components/app-cart-overview-item-skeleton";
-import AppCartOverviewItem from "@components/app-cart-overview-item";
-import AppCartOverview from "@components/app-cart-overview";
-import AppCartPage from "@components/app-cart-page";
+import AppCartItemSkeleton from "@components/cart/app-cart-item-skeleton";
+import AppCartItem from "@components/cart/app-cart-item";
+import AppCart from "@components/cart/app-cart";
+import AppCartSummary from "@components/cart/app-cart-summary";
+import AppCartForm from "@components/cart/app-cart-form";
+import AppCartOverview from "@components/cart/app-cart-overview";
+import AppCartPage from "@components/cart/app-cart-page";
 
-import AppErrorPage from "@components/app-error-page";
+import AppErrorPage from "@components/error/app-error-page";
 
-customElements.define("app-index-product-skeleton", AppIndexProductSkeleton);
-customElements.define("app-index-product", AppIndexProduct);
-customElements.define("app-index-product-list", AppIndexProductList);
-customElements.define("app-index-page", AppIndexPage);
+customElements.define("app-home-product-skeleton", AppHomeProductSkeleton);
+customElements.define("app-home-product", AppHomeProduct);
+customElements.define("app-home-product-list", AppHomeProductList);
+customElements.define("app-home-page", AppHomePage);
 
 customElements.define("app-product-description-skeleton", AppProductDescriptionSkeleton);
 customElements.define("app-product-description", AppProductDescription);
 customElements.define("app-product-page", AppProductPage);
 
-customElements.define("app-cart-summary-item-skeleton", AppCartSummaryItemSkeleton);
-customElements.define("app-cart-summary-item", AppCartSummaryItem);
+customElements.define("app-cart-item-skeleton", AppCartItemSkeleton);
+customElements.define("app-cart-item", AppCartItem);
+customElements.define("app-cart", AppCart);
 customElements.define("app-cart-summary", AppCartSummary);
-customElements.define("app-cart-overview-item-skeleton", AppCartOverviewItemSkeleton);
-customElements.define("app-cart-overview-item", AppCartOverviewItem);
+customElements.define("app-cart-form", AppCartForm);
 customElements.define("app-cart-overview", AppCartOverview);
 customElements.define("app-cart-page", AppCartPage);
 

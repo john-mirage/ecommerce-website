@@ -1,7 +1,8 @@
-import { cart } from "@utils/cart";
-import { getOneCamera } from "@utils/camera-api";
+import { getOneCamera } from "@api/camera";
 
-const heartBeatAnimation = [
+const template = document.getElementById("template-app-cart-overview");
+
+export const heartBeatAnimation = [
   { transform: "scale(1)", offset: 0 },
   { transform: "scale(1.5)", offset: 0.14 },
   { transform: "scale(1)", offset: 0.28 },
@@ -9,21 +10,21 @@ const heartBeatAnimation = [
   { transform: "scale(1)", offset: 0.7 },
 ];
 
-const fadeInAndTranslateAnimation = [
+export const heartBeatAnimationTiming = {
+  duration: 1000,
+}
+
+export const fadeInAndTranslateYAnimation = [
   { opacity: 0, transform: "translateY(-1rem)", offset: 0},
   { opacity: 1, transform: "translateY(0)", offset: 1 }
 ];
 
-const fadeOutAndTranslateAnimation = [
+export const fadeOutAndTranslateYAnimation = [
   { opacity: 1, transform: "translateY(0)", offset: 0 },
   { opacity: 0, transform: "translateY(-1rem)", offset: 1 }
 ];
 
-const heartBeatAnimationTiming = {
-  duration: 1000,
-}
-
-const fadeAnimationTiming = {
+export const fadeAndTranslateYAnimationTiming = {
   duration: 300,
   easing: "cubic-bezier(.43,1.6,.56,1)",
 }
@@ -31,11 +32,13 @@ const fadeAnimationTiming = {
 class AppCartOverview extends HTMLElement {
   constructor() {
     super();
-    this.buttonElement = this.querySelector('[data-name="cart-button"]');
-    this.badgeElement = this.querySelector('[data-name="cart-badge"]');
-    this.modalElement = this.querySelector('[data-name="cart-modal"]');
-    this.listElement = this.querySelector('[data-name="cart-list"]');
-    this.emptyMessageElement = this.querySelector('[data-name="cart-empty-message"]');
+    this.initialCall = true;
+    this.fragment = template.content.cloneNode(true);
+    this.buttonElement = this.fragment.querySelector('[data-name="cart-button"]');
+    this.badgeElement = this.fragment.querySelector('[data-name="cart-badge"]');
+    this.modalElement = this.fragment.querySelector('[data-name="cart-modal"]');
+    this.listElement = this.fragment.querySelector('[data-name="cart-list"]');
+    this.emptyMessageElement = this.fragment.querySelector('[data-name="cart-empty-message"]');
     this.cart = cart;
     this.isOpen = false;
     this.isAnimating = false;
@@ -47,6 +50,10 @@ class AppCartOverview extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.initialCall) {
+      this.append(this.fragment);
+      this.initialCall = false;
+    }
     this.displayCartItems();
     this.buttonElement.addEventListener("click", this.handleButtonClick);
   }
@@ -56,7 +63,7 @@ class AppCartOverview extends HTMLElement {
     //document.removeEventListener("click", this.handleOutsideClick);
   }
 
-  displayCartItemsSkeletons() {
+  displayCartItemSkeletons() {
     this.listElement.innerHTML = "";
     for (let index = 0; index < this.cart.cart.size; ++index) {
       const skeleton = this.appCartOverviewItemSkeleton.cloneNode(true);
@@ -70,7 +77,7 @@ class AppCartOverview extends HTMLElement {
       this.abortController.abort();
     }
     this.updateButtonBadge();
-    this.displayCartItemsSkeletons();
+    this.displayCartItemSkeletons();
     const { items, error } = await this.getCartItems();
     if (typeof error === "string") {
       if (error === "aborted") {
@@ -128,7 +135,7 @@ class AppCartOverview extends HTMLElement {
   openModal() {
     this.isAnimating = true;
     this.modalElement.classList.replace("hidden", "block");
-    const fadeIn = this.modalElement.animate(fadeInAndTranslateAnimation, fadeAnimationTiming);
+    const fadeIn = this.modalElement.animate(fadeInAndTranslateYAnimation, fadeAndTranslateYAnimationTiming);
     fadeIn.onfinish = () => {
       this.isOpen = true;
       this.isAnimating = false;
@@ -139,7 +146,7 @@ class AppCartOverview extends HTMLElement {
   closeModal() {
     //document.removeEventListener("click", this.handleOutsideClick);
     this.isAnimating = true;
-    const fadeOut = this.modalElement.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
+    const fadeOut = this.modalElement.animate(fadeOutAndTranslateYAnimation, fadeAndTranslateYAnimationTiming);
     fadeOut.onfinish = () => {
       this.modalElement.classList.replace("block", "hidden");
       this.isOpen = false;

@@ -6,7 +6,7 @@ export const formatOptions = {
   maximumFractionDigits: 0
 }
 
-export function formatCameraPrice(cameraPrice) {
+export function formatProductPrice(cameraPrice) {
   const price = cameraPrice / 100;
   const numberFormatter = new Intl.NumberFormat(formatLocale, formatOptions);
   return numberFormatter.format(price);

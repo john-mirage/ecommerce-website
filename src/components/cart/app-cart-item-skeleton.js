@@ -1,6 +1,6 @@
-const template = document.getElementById("template-app-cart-overview-item-skeleton");
+const template = document.getElementById("template-app-cart-item-skeleton");
 
-class AppCartOverviewItemSkeleton extends HTMLElement {
+class AppCartItemSkeleton extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
@@ -15,4 +15,4 @@ class AppCartOverviewItemSkeleton extends HTMLElement {
   }
 }
 
-export default AppCartOverviewItemSkeleton;
+export default AppCartItemSkeleton;

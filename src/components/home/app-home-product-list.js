@@ -1,15 +1,15 @@
-import { getAllCameras } from "@utils/camera-api";
+import { getAllCameras } from "@api/camera";
 
-const template = document.getElementById("template-app-index-product-list");
+const template = document.getElementById("template-app-home-product-list");
 
-class AppIndexProductList extends HTMLElement {
+class AppHomeProductList extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
     this.fragment = template.content.cloneNode(true);
     this.listElement = this.fragment.querySelector('[data-name="list"]');
-    this.appIndexProduct = document.createElement("app-index-product");
-    this.appIndexProductSkeleton = document.createElement("app-index-product-skeleton");
+    this.appHomeProduct = document.createElement("app-index-product");
+    this.appHomeProductSkeleton = document.createElement("app-index-product-skeleton");
     this.abortController = false;
   }
 
@@ -20,7 +20,7 @@ class AppIndexProductList extends HTMLElement {
     }
     this.listElement.innerHTML = "";
     for (let index = 0; index < 6; ++index) {
-      const skeleton = this.appIndexProductSkeleton.cloneNode(true);
+      const skeleton = this.appHomeProductSkeleton.cloneNode(true);
       this.listElement.append(skeleton);
     }
     this.displayProducts();
@@ -47,7 +47,7 @@ class AppIndexProductList extends HTMLElement {
     } else {
       this.listElement.innerHTML = "";
       cameras.forEach((camera) => {
-        const product = this.appIndexProduct.cloneNode(true);
+        const product = this.appHomeProduct.cloneNode(true);
         product.camera = camera;
         this.listElement.append(product);
       });
@@ -56,4 +56,4 @@ class AppIndexProductList extends HTMLElement {
   }
 }
 
-export default AppIndexProductList;
+export default AppHomeProductList;

@@ -1,6 +1,6 @@
-const template = document.getElementById("template-app-index-product-skeleton");
+const template = document.getElementById("template-app-cart-form");
 
-class AppIndexProductSkeleton extends HTMLElement {
+class AppCartForm extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
@@ -15,4 +15,4 @@ class AppIndexProductSkeleton extends HTMLElement {
   }
 }
 
-export default AppIndexProductSkeleton;
+export default AppCartForm;

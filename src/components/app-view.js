@@ -1,8 +1,21 @@
-import {
-  getFadeInAndTranslateAnimation,
-  getFadeOutAndTranslateAnimation,
-  fadeAnimationTiming,
-} from "@utils/fade-animations";
+export function getFadeInAndTranslateXAnimation(toLeft) {
+  return [
+    { opacity: 0, transform: toLeft ? "translateX(4rem)" : "translateX(-4rem)", offset: 0 },
+    { opacity: 1, transform: "translateX(0)", offset: 1 }
+  ];
+}
+
+export function getFadeOutAndTranslateXAnimation(toLeft) {
+  return [
+    { opacity: 1, transform: "translateX(0)", offset: 0 },
+    { opacity: 0, transform: toLeft ? "translateX(-4rem)" : "translateX(4rem)", offset: 1 }
+  ];
+}
+
+export const fadeAndTranslateXAnimationTiming = {
+  duration: 300,
+  easing: "ease-in-out",
+}
 
 class AppView extends HTMLElement {
   constructor() {
@@ -45,12 +58,12 @@ class AppView extends HTMLElement {
         const nextPage = this.getNextPage(pageName);
         if (typeof currentPage.level === "number" && typeof nextPage.level === "number") {
           const isLeft = currentPage.level < nextPage.level;
-          const fadeOutAndTranslateAnimation = getFadeOutAndTranslateAnimation(isLeft);
-          const fadeOut = this.animate(fadeOutAndTranslateAnimation, fadeAnimationTiming);
+          const fadeOutAndTranslateXanimation = getFadeOutAndTranslateXAnimation(isLeft);
+          const fadeOut = this.animate(fadeOutAndTranslateXanimation, fadeAndTranslateXAnimationTiming);
           fadeOut.onfinish = () => {
             this.appPage.updatePage(nextPage);
-            const fadeInAndTranslateAnimation = getFadeInAndTranslateAnimation(isLeft);
-            this.animate(fadeInAndTranslateAnimation, fadeAnimationTiming);
+            const fadeInAndTranslateXanimation = getFadeInAndTranslateXAnimation(isLeft);
+            this.animate(fadeInAndTranslateXanimation, fadeAndTranslateXAnimationTiming);
           };
         } else {
           throw new Error("Both current page and next page must have a valid level");

@@ -1,6 +1,6 @@
-const template = document.getElementById("template-app-index-page");
+const template = document.getElementById("template-app-home-page");
 
-class AppIndexPage extends HTMLElement {
+class AppHomePage extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
@@ -16,4 +16,4 @@ class AppIndexPage extends HTMLElement {
   }
 }
 
-export default AppIndexPage;
+export default AppHomePage;

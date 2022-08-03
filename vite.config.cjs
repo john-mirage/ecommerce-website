@@ -10,6 +10,7 @@ export default defineConfig({
   base: "/orinoco/",
   resolve: {
     alias: {
+      '@api': resolve(__dirname, 'src/api'),
       '@components': resolve(__dirname, 'src/components'),
       '@images': resolve(__dirname, 'src/images'),
       '@utils': resolve(__dirname, 'src/utils'),

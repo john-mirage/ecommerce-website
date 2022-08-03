@@ -1,23 +1,26 @@
-import { cart } from "@utils/cart";
-import { getOneCamera } from "@utils/camera-api";
+import { getOneCamera } from "@api/camera";
+
+const template = document.getElementById("template-app-cart-summary");
 
 class AppCartSummary extends HTMLElement {
   constructor() {
     super();
-    this.cart = cart;
-    this.listElement = this.querySelector('[data-name="list"]');
-    this.totalElement = this.querySelector('[data-name="total"]');
+    this.initialCall = true;
+    this.fragment = template.content.cloneNode(true);
+    this.listElement = this.fragment.querySelector('[data-name="list"]');
+    this.totalElement = this.fragment.querySelector('[data-name="total"]');
     this.appCartSummaryItem = document.createElement("app-cart-summary-item");
     this.appCartSummaryItemSkeleton = document.createElement("app-cart-summary-item-skeleton");
+    this.cart = cart;
     this.abortController = false;
   }
 
   connectedCallback() {
-    this.listElement.innerHTML = "";
-    for (let index = 0; index < this.cart.cart.size; ++index) {
-      const skeleton = this.appCartSummaryItemSkeleton.cloneNode(true);
-      this.listElement.append(skeleton);
+    if (this.initialCall) {
+      this.append(this.fragment);
+      this.initialCall = false;
     }
+    this.displayCartItemSkeletons();
     this.displayCartItems();
   }
 
@@ -25,6 +28,14 @@ class AppCartSummary extends HTMLElement {
     if (this.abortController) {
       this.abortController.abort();
       console.log("aborted");
+    }
+  }
+
+  displayCartItemSkeletons() {
+    this.listElement.innerHTML = "";
+    for (let index = 0; index < this.cart.cart.size; ++index) {
+      const skeleton = this.appCartSummaryItemSkeleton.cloneNode(true);
+      this.listElement.append(skeleton);
     }
   }
 

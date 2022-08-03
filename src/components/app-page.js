@@ -1,14 +1,27 @@
-import {
-  fadeInAnimation,
-  fadeOutAnimation,
-  fadeAnimationTiming,
-} from "@utils/fade-animations";
+const template = document.getElementById("template-app-page");
+
+export const fadeInAnimation = [
+  { opacity: 0, offset: 0 },
+  { opacity: 1, offset: 1 }
+];
+
+export const fadeOutAnimation = [
+  { opacity: 1, offset: 0 },
+  { opacity: 0, offset: 1 }
+];
+
+export const fadeAnimationTiming = {
+  duration: 300,
+  easing: "ease-in-out",
+}
 
 class AppPage extends HTMLElement {
   constructor() {
     super();
+    this.initialCall = true;
     this.currentPage = false;
-    this.mainElement = this.querySelector('[data-name="main"]');
+    this.fragment = template.content.cloneNode(true);
+    this.mainElement = this.fragment.querySelector('[data-name="main"]');
     this.handleError = this.handleError.bind(this);
   }
 
@@ -45,6 +58,10 @@ class AppPage extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.initialCall) {
+      this.append(this.fragment);
+      this.initialCall = false;
+    }
     this.addEventListener("display-error-page", this.handleError);
   }
 

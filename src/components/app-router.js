@@ -1,5 +1,3 @@
-import { cart } from "@utils/cart";
-
 class AppRouter extends HTMLElement {
   constructor() {
     super();

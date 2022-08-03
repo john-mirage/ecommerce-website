@@ -1,4 +1,4 @@
-import { getOneCamera } from "@utils/camera-api";
+import { getOneCamera } from "@api/camera";
 
 class AppProductPage extends HTMLElement {
   constructor() {

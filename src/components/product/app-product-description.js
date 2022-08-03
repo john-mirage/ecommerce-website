@@ -1,5 +1,4 @@
-import { formatCameraPrice } from "@utils/camera-price-formatter";
-import { cart } from "@utils/cart";
+import { formatProductPrice } from "@utils/currency-formatter";
 
 const template = document.getElementById("template-app-product-description");
 
@@ -31,7 +30,7 @@ class AppProductDescription extends HTMLElement {
     this._camera = camera;
     this.imageElement.setAttribute("src", camera.imageUrl);
     this.nameElement.textContent = camera.name;
-    this.priceElement.textContent = formatCameraPrice(camera.price);
+    this.priceElement.textContent = formatProductPrice(camera.price);
     this.descriptionElement.textContent = camera.description;
   }
 

@@ -1,8 +1,8 @@
-import { formatCameraPrice } from "@utils/camera-price-formatter";
+import { formatProductPrice } from "@utils/currency-formatter";
 
-const template = document.getElementById("template-app-index-product");
+const template = document.getElementById("template-app-home-product");
 
-class AppIndexProduct extends HTMLElement {
+class AppHomeProduct extends HTMLElement {
   constructor() {
     super();
     this.initialCall = true;
@@ -28,7 +28,7 @@ class AppIndexProduct extends HTMLElement {
     this.linkElement.setAttribute("href", `/orinoco/produit?id=${this.camera._id}`);
     this.imageElement.setAttribute("src", this.camera.imageUrl);
     this.nameElement.textContent = this.camera.name;
-    this.priceElement.textContent = formatCameraPrice(this.camera.price);
+    this.priceElement.textContent = formatProductPrice(this.camera.price);
   }
 
   connectedCallback() {
@@ -54,4 +54,4 @@ class AppIndexProduct extends HTMLElement {
   }
 }
 
-export default AppIndexProduct;
+export default AppHomeProduct;

@@ -1,11 +1,19 @@
+const template = document.getElementById("template-app-header");
+
 class AppHeader extends HTMLElement {
   constructor() {
     super();
-    this.links = this.querySelectorAll('[data-name="link"]');
+    this.initialCall = true;
+    this.fragment = template.content.cloneNode(true);
+    this.links = this.fragment.querySelectorAll('[data-name="link"]');
     this.handleLinkClick = this.handleLinkClick.bind(this);
   }
 
   connectedCallback() {
+    if (this.initialCall) {
+      this.append(this.fragment);
+      this.initialCall = false;
+    }
     this.links.forEach((link) => {
       link.addEventListener("click", this.handleLinkClick);
     });

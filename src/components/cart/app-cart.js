@@ -1,3 +1,15 @@
+class AppCart extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+
+  }
+}
+
+export default AppCart;
+
 export const CART_LOCAL_STORAGE_KEY = "orinoco-cart";
 
 /*
@@ -213,5 +225,3 @@ export class Cart {
     }
   }
 }
-
-export const cart = new Cart();
