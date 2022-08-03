@@ -7,27 +7,13 @@ class AppCartSummary extends HTMLElement {
     super();
     this.initialCall = true;
     this.fragment = template.content.cloneNode(true);
-    this.listElement = this.fragment.querySelector('[data-name="list"]');
     this.totalElement = this.fragment.querySelector('[data-name="total"]');
-    this.appCartSummaryItem = document.createElement("app-cart-summary-item");
-    this.appCartSummaryItemSkeleton = document.createElement("app-cart-summary-item-skeleton");
-    this.cart = cart;
-    this.abortController = false;
   }
 
   connectedCallback() {
     if (this.initialCall) {
       this.append(this.fragment);
       this.initialCall = false;
-    }
-    this.displayCartItemSkeletons();
-    this.displayCartItems();
-  }
-
-  disconnectedCallback() {
-    if (this.abortController) {
-      this.abortController.abort();
-      console.log("aborted");
     }
   }
 
